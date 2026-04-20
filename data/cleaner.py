@@ -1,4 +1,5 @@
 import duckdb
+from pathlib import Path
 
 
 class DataCleaner:
@@ -25,7 +26,7 @@ class DataCleaner:
                 total_revenue_company_as_of,
                 revenue_share,
                 is_largest_share_segment,
-                NULLIF(TRIM(CAST(MstarGlobal AS VARCHAR)), '') AS MstarGlobal
+                MstarGlobal
             FROM task1
         """)
 
@@ -42,6 +43,23 @@ class DataCleaner:
                 NULLIF(TRIM(CAST(Subindustry AS VARCHAR)), '') AS Subindustry
             FROM task2
         """)
+
+    def export_to_cleaned(self, cleaned_dir: str):
+        """Export cleaned tables to CSV so the team scripts can read them.
+        This creates data/cleaned/task1_clean.csv and task2_clean.csv."""
+        out = Path(cleaned_dir)
+        out.mkdir(parents=True, exist_ok=True)
+
+        t1_path = (out / "task1_clean.csv").as_posix()
+        t2_path = (out / "task2_clean.csv").as_posix()
+
+        print(f"Exporting task1_clean -> {t1_path}")
+        self.con.execute(f"COPY task1_clean TO '{t1_path}' (HEADER, DELIMITER ',')")
+
+        print(f"Exporting task2_clean -> {t2_path}")
+        self.con.execute(f"COPY task2_clean TO '{t2_path}' (HEADER, DELIMITER ',')")
+
+        print("Export to data/cleaned/ done.")
 
     def run(self):
         self.connect()
