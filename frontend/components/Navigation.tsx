@@ -41,17 +41,18 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/10">
       <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold font-mono hover:text-white transition-colors">
+        <Link href="/" className="flex items-baseline gap-1.5 hover:opacity-80 transition-opacity">
           <TextScramble
             as="span"
             speed={0.03}
-            duration={0.6}
+            duration={0.8}
             characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            className="text-white/90"
+            className="text-xl font-black tracking-widest text-white"
+            style={{ fontFamily: "var(--font-geist-sans), 'Inter', sans-serif", letterSpacing: "0.18em" }}
           >
-            GECS
+            TAVSS
           </TextScramble>
-          {" "}<span className="text-red-500">v1.0</span>
+          <span className="text-[10px] font-mono text-red-500/70 tracking-widest">v1.0</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-2">
