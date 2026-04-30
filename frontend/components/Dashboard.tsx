@@ -11,7 +11,7 @@ import {
 
 // ── Static data ────────────────────────────────────────────────────────────────
 
-const STEP_DURATIONS = [160, 500, 200, 370, 320];
+const STEP_DURATIONS = [60, 80, 60, 80, 60];
 
 const PIPELINE_STEPS = [
   { icon: Terminal, label: "TEXT INGESTION",  detail: "Tokenise raw description" },
@@ -584,20 +584,26 @@ export default function Dashboard() {
     setLatencyMs(null);
     setStepTimes(Array(5).fill(null));
 
-    for (let i = 0; i < PIPELINE_STEPS.length; i++) {
-      setActiveStep(i);
-      const t0 = performance.now();
-      await new Promise<void>((r) => setTimeout(r, STEP_DURATIONS[i]));
-      setStepTimes((prev) => { const n = [...prev]; n[i] = Math.round(performance.now() - t0); return n; });
-    }
-
+    // Run animation and fetch in parallel — total time = max(anim, api) not sum
     const t0 = performance.now();
+
+    const animPromise = (async () => {
+      for (let i = 0; i < PIPELINE_STEPS.length; i++) {
+        setActiveStep(i);
+        const s = performance.now();
+        await new Promise<void>((r) => setTimeout(r, STEP_DURATIONS[i]));
+        setStepTimes((prev) => { const n = [...prev]; n[i] = Math.round(performance.now() - s); return n; });
+      }
+    })();
+
+    const fetchPromise = fetch("/api/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+
     try {
-      const res  = await fetch("/api/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
+      const [, res] = await Promise.all([animPromise, fetchPromise]);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Server error");
       setLatencyMs(Math.round(performance.now() - t0));
