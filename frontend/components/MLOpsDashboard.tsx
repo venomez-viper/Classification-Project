@@ -19,6 +19,8 @@ import GraphTab from "./tabs/GraphTab";
 import CodeTab from "./tabs/CodeTab";
 import MonitoringTab from "./tabs/MonitoringTab";
 import ReportsTab from "./tabs/ReportsTab";
+import AlertsTab from "./tabs/AlertsTab";
+import SettingsTab from "./tabs/SettingsTab";
 
 // --- Mock Data ---
 const SIDEBAR_ITEMS = [
@@ -486,9 +488,12 @@ export default function MLOpsDashboard() {
 
             <div className="flex items-center gap-4 ml-6">
               <button className="text-white/40 hover:text-white"><Search className="w-4 h-4" /></button>
-              <button className="text-white/40 hover:text-white relative">
+              <button onClick={() => setActiveTab("Alerts")} className="text-white/40 hover:text-white relative">
                 <Bell className="w-4 h-4" />
                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
+              </button>
+              <button onClick={() => setActiveTab("Settings")} className="text-white/40 hover:text-white">
+                <Settings className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -507,10 +512,12 @@ export default function MLOpsDashboard() {
             {activeTab === "Code Showcase" && <CodeTab key="Code" />}
             {activeTab === "Monitoring" && <MonitoringTab key="Monitoring" />}
             {activeTab === "Reports" && <ReportsTab key="Reports" />}
+            {activeTab === "Alerts" && <AlertsTab key="Alerts" />}
             {activeTab === "Documentation" && <DocumentationTab key="Documentation" />}
+            {activeTab === "Settings" && <SettingsTab key="Settings" />}
 
             {/* Fallback for unbuilt tabs */}
-            {["Alerts", "Governance", "Settings"].includes(activeTab) && (
+            {["Governance"].includes(activeTab) && (
               <PlaceholderTab key={activeTab} title={activeTab} />
             )}
           </AnimatePresence>
