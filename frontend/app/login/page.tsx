@@ -134,7 +134,7 @@ function LoginInner() {
                       style={{ borderColor: error ? "rgba(239,68,68,0.3)" : undefined }}
                     />
                     <button type="button" onClick={() => setShowPw(p => !p)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/50 transition-colors">
+                      className="absolute inset-y-0 right-0 flex items-center px-3.5 text-white/20 hover:text-white/50 transition-colors">
                       {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
