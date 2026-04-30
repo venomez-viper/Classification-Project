@@ -260,7 +260,7 @@ export default function Home() {
             </p>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              {TEAM_HIGHLIGHTS.slice(0, 4).map((member) => (
+              {TEAM_HIGHLIGHTS.map((member) => (
                 <div key={member.name} className="rounded-2xl border border-white/10 bg-black/25 p-4">
                   <div className="text-xs uppercase tracking-[0.28em] text-white/35 mb-2">{member.role}</div>
                   <div className="text-lg font-semibold text-white mb-2">{member.name}</div>
