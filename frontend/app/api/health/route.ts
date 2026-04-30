@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const RAILWAY_URL = process.env.SVM_API_URL ?? process.env.NEXT_PUBLIC_SVM_API_URL ?? "";
-const HF_SPACE_URL = process.env.HF_SPACE_URL ?? "";
+const HF_SPACE_URL = process.env.HF_SPACE_URL ?? process.env.NEXT_PUBLIC_LLM_API_URL ?? "";
 
 async function ping(url: string, timeoutMs = 5000): Promise<{ ok: boolean; latency: number }> {
   const start = Date.now();
