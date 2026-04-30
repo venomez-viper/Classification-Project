@@ -24,6 +24,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const data = await upstream.json();
-  return NextResponse.json(data, { status: upstream.status });
+  const text = await upstream.text();
+  if (!text) {
+    return NextResponse.json({ error: "HF Space returned empty response. It may still be loading." }, { status: 503 });
+  }
+  try {
+    const data = JSON.parse(text);
+    return NextResponse.json(data, { status: upstream.status });
+  } catch {
+    return NextResponse.json({ error: `HF Space returned invalid JSON: ${text.slice(0, 200)}` }, { status: 502 });
+  }
 }

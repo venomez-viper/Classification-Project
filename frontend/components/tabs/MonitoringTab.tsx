@@ -1,6 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { AlertTriangle, CheckCircle2, Shield, Terminal } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Shield, Terminal, Loader2 } from "lucide-react";
+
+type ServiceStatus = { ok: boolean; latency: number; label: string };
+type HealthData = { timestamp: string; services: { vercel: ServiceStatus; railway: ServiceStatus; hf: ServiceStatus } };
 
 // ─── ONE batched tick drives ALL live data — zero separate intervals ──────────
 type SeriesState = {
@@ -69,7 +72,21 @@ export default function MonitoringTab() {
   const [series, setSeries] = useState<SeriesState>(INIT);
   const [alerts, setAlerts] = useState<Alert[]>(INIT_ALERTS);
   const [clock, setClock] = useState("");
+  const [health, setHealth] = useState<HealthData | null>(null);
   const alertTick = useRef(0);
+
+  // Poll real service health every 30 s
+  useEffect(() => {
+    async function fetchHealth() {
+      try {
+        const res = await fetch("/api/health");
+        if (res.ok) setHealth(await res.json());
+      } catch { /* ignore */ }
+    }
+    fetchHealth();
+    const id = setInterval(fetchHealth, 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   // Single interval — all updates batched into one setState call each
   useEffect(() => {
@@ -197,26 +214,31 @@ export default function MonitoringTab() {
         {/* Right panel — 4 cols */}
         <div className="col-span-4 flex flex-col gap-3 min-h-0">
 
-          {/* Service health — static, no updates needed */}
+          {/* Service health — live polled every 30s */}
           <div className="bg-black/60 border border-white/5 rounded-xl p-4 flex-shrink-0">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="w-3.5 h-3.5 text-emerald-500" />
               <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">Service Health</span>
+              {!health && <Loader2 className="w-3 h-3 text-white/20 animate-spin ml-auto" />}
+              {health && <span className="ml-auto text-[9px] font-mono text-white/15">{health.timestamp.slice(11, 19)} UTC</span>}
             </div>
             <div className="space-y-2">
-              {[
-                { name: "Flask / Waitress (5000)", ok: true  },
-                { name: "LLM Microservice (5001)", ok: true  },
-                { name: "TF-IDF Vectorizer",       ok: true  },
-                { name: "scipy.sparse CSR Engine", ok: true  },
-                { name: "GPU VRAM",                ok: false, note: "SATURATED" },
-                { name: "Next.js Frontend",        ok: true  },
-              ].map(s => (
-                <div key={s.name} className={`flex items-center justify-between px-3 py-1.5 rounded-lg border text-[10px] font-mono ${s.ok ? "border-emerald-500/10 bg-emerald-500/5" : "border-red-500/20 bg-red-500/5"}`}>
-                  <span className="text-white/40">{s.name}</span>
-                  <span className={s.ok ? "text-emerald-400" : "text-red-400"}>{(s as any).note ?? "HEALTHY"}</span>
-                </div>
-              ))}
+              {health
+                ? Object.values(health.services).map(s => (
+                    <div key={s.label} className={`flex items-center justify-between px-3 py-1.5 rounded-lg border text-[10px] font-mono ${s.ok ? "border-emerald-500/10 bg-emerald-500/5" : "border-red-500/20 bg-red-500/5"}`}>
+                      <span className="text-white/40">{s.label}</span>
+                      <span className={s.ok ? "text-emerald-400" : "text-red-400"}>
+                        {s.ok ? `${s.latency}ms` : "OFFLINE"}
+                      </span>
+                    </div>
+                  ))
+                : ["Next.js / Vercel", "Flask SVM / Railway", "DeBERTa / HF Space"].map(name => (
+                    <div key={name} className="flex items-center justify-between px-3 py-1.5 rounded-lg border border-white/5 text-[10px] font-mono">
+                      <span className="text-white/25">{name}</span>
+                      <span className="text-white/15">checking…</span>
+                    </div>
+                  ))
+              }
             </div>
           </div>
 
