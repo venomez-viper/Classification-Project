@@ -20,9 +20,9 @@
     "framer-motion": "^12.38.0",
     "geist": "^1.7.0",
     "lucide-react": "^1.9.0",
-    "next": "16.2.4",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "next": "15.0.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "remotion": "^4.0.451",
     "shadcn": "^4.4.0",
     "tailwind-merge": "^3.5.0",
@@ -34,7 +34,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "15.0.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
