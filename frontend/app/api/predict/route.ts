@@ -23,6 +23,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const data = await upstream.json();
-  return NextResponse.json(data, { status: upstream.status });
+  const text = await upstream.text();
+  if (!text) {
+    return NextResponse.json({ error: "Railway returned empty response." }, { status: 503 });
+  }
+  try {
+    const data = JSON.parse(text);
+    return NextResponse.json(data, { status: upstream.status });
+  } catch {
+    return NextResponse.json({ error: `Railway error (${upstream.status}): ${text.slice(0, 300)}` }, { status: 502 });
+  }
 }
