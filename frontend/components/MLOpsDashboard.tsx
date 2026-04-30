@@ -435,7 +435,7 @@ export default function MLOpsDashboard() {
               title="Sign out"
               onClick={async () => {
                 await fetch("/api/auth", { method: "DELETE" });
-                window.location.href = "/login";
+                window.location.href = "/";
               }}
               className="text-white/20 hover:text-red-400 transition-colors p-1 rounded"
             >
