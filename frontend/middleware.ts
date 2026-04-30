@@ -7,11 +7,6 @@ const PUBLIC_PAGES = [
   "/about",
   "/journey",
   "/team",
-  "/demo",
-  "/features",
-  "/breezeml",
-  "/model",
-  "/graph",
 ];
 
 export function middleware(request: NextRequest) {
