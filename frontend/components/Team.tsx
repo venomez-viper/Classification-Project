@@ -1,11 +1,11 @@
 "use client";
 
-import { FallingPattern } from "@/components/ui/falling-pattern";
-import { RevealText } from "@/components/ui/reveal-text";
-import { GlowCard } from "@/components/ui/spotlight-card";
-import { TextScramble } from "@/components/ui/text-scramble";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, GitBranch, Library, LineChart, ScanSearch, ServerCog } from "lucide-react";
+import { FallingPattern } from "@/components/ui/falling-pattern";
+import { GlowCard } from "@/components/ui/spotlight-card";
+import { RevealText } from "@/components/ui/reveal-text";
+import { TextScramble } from "@/components/ui/text-scramble";
 
 const TEAM = [
   {
@@ -13,48 +13,59 @@ const TEAM = [
     fullName: "Akash Anipakalu Giridhar",
     role: "ML Engineering and Library Architecture",
     detail:
-      "Built and patched the breezeml PyPI library across 5 versions. Designed the sparse matrix pipeline, fixed the SVM deadlock that was causing 20-minute training times, and deployed the Flask inference server.",
+      "Built and patched the breezeml package, shaped the sparse inference pipeline, and deployed the Flask serving layer used by the app.",
     glowColor: "red" as const,
+    icon: Library,
   },
   {
     name: "SUBASREE",
     fullName: "Subasree Segar",
     role: "Data Science and Model Evaluation",
     detail:
-      "Ran evaluation across both tasks, analyzed per-class F1 scores, identified which industries the model struggled on, and compiled the performance diagnostics for the final report.",
+      "Ran evaluation across both tasks, read the failure patterns at the class level, and translated model behavior into report-grade findings.",
     glowColor: "blue" as const,
+    icon: LineChart,
   },
   {
     name: "VISHAL",
     fullName: "Vishal Shaileshkumar Rathod",
     role: "Feature Engineering",
     detail:
-      "Developed the TF-IDF feature sets for both tasks, tested different vocabulary sizes and ngram configurations, and validated the full sparse vector pipeline end to end.",
+      "Designed and validated the TF-IDF feature space, tested vocabulary and n-gram settings, and kept the sparse pipeline effective.",
     glowColor: "orange" as const,
+    icon: ServerCog,
   },
   {
     name: "SRILAXMI",
     fullName: "Srilaxmi Ganjipalli",
     role: "Data Exploration and Preprocessing",
     detail:
-      "Analyzed the raw dataset structure, identified class imbalance patterns, applied the cleaning logic for rare classes and missing values, and documented all data constraints.",
+      "Mapped the raw dataset structure, identified imbalance and cleaning issues, and clarified the data constraints the models had to survive.",
     glowColor: "green" as const,
+    icon: ScanSearch,
   },
   {
     name: "TSERENNADMID",
     fullName: "Tserennadmid Batkhuu",
     role: "Reporting and Documentation",
     detail:
-      "Maintained the GitHub repository, wrote the weekly progress reports, and kept all project documentation up to date across all three weeks of the capstone.",
+      "Maintained repository continuity, documented the weekly project state, and kept the team narrative coherent as the system evolved.",
     glowColor: "purple" as const,
+    icon: GitBranch,
   },
+];
+
+const STRIP = [
+  { label: "People", value: "5" },
+  { label: "Core workstreams", value: "5" },
+  { label: "Shared outcome", value: "1 shipped system" },
+  { label: "Operating mode", value: "Cross-functional" },
 ];
 
 export default function Team() {
   return (
-    <section id="team" className="relative min-h-screen overflow-hidden bg-black">
-      {/* Full page Matrix green FallingPattern */}
-      <div className="fixed inset-0 z-0 opacity-60 pointer-events-none">
+    <section id="team" className="relative min-h-screen overflow-hidden bg-black text-white">
+      <div className="fixed inset-0 z-0 opacity-45 pointer-events-none">
         <FallingPattern
           color="#00ff41"
           backgroundColor="#000000"
@@ -64,100 +75,140 @@ export default function Team() {
         />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-20">
-        {/* Page title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-20"
-        >
-          <TextScramble as="p" speed={0.02} duration={0.8} characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" className="text-red-500 text-sm font-semibold uppercase tracking-widest mb-4">
-            DePaul University Chicago
-          </TextScramble>
-          <h1 className="text-6xl sm:text-8xl font-black text-white tracking-tight mb-3">
-            Group 4
-          </h1>
-          <p className="text-white/40 text-lg">
-            The five people who stayed up debugging memory crashes so you would not have to.
-          </p>
-        </motion.div>
+      <div className="relative z-10 px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65 }}
+            className="grid gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end"
+          >
+            <div>
+              <TextScramble
+                as="p"
+                speed={0.02}
+                duration={0.8}
+                characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                className="text-red-400 text-sm font-semibold uppercase tracking-[0.3em] mb-5"
+              >
+                Systems Team
+              </TextScramble>
 
-        <div className="space-y-20">
-          {TEAM.map((member, i) => (
-            <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              {/* Giant name - left aligned */}
-              <div className="flex items-center mb-6">
+              <div className="mb-6">
                 <RevealText
-                  text={member.name}
+                  text="GROUP4"
                   textColor="text-white"
                   overlayColor="text-red-500"
-                  fontSize="text-[64px] sm:text-[90px] lg:text-[112px]"
+                  fontSize="text-[56px] sm:text-[92px] lg:text-[124px]"
                   letterDelay={0.06}
-                  overlayDelay={0.04}
-                  letterImages={[
-                    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-                    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                    "https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?w=800&q=80",
-                    "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80",
-                    "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80",
-                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-                    "https://images.unsplash.com/photo-1526628953301-3cd0b8b9d3e5?w=800&q=80",
-                    "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&q=80",
-                    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-                    "https://images.unsplash.com/photo-1605792657660-596af9009e82?w=800&q=80",
-                    "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=80",
-                    "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80",
-                  ]}
+                  overlayDelay={0.035}
                 />
               </div>
 
-              {/* Detail card sits under the name, same left edge */}
-              <GlowCard glowColor={member.glowColor} className="w-full">
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-1">
-                      {member.fullName}
-                    </p>
-                    <TextScramble as="p" speed={0.015} duration={0.5} className="text-base font-semibold text-white mb-2">
-                      {member.role}
-                    </TextScramble>
-                    <p className="text-sm text-white/55 leading-relaxed">{member.detail}</p>
-                  </div>
-                </div>
-              </GlowCard>
-            </motion.div>
-          ))}
-        </div>
+              <h1 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[0.96]">
+                Five people, five specialties,
+                <span className="block text-white/55">one end-to-end product story.</span>
+              </h1>
 
-        {/* Footer links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-24 pt-12 border-t border-white/8 flex flex-wrap items-center justify-center gap-4"
-        >
-          <a
-            href="https://github.com/venomez-viper/Classification-Project"
-            target="_blank"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white/50 hover:text-white text-sm transition-all"
+              <p className="mt-6 max-w-3xl text-lg sm:text-xl leading-relaxed text-white/55">
+                This capstone worked because the team split responsibility clearly, then pulled the work back together
+                into a single system across modeling, documentation, deployment, and presentation.
+              </p>
+            </div>
+
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-xl overflow-hidden">
+              <div className="border-b border-white/8 px-6 py-5">
+                <div className="text-xs uppercase tracking-[0.28em] text-emerald-300/80 mb-2">Operating snapshot</div>
+                <h2 className="text-2xl font-bold text-white">The build crew behind TAVSS</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-px bg-white/8">
+                {STRIP.map((item) => (
+                  <div key={item.label} className="bg-black/65 px-6 py-6">
+                    <div className="text-xs uppercase tracking-[0.24em] text-white/35">{item.label}</div>
+                    <div className="mt-2 text-2xl font-black text-white">{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+            {TEAM.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-120px" }}
+                transition={{ duration: 0.55, delay: index * 0.05 }}
+              >
+                <GlowCard glowColor={member.glowColor} className="h-full border-white/8 bg-white/[0.03] p-6">
+                  <div className="mb-5 flex items-center justify-between">
+                    <member.icon className="h-5 w-5 text-white/75" />
+                    <span className="text-xs uppercase tracking-[0.24em] text-white/28">Core role</span>
+                  </div>
+                  <div className="text-2xl font-black text-white mb-2">{member.name}</div>
+                  <div className="text-sm text-white/45 mb-4 min-h-[44px]">{member.fullName}</div>
+                  <div className="text-xs uppercase tracking-[0.24em] text-red-300/80 mb-3">{member.role}</div>
+                  <p className="text-sm leading-7 text-white/58">{member.detail}</p>
+                </GlowCard>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-16 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="rounded-[32px] border border-white/10 bg-black/35 p-8">
+              <div className="text-xs uppercase tracking-[0.28em] text-cyan-300/80 mb-4">Team doctrine</div>
+              <h2 className="text-3xl font-black text-white mb-4">No isolated heroics. Shared system ownership.</h2>
+              <p className="text-white/55 leading-8">
+                The strongest part of the team was not that every member did the same kind of work. It was that each
+                workstream connected cleanly to the next one. Data work informed modeling. Modeling informed deployment.
+                Deployment shaped the product story. Documentation made the whole thing legible.
+              </p>
+            </div>
+
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.03] p-8">
+              <div className="text-xs uppercase tracking-[0.28em] text-rose-300/80 mb-5">Contribution lanes</div>
+              <div className="space-y-4">
+                {TEAM.map((member) => (
+                  <div key={member.fullName} className="rounded-2xl border border-white/8 bg-black/30 px-5 py-4">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <div className="font-semibold text-white">{member.fullName}</div>
+                        <div className="text-sm text-white/45">{member.role}</div>
+                      </div>
+                      <div className="text-xs uppercase tracking-[0.24em] text-white/28">Group 4</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-20 pt-12 border-t border-white/8 flex flex-wrap items-center justify-center gap-4"
           >
-            <ExternalLink className="w-4 h-4" />
-            GitHub Repository
-          </a>
-          <a
-            href="https://pypi.org/project/breezeml/"
-            target="_blank"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-red-600/20 bg-red-600/8 hover:bg-red-600/15 text-red-400 hover:text-red-300 text-sm transition-all"
-          >
-            breezeml on PyPI
-          </a>
-        </motion.div>
+            <a
+              href="https://github.com/venomez-viper/Classification-Project"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-white/50 hover:text-white text-sm transition-all"
+            >
+              <ExternalLink className="w-4 h-4" />
+              GitHub Repository
+            </a>
+            <a
+              href="https://pypi.org/project/breezeml/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-red-600/20 bg-red-600/8 hover:bg-red-600/15 text-red-400 hover:text-red-300 text-sm transition-all"
+            >
+              breezeml on PyPI
+            </a>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
