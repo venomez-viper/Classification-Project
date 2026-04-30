@@ -6,6 +6,9 @@ const PUBLIC_PATHS = ["/login", "/api/auth", "/_next", "/favicon.ico", "/public"
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Landing page is always public
+  if (pathname === "/") return NextResponse.next();
+
   // Allow public paths through
   if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();
