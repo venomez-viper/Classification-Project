@@ -339,7 +339,7 @@ export default function Home() {
                     {page.badge}
                   </span>
                   <span className="text-white/20 group-hover:text-white/50 transition-colors text-lg">
-                    ->
+                    {"->"}
                   </span>
                 </div>
                 <h3 className="text-base font-bold text-white mb-2">{page.title}</h3>

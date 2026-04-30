@@ -69,7 +69,7 @@ export default function Navigation() {
           href="/login"
           className="text-sm px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(220,38,38,0.4)]"
         >
-          Login to App ->
+          Login to App {"->"}
         </Link>
       </div>
     </nav>
