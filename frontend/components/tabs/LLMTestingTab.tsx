@@ -125,8 +125,7 @@ export default function LLMTestingTab() {
     }
 
     try {
-      const base = process.env.NEXT_PUBLIC_LLM_API_URL ?? "http://localhost:5001";
-      const res  = await fetch(`${base}/api/predict_llm`, {
+      const res = await fetch("/api/predict_llm", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
