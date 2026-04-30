@@ -6,6 +6,7 @@ import { TextScramble } from "@/components/ui/text-scramble";
 
 const NAV = [
   { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "Features", href: "/features" },
   { label: "breezeml", href: "/breezeml" },
   { label: "Model", href: "/model" },
@@ -13,7 +14,6 @@ const NAV = [
   { label: "Demo (SVM)", href: "/demo" },
   { label: "Demo (LLM)", href: "/llm" },
   { label: "Journey", href: "/journey" },
-  { label: "Dashboard", href: "/dashboard" },
   { label: "Team", href: "/team" },
 ];
 
@@ -68,13 +68,12 @@ export default function Navigation() {
           ))}
         </div>
 
-        <a
-          href="https://pypi.org/project/breezeml/"
-          target="_blank"
-          className="text-sm px-4 py-2 rounded-lg border border-red-600/30 text-red-500 hover:bg-red-600/10 transition-all font-medium"
+        <Link
+          href="/login"
+          className="text-sm px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(220,38,38,0.4)]"
         >
-          breezeml PyPI
-        </a>
+          Login to App →
+        </Link>
       </div>
     </nav>
   );

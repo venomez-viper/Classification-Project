@@ -127,16 +127,16 @@ export default function Hero() {
           className="flex flex-wrap items-center justify-center gap-3"
         >
           <a
-            href="#demo"
+            href="/login"
             className="px-7 py-3.5 rounded-xl bg-red-700 hover:bg-red-600 text-white font-semibold text-sm transition-all hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(220,38,38,0.4)]"
           >
-            <TextScramble as="span" speed={0.02} duration={0.5}>Try Live Demo</TextScramble>
+            <TextScramble as="span" speed={0.02} duration={0.5}>Launch TAVSS App</TextScramble>
           </a>
           <a
-            href="#overview"
+            href="/about"
             className="px-7 py-3.5 rounded-xl border border-white/15 hover:border-white/30 text-white/70 hover:text-white font-semibold text-sm transition-all"
           >
-            Explore the Research
+            About the Project
           </a>
         </motion.div>
       </div>
