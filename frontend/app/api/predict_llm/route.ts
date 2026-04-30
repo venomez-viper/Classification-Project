@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   let upstream: Response;
   try {
-    upstream = await fetch(`${HF_SPACE_URL}/api/predict_llm`, {
+    upstream = await fetch(`${HF_SPACE_URL}/run/predict_llm`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

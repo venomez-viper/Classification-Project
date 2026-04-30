@@ -121,7 +121,7 @@ fastapi_app, _, _ = demo.launch(
     prevent_thread_lock=True,
 )
 
-@fastapi_app.post("/api/predict_llm")
+@fastapi_app.post("/run/predict_llm")
 async def predict_llm_endpoint(request: Request):
     # ── Auth check ────────────────────────────────────────────────────────────
     if HF_API_SECRET:
