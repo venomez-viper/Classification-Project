@@ -10,11 +10,11 @@ Required HF Space secrets (Settings → Variables and secrets):
 """
 import os, json, asyncio, subprocess, sys
 
-# Force-install sentencepiece if missing (HF Spaces Docker cache may skip requirements.txt)
-try:
-    import sentencepiece
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "sentencepiece==0.2.0", "-q"])
+# Always force-install sentencepiece — HF Spaces Docker cache bypasses requirements.txt
+print("Installing sentencepiece...")
+subprocess.check_call([sys.executable, "-m", "pip", "install", "sentencepiece==0.1.99",
+                       "--force-reinstall", "-q"])
+print("sentencepiece ready.")
 
 import torch
 import gradio as gr
@@ -73,7 +73,9 @@ try:
     MODELS_READY = True
     print("Model loaded ✓")
 except Exception as e:
+    import traceback
     print(f"ERROR loading model: {e}")
+    print(traceback.format_exc())
 
 # ── Inference helpers ─────────────────────────────────────────────────────────
 def _get_label(code: str) -> str:
