@@ -51,14 +51,15 @@ HF_API_SECRET = os.environ.get("HF_API_SECRET", "")
 # ── Model loading ─────────────────────────────────────────────────────────────
 device = "cuda" if torch.cuda.is_available() else "cpu"
 HF_MODEL_REPO = os.environ.get("HF_MODEL_REPO", "Akash-AG/gecs-deberta-v3")
+HF_TOKEN      = os.environ.get("HF_TOKEN", None)
 JSON_MAP      = "task1_idx_to_code.json"
 
 print(f"Loading DeBERTa from {HF_MODEL_REPO} on {device.upper()}...")
 MODELS_READY = False
 try:
     from transformers import DebertaV2Tokenizer
-    tokenizer = DebertaV2Tokenizer.from_pretrained(HF_MODEL_REPO)
-    model     = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_REPO)
+    tokenizer = DebertaV2Tokenizer.from_pretrained(HF_MODEL_REPO, token=HF_TOKEN)
+    model     = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_REPO, token=HF_TOKEN)
     model.to(device).eval()
     with open(JSON_MAP) as f:
         idx_to_code = {int(k): str(v) for k, v in json.load(f).items()}
