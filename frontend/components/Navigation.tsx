@@ -1,16 +1,20 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { TextScramble } from "@/components/ui/text-scramble";
 
 const NAV = [
+  { label: "Home", href: "/" },
   { label: "Journey", href: "/journey" },
   { label: "Team", href: "/team" },
+  { label: "Demo", href: "/demo" },
 ];
 
 function NavLink({ label, href, active }: { label: string; href: string; active: boolean }) {
   const [trigger, setTrigger] = useState(false);
+
   return (
     <Link
       href={href}
@@ -65,7 +69,7 @@ export default function Navigation() {
           href="/login"
           className="text-sm px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(220,38,38,0.4)]"
         >
-          Login to App →
+          Login to App ->
         </Link>
       </div>
     </nav>
