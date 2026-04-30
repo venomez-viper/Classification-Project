@@ -54,5 +54,5 @@ graph_visualizer/
 reports/
 generate_team_tasks.py
 export_notebooks.py
-app.py
-main.py
+/app.py
+/main.py
