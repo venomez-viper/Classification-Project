@@ -8,7 +8,14 @@ Required HF Space secrets (Settings → Variables and secrets):
   HF_API_SECRET   — shared secret that the Vercel proxy must send as
                     the X-API-Secret header to authenticate requests
 """
-import os, json, asyncio
+import os, json, asyncio, subprocess, sys
+
+# Force-install sentencepiece if missing (HF Spaces Docker cache may skip requirements.txt)
+try:
+    import sentencepiece
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "sentencepiece==0.2.0", "-q"])
+
 import torch
 import gradio as gr
 from fastapi import Request

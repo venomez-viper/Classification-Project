@@ -632,13 +632,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white pt-20 relative overflow-x-hidden">
+    <div className="bg-[#020202] text-white relative overflow-x-hidden">
 
       {/* Scanline */}
-      <div className="pointer-events-none fixed inset-0 z-50"
+      <div className="pointer-events-none absolute inset-0 z-10"
         style={{ background: "repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px)" }} />
       {/* Grid */}
-      <div className="pointer-events-none fixed inset-0 z-0"
+      <div className="pointer-events-none absolute inset-0 z-0"
         style={{ backgroundImage: "linear-gradient(rgba(0,255,65,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,0.015) 1px,transparent 1px)", backgroundSize: "56px 56px" }} />
 
       <div className="relative z-10 max-w-screen-2xl mx-auto px-6 pb-16">
