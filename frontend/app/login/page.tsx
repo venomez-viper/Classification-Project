@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Lock, User, AlertCircle, Loader2 } from "lucide-react";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 function LoginInner() {
   const router       = useRouter();
@@ -47,6 +48,21 @@ function LoginInner() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden px-4">
+
+      {/* Sparkles layer */}
+      <div className="absolute inset-0 pointer-events-none">
+        <SparklesCore
+          id="login-sparkles"
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.4}
+          particleDensity={120}
+          className="w-full h-full"
+          particleColor="#dc2626"
+          speed={0.6}
+        />
+        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]" />
+      </div>
 
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none"
