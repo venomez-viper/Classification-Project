@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Lock, User, AlertCircle, Loader2 } from "lucide-react";
 
-export default function LoginPage() {
+function LoginInner() {
   const router       = useRouter();
   const searchParams = useSearchParams();
   const from         = searchParams.get("from") ?? "/ml";
@@ -184,5 +184,17 @@ export default function LoginPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-red-500 animate-spin" />
+      </div>
+    }>
+      <LoginInner />
+    </Suspense>
   );
 }
