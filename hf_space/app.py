@@ -12,7 +12,6 @@ import os, json, asyncio
 import torch
 import gradio as gr
 from fastapi import Request
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
@@ -51,14 +50,14 @@ HF_API_SECRET = os.environ.get("HF_API_SECRET", "")
 
 # ── Model loading ─────────────────────────────────────────────────────────────
 device = "cuda" if torch.cuda.is_available() else "cpu"
-HF_MODEL_REPO  = os.environ.get("HF_MODEL_REPO", "Akash-AG/gecs-deberta-v3")
-TOKENIZER_PATH = "microsoft/deberta-v3-small"
-JSON_MAP       = "llm_finetuning/data/task1_idx_to_code.json"
+HF_MODEL_REPO = os.environ.get("HF_MODEL_REPO", "Akash-AG/gecs-deberta-v3")
+JSON_MAP      = "task1_idx_to_code.json"
 
 print(f"Loading DeBERTa from {HF_MODEL_REPO} on {device.upper()}...")
 MODELS_READY = False
 try:
-    tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_PATH)
+    from transformers import DebertaV2Tokenizer
+    tokenizer = DebertaV2Tokenizer.from_pretrained(HF_MODEL_REPO)
     model     = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_REPO)
     model.to(device).eval()
     with open(JSON_MAP) as f:
@@ -112,15 +111,6 @@ fastapi_app, _, _ = demo.launch(
     server_name="0.0.0.0",
     server_port=7860,
     prevent_thread_lock=True,
-)
-
-# CORS: only requests from your Vercel deployment are allowed.
-# The actual secret check is the X-API-Secret header below.
-fastapi_app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://*.vercel.app"],
-    allow_methods=["POST"],
-    allow_headers=["Content-Type", "X-API-Secret"],
 )
 
 @fastapi_app.post("/api/predict_llm")
