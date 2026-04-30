@@ -2,12 +2,25 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const PUBLIC_PATHS = ["/login", "/api/auth", "/_next", "/favicon.ico", "/public"];
+const PUBLIC_PAGES = [
+  "/",
+  "/about",
+  "/journey",
+  "/team",
+  "/demo",
+  "/features",
+  "/breezeml",
+  "/model",
+  "/graph",
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Landing page is always public
-  if (pathname === "/") return NextResponse.next();
+  // Marketing and showcase pages are public
+  if (PUBLIC_PAGES.includes(pathname)) {
+    return NextResponse.next();
+  }
 
   // Allow public paths through
   if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
