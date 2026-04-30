@@ -5,14 +5,6 @@ import { useState } from "react";
 import { TextScramble } from "@/components/ui/text-scramble";
 
 const NAV = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Features", href: "/features" },
-  { label: "breezeml", href: "/breezeml" },
-  { label: "Model", href: "/model" },
-  { label: "Graph", href: "/graph" },
-  { label: "Demo (SVM)", href: "/demo" },
-  { label: "Demo (LLM)", href: "/llm" },
   { label: "Journey", href: "/journey" },
   { label: "Team", href: "/team" },
 ];
