@@ -21,6 +21,7 @@ import MonitoringTab from "./tabs/MonitoringTab";
 import ReportsTab from "./tabs/ReportsTab";
 import AlertsTab from "./tabs/AlertsTab";
 import SettingsTab from "./tabs/SettingsTab";
+import GovernanceTab from "./tabs/GovernanceTab";
 
 // --- Mock Data ---
 const SIDEBAR_ITEMS = [
@@ -371,23 +372,6 @@ function OverviewTab() {
   );
 }
 
-function PlaceholderTab({ title }: { title: string }) {
-  return (
-    <motion.div key={title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="h-full flex flex-col items-center justify-center border border-dashed border-red-500/20 bg-red-500/5 rounded-2xl p-12 max-w-2xl mx-auto mt-12 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20">
-        <ActivitySquare className="w-8 h-8 text-red-500" />
-      </div>
-      <h2 className="text-2xl font-bold text-white mb-2 tracking-widest uppercase">{title} Workspace</h2>
-      <p className="text-sm text-white/40 leading-relaxed mb-8">
-        This is a new revamp from scratch. This module is currently isolated from legacy project routes and is ready for fresh development.
-      </p>
-      <button className="px-6 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg transition-colors shadow-[0_0_15px_rgba(220,38,38,0.4)]">
-        Initialize Module
-      </button>
-    </motion.div>
-  );
-}
-
 // --- Main Layout ---
 
 export default function MLOpsDashboard() {
@@ -514,12 +498,8 @@ export default function MLOpsDashboard() {
             {activeTab === "Reports" && <ReportsTab key="Reports" />}
             {activeTab === "Alerts" && <AlertsTab key="Alerts" />}
             {activeTab === "Documentation" && <DocumentationTab key="Documentation" />}
+            {activeTab === "Governance" && <GovernanceTab key="Governance" />}
             {activeTab === "Settings" && <SettingsTab key="Settings" />}
-
-            {/* Fallback for unbuilt tabs */}
-            {["Governance"].includes(activeTab) && (
-              <PlaceholderTab key={activeTab} title={activeTab} />
-            )}
           </AnimatePresence>
         </div>
       </main>
