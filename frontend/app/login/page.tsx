@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Lock, User, AlertCircle, Loader2 } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { TextScramble } from "@/components/ui/text-scramble";
 
 function LoginInner() {
   const router       = useRouter();
@@ -104,7 +105,16 @@ function LoginInner() {
                     <Lock className="w-5 h-5 text-red-400" />
                   </div>
                 </div>
-                <h1 className="text-4xl font-black text-white tracking-[0.15em] uppercase">TAVSS</h1>
+                <h1 className="text-4xl font-black text-white tracking-[0.15em] uppercase">
+                  <TextScramble
+                    as="span"
+                    speed={0.03}
+                    duration={1.2}
+                    characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                  >
+                    TAVSS
+                  </TextScramble>
+                </h1>
                 <p className="text-xs font-mono text-red-500/50 mt-2 tracking-[0.3em] uppercase">
                   Restricted Access · Authorize to Continue
                 </p>
