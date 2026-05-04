@@ -139,6 +139,11 @@ def predict_llm():
 
 
 if __name__ == "__main__":
-    from waitress import serve
-    print("DeBERTa server starting on http://localhost:5001")
-    serve(app, host="0.0.0.0", port=5001)
+    port = int(os.environ.get("PORT", 5001))
+    try:
+        from waitress import serve
+        print(f"DeBERTa server starting on http://localhost:{port}")
+        serve(app, host="0.0.0.0", port=port)
+    except ImportError:
+        print(f"Dev server starting on http://localhost:{port}")
+        app.run(debug=False, port=port)
