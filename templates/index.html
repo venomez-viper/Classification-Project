@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group 4 | GECS Industry Classification Engine</title>
-    <meta name="description" content="AI-powered Morningstar GECS industry classification using a 4-level cascade SVM built with breezeml.">
+    <meta name="description" content="AI-powered Morningstar GECS industry classification using a 4-level cascade SVM.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -18,8 +18,9 @@
             color: #fff;
             overflow-x: hidden;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            padding: 2rem 0 3rem;
         }
 
         #pipeline-canvas { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; }
@@ -27,7 +28,7 @@
         .glass-container {
             position: relative;
             z-index: 10;
-            width: min(700px, 94vw);
+            width: min(760px, 94vw);
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -35,7 +36,6 @@
             border-radius: 24px;
             padding: 2.5rem 2.5rem 2rem;
             box-shadow: 0 8px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
-            margin: 2rem auto;
         }
 
         /* ── Header ── */
@@ -52,164 +52,147 @@
         .app-header p { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
         .app-header strong { color: rgba(167,139,250,0.9); }
 
-        /* ── Score badges ── */
-        .score-badges {
-            display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
-            margin-bottom: 0.3rem;
-        }
-        .score-badge {
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em;
-            text-transform: uppercase; padding: 3px 10px; border-radius: 99px;
-        }
-        .badge-t1 {
-            background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3);
-            color: #a78bfa;
-        }
-        .badge-t2 {
-            background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.3);
-            color: #60a5fa;
-        }
+        .score-badges { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.3rem; }
+        .score-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+        .badge-t1 { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3); color: #a78bfa; }
+        .badge-t2 { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.3); color: #60a5fa; }
 
         /* ── Pipeline Steps ── */
-        .pipeline-steps {
-            display: flex; align-items: center; justify-content: center;
-            gap: 0.3rem; margin-bottom: 1.8rem; flex-wrap: wrap;
-        }
-        .step-pill {
-            font-size: 0.63rem; font-weight: 600; letter-spacing: 0.06em;
-            text-transform: uppercase; padding: 4px 9px; border-radius: 99px;
-            border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.04); transition: all 0.3s;
-        }
-        .step-pill.active {
-            color: #fff; border-color: rgba(167,139,250,0.6);
-            background: rgba(167,139,250,0.15); box-shadow: 0 0 12px rgba(167,139,250,0.3);
-        }
+        .pipeline-steps { display: flex; align-items: center; justify-content: center; gap: 0.3rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
+        .step-pill { font-size: 0.63rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 9px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); transition: all 0.3s; }
+        .step-pill.active { color: #fff; border-color: rgba(167,139,250,0.6); background: rgba(167,139,250,0.15); box-shadow: 0 0 12px rgba(167,139,250,0.3); }
         .step-arrow { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
 
+        /* ── Example Pills (Feature 2) ── */
+        .examples-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin-bottom: 0.75rem; }
+        .examples-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.3); flex-shrink: 0; }
+        .pill-btn {
+            padding: 3px 12px; border-radius: 99px; font-size: 0.72rem; font-weight: 600;
+            cursor: pointer; border: 1px solid rgba(167,139,250,0.35); background: rgba(167,139,250,0.08);
+            color: #c4b5fd; font-family: 'Outfit', sans-serif; transition: background 0.18s, box-shadow 0.18s, border-color 0.18s; white-space: nowrap;
+        }
+        .pill-btn:hover { background: rgba(167,139,250,0.22); border-color: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.45); }
+        .pill-btn.teal { border-color: rgba(52,211,153,0.35); background: rgba(52,211,153,0.07); color: #6ee7b7; }
+        .pill-btn.teal:hover { background: rgba(52,211,153,0.2); border-color: #34d399; box-shadow: 0 0 8px rgba(52,211,153,0.4); }
+
         /* ── Input ── */
-        label {
-            display: block; font-size: 0.78rem; font-weight: 600;
-            letter-spacing: 0.06em; text-transform: uppercase;
-            color: rgba(255,255,255,0.45); margin-bottom: 0.6rem;
-        }
-        textarea {
-            width: 100%; background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
-            color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.9rem;
-            line-height: 1.6; padding: 1rem 1.1rem; resize: vertical; outline: none;
-            transition: border 0.3s, box-shadow 0.3s;
-        }
-        textarea:focus {
-            border-color: rgba(167,139,250,0.5);
-            box-shadow: 0 0 0 3px rgba(167,139,250,0.12);
-        }
+        label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.6rem; }
+        textarea { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.9rem; line-height: 1.6; padding: 1rem 1.1rem; resize: vertical; outline: none; transition: border 0.3s, box-shadow 0.3s; }
+        textarea:focus { border-color: rgba(167,139,250,0.5); box-shadow: 0 0 0 3px rgba(167,139,250,0.12); }
         textarea::placeholder { color: rgba(255,255,255,0.2); }
 
         /* ── Button ── */
-        .glow-button {
-            width: 100%; margin-top: 1rem; padding: 0.9rem; border: none;
-            border-radius: 12px; font-family: 'Outfit', sans-serif;
-            font-size: 1rem; font-weight: 700; cursor: pointer;
-            background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff;
-            letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-        }
-        .glow-button:hover:not(:disabled) {
-            opacity: 0.9; transform: translateY(-1px);
-            box-shadow: 0 8px 40px rgba(124,58,237,0.6);
-        }
+        .glow-button { width: 100%; margin-top: 1rem; padding: 0.9rem; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff; letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 30px rgba(124,58,237,0.4); }
+        .glow-button:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 40px rgba(124,58,237,0.6); }
         .glow-button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-        /* ── Results grid ── */
-        .results-section {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1rem; margin-top: 1.4rem;
+        /* ── Signal Words (Feature 1) ── */
+        .signal-section { margin-top: 1rem; animation: fadeUp 0.4s ease both; }
+        .signal-header { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 0.5rem; }
+        .signal-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .signal-chip {
+            font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 6px;
+            background: rgba(167,139,250,0.14); border: 1px solid rgba(167,139,250,0.35);
+            color: #c4b5fd; font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 0 6px rgba(167,139,250,0.3);
         }
+
+        /* ── Results grid ── */
+        .results-section { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 1rem; }
+        .cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .results-section.hidden { display: none; }
 
-        .result-card {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 16px; padding: 1.2rem 1.2rem 1rem;
-            transition: box-shadow 0.4s; animation: fadeUp 0.5s ease both;
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 1.2rem 1.2rem 1rem; animation: fadeUp 0.5s ease both; }
         .result-card.t1-card { border-color: rgba(167,139,250,0.25); box-shadow: 0 0 30px rgba(167,139,250,0.1); }
-        .result-card.t2-card { border-color: rgba(96,165,250,0.25);  box-shadow: 0 0 30px rgba(96,165,250,0.1);  }
+        .result-card.t2-card { border-color: rgba(96,165,250,0.25); box-shadow: 0 0 30px rgba(96,165,250,0.1); }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-subtitle {
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
-            text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem;
-        }
-        .label-text {
-            font-size: 1.05rem; font-weight: 700; color: #fff;
-            line-height: 1.25; margin-bottom: 0.4rem;
-        }
-        .code-chip {
-            display: inline-block; background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12); border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: rgba(255,255,255,0.4); padding: 2px 8px; letter-spacing: 0.05em;
-        }
+        .card-subtitle { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+        .label-text { font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.25; margin-bottom: 0.4rem; }
+        .code-chip { display: inline-block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(255,255,255,0.4); padding: 2px 8px; letter-spacing: 0.05em; }
 
         /* ── Confidence bar ── */
-        .conf-row {
-            display: flex; align-items: center; gap: 0.5rem;
-            margin-top: 0.7rem;
-        }
+        .conf-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
         .conf-label { font-size: 0.62rem; color: rgba(255,255,255,0.35); min-width: 32px; }
-        .conf-track {
-            flex: 1; height: 4px; background: rgba(255,255,255,0.07);
-            border-radius: 99px; overflow: hidden;
-        }
-        .conf-fill {
-            height: 100%; border-radius: 99px; transition: width 0.8s ease;
-            background: linear-gradient(90deg, #7c3aed, #60a5fa);
-        }
+        .conf-track { flex: 1; height: 4px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
+        .conf-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; background: linear-gradient(90deg, #7c3aed, #60a5fa); }
         .conf-pct { font-size: 0.68rem; font-weight: 700; color: rgba(255,255,255,0.6); min-width: 36px; text-align: right; }
 
         /* ── Cascade path ── */
-        .cascade-path {
-            display: flex; align-items: center; gap: 0.25rem;
-            margin-top: 0.8rem; flex-wrap: wrap;
-        }
-        .path-node {
-            display: flex; flex-direction: column; align-items: center;
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px; padding: 3px 8px;
-        }
+        .cascade-path { display: flex; align-items: center; gap: 0.25rem; margin-top: 0.8rem; flex-wrap: wrap; }
+        .path-node { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 3px 8px; }
         .path-level { font-size: 0.52rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
         .path-code  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.65); }
         .path-conf  { font-size: 0.5rem; color: rgba(52,211,153,0.7); }
         .path-arrow { color: rgba(255,255,255,0.15); font-size: 0.65rem; }
-        .path-node.winner {
-            border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08);
-        }
+        .path-node.winner { border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08); }
         .path-node.winner .path-code { color: #a78bfa; }
 
         /* ── Alternatives ── */
-        .alts-header {
-            font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em;
-            text-transform: uppercase; color: rgba(255,255,255,0.25);
-            margin-top: 0.8rem; margin-bottom: 0.3rem;
-        }
-        .alt-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 2px 0; font-size: 0.7rem; color: rgba(255,255,255,0.4);
-        }
+        .alts-header { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 0.8rem; margin-bottom: 0.3rem; }
+        .alt-row { display: flex; align-items: center; justify-content: space-between; padding: 2px 0; font-size: 0.7rem; color: rgba(255,255,255,0.4); }
         .alt-row span.rank { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; margin-right: 0.3rem; }
         .alt-conf { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.25); }
 
-        /* ── Error ── */
-        .error-toast {
-            margin-top: 1rem; padding: 0.75rem 1rem;
-            background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
-            border-radius: 10px; font-size: 0.85rem; color: #fca5a5;
+        /* ── Crosswalk Card (Feature 5) ── */
+        .crosswalk-card {
+            border-color: rgba(52,211,153,0.2) !important;
+            box-shadow: 0 0 25px rgba(52,211,153,0.08) !important;
+            padding: 0 !important;
+            overflow: hidden;
         }
+        .crosswalk-title { padding: 0.6rem 1.2rem; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #34d399; border-bottom: 1px solid rgba(52,211,153,0.15); background: rgba(52,211,153,0.06); }
+        .crosswalk-rows { display: flex; flex-direction: column; }
+        .xw-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.04); border-left: 3px solid transparent; transition: background 0.15s; }
+        .xw-row:last-child { border-bottom: none; }
+        .xw-row:hover { background: rgba(255,255,255,0.03); }
+        .xw-mstar { border-left-color: #a78bfa; }
+        .xw-gics  { border-left-color: #60a5fa; }
+        .xw-naics { border-left-color: #34d399; }
+        .xw-sic   { border-left-color: #fb923c; }
+        .xw-system { width: 88px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.3); flex-shrink: 0; }
+        .xw-code { width: 72px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; }
+        .xw-mstar .xw-code { color: #a78bfa; }
+        .xw-gics  .xw-code { color: #60a5fa; }
+        .xw-naics .xw-code { color: #34d399; }
+        .xw-sic   .xw-code { color: #fb923c; }
+        .xw-name { font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+
+        /* ── History (Feature 4) ── */
+        .history-section { margin-top: 1rem; animation: fadeUp 0.4s ease both; }
+        .history-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+        .history-header-row { padding: 0.6rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); cursor: pointer; user-select: none; }
+        .history-header-row span { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+        .history-header-row button { font-size: 0.62rem; background: none; border: 1px solid rgba(239,68,68,0.3); color: rgba(239,68,68,0.6); border-radius: 6px; padding: 2px 8px; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
+        .history-header-row button:hover { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.6); color: #fca5a5; }
+        .history-list-inner { max-height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(167,139,250,0.3) transparent; }
+        .history-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: background 0.15s; }
+        .history-item:last-child { border-bottom: none; }
+        .history-item:hover { background: rgba(167,139,250,0.08); }
+        .hist-label { flex: 1; font-size: 0.82rem; color: rgba(255,255,255,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hist-code { font-size: 0.67rem; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: rgba(96,165,250,0.1); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+        .hist-conf { font-size: 0.74rem; color: #a78bfa; font-weight: 700; flex-shrink: 0; width: 40px; text-align: right; }
+        .history-empty { padding: 1rem; text-align: center; color: rgba(255,255,255,0.2); font-size: 0.8rem; }
+        .hist-chevron { font-size: 0.7rem; color: rgba(255,255,255,0.25); transition: transform 0.25s; }
+        .history-list-inner.collapsed { display: none; }
+
+        /* ── Benchmark (Feature 3) ── */
+        .benchmark-section { margin-top: 1.2rem; }
+        .benchmark-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1rem 1.2rem 1.1rem; }
+        .benchmark-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.85rem; }
+        .bench-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
+        .bench-row:last-child { margin-bottom: 0; }
+        .bench-label { width: 110px; font-size: 0.74rem; color: rgba(255,255,255,0.45); text-align: right; flex-shrink: 0; }
+        .bench-track { flex: 1; height: 20px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; }
+        .bench-fill { height: 100%; border-radius: 6px; width: 0%; transition: width 1s cubic-bezier(0.22, 1, 0.36, 1); background: linear-gradient(90deg, #4c1d95, #1d4ed8); }
+        .bench-fill.hero { background: linear-gradient(90deg, #7c3aed, #38bdf8); box-shadow: 0 0 12px rgba(124,58,237,0.5); }
+        .bench-pct { width: 44px; font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.6); flex-shrink: 0; }
+        .bench-pct.hero { color: #a78bfa; }
+        .bench-delta { font-size: 0.65rem; color: #34d399; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+
+        /* ── Error ── */
+        .error-toast { margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; font-size: 0.85rem; color: #fca5a5; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -217,15 +200,18 @@
 <canvas id="pipeline-canvas"></canvas>
 
 <main class="glass-container">
+
+    <!-- Header -->
     <header class="app-header">
         <h1>GECS Classification Engine</h1>
-        <p>Powered by <strong>breezeml</strong> · 4-Level Cascade SVM · Group 4</p>
+        <p>4-Level Cascade SVM · <strong>Group 4</strong> · MGT 599 Capstone · Strayer University</p>
         <div class="score-badges">
             <span class="score-badge badge-t1">Task 1 — 88.90% Macro F1 · 145 classes</span>
             <span class="score-badge badge-t2">Task 2 — 55.41% Macro F1 · 428 classes</span>
         </div>
     </header>
 
+    <!-- Pipeline steps -->
     <div class="pipeline-steps">
         <span class="step-pill" id="step-1">Text</span>
         <span class="step-arrow">›</span>
@@ -240,56 +226,131 @@
         <span class="step-pill" id="step-6">Sub-Industry</span>
     </div>
 
+    <!-- Example pill buttons (Feature 2) -->
+    <div class="examples-row" id="examples-row"></div>
+
+    <!-- Input -->
     <section class="input-section">
         <div class="form-group">
             <label for="segment-input">Company / Segment Description</label>
-            <textarea id="segment-input" rows="5" placeholder="Paste a company profile or business segment description here to run real-time GECS classification..."></textarea>
+            <textarea id="segment-input" rows="5" placeholder="Paste a company profile or click an example above to run real-time GECS classification..."></textarea>
         </div>
         <button id="predict-btn" class="glow-button">Run Cascade Inference</button>
     </section>
 
+    <!-- Signal words (Feature 1) — appears after prediction -->
+    <div id="signal-section" class="signal-section hidden">
+        <div class="signal-header">Key classification signals</div>
+        <div class="signal-chips" id="signal-chips"></div>
+    </div>
+
+    <!-- Results -->
     <section id="results-panel" class="results-section hidden">
-        <!-- Task 1 card -->
-        <div class="result-card t1-card">
-            <div class="card-subtitle">Task 1 — GECS Industry (88.90% F1)</div>
-            <div class="label-text" id="mstar-label">—</div>
-            <div class="code-chip" id="mstar-code">—</div>
 
-            <div class="conf-row">
-                <span class="conf-label">Conf</span>
-                <div class="conf-track"><div class="conf-fill" id="conf-bar-t1" style="width:0%"></div></div>
-                <span class="conf-pct" id="conf-pct-t1">—</span>
+        <!-- T1 + T2 cards -->
+        <div class="cards-row">
+            <div class="result-card t1-card">
+                <div class="card-subtitle">Task 1 — GECS Industry (88.90% F1)</div>
+                <div class="label-text" id="mstar-label">—</div>
+                <div class="code-chip" id="mstar-code">—</div>
+                <div class="conf-row">
+                    <span class="conf-label">Conf</span>
+                    <div class="conf-track"><div class="conf-fill" id="conf-bar-t1" style="width:0%"></div></div>
+                    <span class="conf-pct" id="conf-pct-t1">—</span>
+                </div>
+                <div class="cascade-path" id="cascade-path-t1"></div>
+                <div class="alts-header">Other candidates</div>
+                <div id="alts-t1"></div>
             </div>
 
-            <div class="cascade-path" id="cascade-path-t1"></div>
-
-            <div class="alts-header">Other candidates</div>
-            <div id="alts-t1"></div>
-        </div>
-
-        <!-- Task 2 card -->
-        <div class="result-card t2-card">
-            <div class="card-subtitle">Task 2 — Sub-Industry (55.41% F1)</div>
-            <div class="label-text" id="sub-label">—</div>
-            <div class="code-chip" id="sub-code">—</div>
-
-            <div class="conf-row">
-                <span class="conf-label">Conf</span>
-                <div class="conf-track"><div class="conf-fill" id="conf-bar-t2" style="width:0%"></div></div>
-                <span class="conf-pct" id="conf-pct-t2">—</span>
+            <div class="result-card t2-card">
+                <div class="card-subtitle">Task 2 — Sub-Industry (55.41% F1)</div>
+                <div class="label-text" id="sub-label">—</div>
+                <div class="code-chip" id="sub-code">—</div>
+                <div class="conf-row">
+                    <span class="conf-label">Conf</span>
+                    <div class="conf-track"><div class="conf-fill" id="conf-bar-t2" style="width:0%"></div></div>
+                    <span class="conf-pct" id="conf-pct-t2">—</span>
+                </div>
+                <div class="cascade-path" id="cascade-path-t2"></div>
+                <div class="alts-header">Other candidates</div>
+                <div id="alts-t2"></div>
             </div>
-
-            <div class="cascade-path" id="cascade-path-t2"></div>
-
-            <div class="alts-header">Other candidates</div>
-            <div id="alts-t2"></div>
         </div>
+
+        <!-- Taxonomy Crosswalk card (Feature 5) -->
+        <div class="result-card crosswalk-card" id="crosswalk-card">
+            <div class="crosswalk-title">Taxonomy Crosswalk</div>
+            <div class="crosswalk-rows">
+                <div class="xw-row xw-mstar">
+                    <div class="xw-system">Morningstar</div>
+                    <div class="xw-code" id="xw-mstar-code">—</div>
+                    <div class="xw-name" id="xw-mstar-name">—</div>
+                </div>
+                <div class="xw-row xw-gics">
+                    <div class="xw-system">GICS</div>
+                    <div class="xw-code" id="xw-gics-code">—</div>
+                    <div class="xw-name" id="xw-gics-name">—</div>
+                </div>
+                <div class="xw-row xw-naics">
+                    <div class="xw-system">NAICS</div>
+                    <div class="xw-code" id="xw-naics-code">—</div>
+                    <div class="xw-name" id="xw-naics-name">—</div>
+                </div>
+                <div class="xw-row xw-sic">
+                    <div class="xw-system">SIC</div>
+                    <div class="xw-code" id="xw-sic-code">—</div>
+                    <div class="xw-name" id="xw-sic-name">—</div>
+                </div>
+            </div>
+        </div>
+
     </section>
+
+    <!-- History (Feature 4) -->
+    <div class="history-section hidden" id="history-section">
+        <div class="history-card">
+            <div class="history-header-row" id="history-toggle">
+                <span>Recent Predictions</span>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                    <button id="clear-history-btn">Clear</button>
+                    <span class="hist-chevron" id="hist-chevron">▼</span>
+                </div>
+            </div>
+            <div class="history-list-inner" id="history-list"></div>
+        </div>
+    </div>
+
+    <!-- Benchmark scorecard (Feature 3) -->
+    <div class="benchmark-section">
+        <div class="benchmark-card">
+            <div class="benchmark-title">Model Benchmark — Task 1 · 10,717 holdout samples · 145 classes · Macro F1</div>
+            <div class="bench-row">
+                <div class="bench-label">Cascade SVM</div>
+                <div class="bench-track"><div class="bench-fill hero" id="bench-cascade" data-target="88.9"></div></div>
+                <div class="bench-pct hero">88.9%</div>
+                <div class="bench-delta">▲ +24.9 pp vs DeBERTa</div>
+            </div>
+            <div class="bench-row">
+                <div class="bench-label">DeBERTa-v3</div>
+                <div class="bench-track"><div class="bench-fill" id="bench-deberta" data-target="64.0"></div></div>
+                <div class="bench-pct">64.0%</div>
+                <div class="bench-delta" style="color:rgba(255,255,255,0.2);">GPU · 3+ hrs</div>
+            </div>
+            <div class="bench-row">
+                <div class="bench-label">Flat SVM</div>
+                <div class="bench-track"><div class="bench-fill" id="bench-flat" data-target="59.7"></div></div>
+                <div class="bench-pct">59.7%</div>
+                <div class="bench-delta" style="color:rgba(255,255,255,0.2);">baseline</div>
+            </div>
+        </div>
+    </div>
 
     <div id="error-message" class="error-toast hidden"></div>
 </main>
 
-<!-- ══════════════ CANVAS ANIMATION ══════════════ -->
+
+<!-- ═══════════════ CANVAS ANIMATION ═══════════════ -->
 <script>
 const canvas = document.getElementById('pipeline-canvas');
 const ctx    = canvas.getContext('2d');
@@ -303,7 +364,7 @@ const VOCAB = [
     "healthcare","energy","pipeline","manufacturing","cloud","AI","SaaS",
     "0.812","0.034","0.421","0.007","0.291","0.663","0.104","0.889",
     "cascade","L1","L2","L3","L4","sector","group","mstar","sub-industry",
-    "breezeml","classifier","balanced","dual=False","88.90%","55.41%",
+    "classifier","balanced","dual=False","88.90%","55.41%",
     "10320010","30820010","31130010","20527020","21022020","10110010",
 ];
 
@@ -427,12 +488,7 @@ function drawConns() {
     ctx.restore();
 }
 
-function resize() {
-    W=canvas.width=window.innerWidth;
-    H=canvas.height=window.innerHeight;
-    buildGrid(); initTokens();
-}
-
+function resize() { W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; buildGrid(); initTokens(); }
 let lastTime = 0;
 function loop(ts) {
     const dt = Math.min(ts-lastTime,50); lastTime=ts; phaseTimer+=dt;
@@ -440,49 +496,194 @@ function loop(ts) {
     const bg=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H));
     bg.addColorStop(0,'#0a0d1a'); bg.addColorStop(1,'#050810');
     ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-    if (phase===0) {
-        gridAlpha=Math.max(0,gridAlpha-.01); svmProgress=Math.max(0,svmProgress-.015);
-        nodesAlpha=Math.max(0,nodesAlpha-.01); lineAlpha=Math.max(0,lineAlpha-.01);
-    } else if (phase===1) {
+    if (phase===0) { gridAlpha=Math.max(0,gridAlpha-.01); svmProgress=Math.max(0,svmProgress-.015); nodesAlpha=Math.max(0,nodesAlpha-.01); lineAlpha=Math.max(0,lineAlpha-.01); }
+    else if (phase===1) {
         gridAlpha=Math.min(.9,gridAlpha+.012); lineAlpha=Math.min(.8,lineAlpha+.015);
-        tokens.forEach((t,i)=>{
-            if (!t.rushing) {
-                t.rushing=true;
-                const cell=gridCells[i%gridCells.length];
-                t.rushX=cell?cell.x+(Math.random()-.5)*20:W/2;
-                t.rushY=cell?cell.y+(Math.random()-.5)*20:H/2;
-            }
-        });
+        tokens.forEach((t,i)=>{ if (!t.rushing) { t.rushing=true; const cell=gridCells[i%gridCells.length]; t.rushX=cell?cell.x+(Math.random()-.5)*20:W/2; t.rushY=cell?cell.y+(Math.random()-.5)*20:H/2; } });
         if (phaseTimer>2000) triggerPhase(2);
-    } else if (phase===2) {
-        svmProgress=Math.min(1,svmProgress+.008); nodesAlpha=Math.min(1,nodesAlpha+.01);
-        if (phaseTimer>2500) triggerPhase(3);
-    } else if (phase===3) {
-        gridAlpha=Math.max(0,gridAlpha-.008); lineAlpha=Math.max(0,lineAlpha-.008);
-        nodesAlpha=Math.max(0,nodesAlpha-.003);
-    }
-
+    } else if (phase===2) { svmProgress=Math.min(1,svmProgress+.008); nodesAlpha=Math.min(1,nodesAlpha+.01); if (phaseTimer>2500) triggerPhase(3); }
+    else if (phase===3) { gridAlpha=Math.max(0,gridAlpha-.008); lineAlpha=Math.max(0,lineAlpha-.008); nodesAlpha=Math.max(0,nodesAlpha-.003); }
     drawConns(); drawGrid(); drawSVM(); drawNodes();
     tokens.forEach(t=>{t.update();t.draw();});
     requestAnimationFrame(loop);
 }
-
 function triggerPhase(p) { phase=p; phaseTimer=0; highlightStep(p); }
-function highlightStep(p) {
-    document.querySelectorAll('.step-pill').forEach((el,i)=>el.classList.toggle('active',i<p));
-}
-
+function highlightStep(p) { document.querySelectorAll('.step-pill').forEach((el,i)=>el.classList.toggle('active',i<p)); }
 window.addEventListener('resize',resize);
 resize();
 requestAnimationFrame(loop);
 </script>
 
-<!-- ════════���═════ UI LOGIC ══════════════ -->
+
+<!-- ═══════════════ UI LOGIC ═══════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const btn          = document.getElementById('predict-btn');
-    const textarea     = document.getElementById('segment-input');
+
+    /* ── Feature 2: Example pill buttons ── */
+    const EXAMPLES = [
+        { label: 'Regional Bank',  variant: '',     text: 'The company operates a network of community banks across the southeastern United States, providing commercial lending, retail deposit accounts, residential mortgage origination, and small business banking services. Net interest income represents the majority of operating revenue.' },
+        { label: 'Biotech',        variant: '',     text: 'The company is a clinical-stage biopharmaceutical firm focused on oncology and rare genetic disorders. Its lead pipeline candidate is an mRNA-based gene therapy currently in Phase 2 clinical trials. Revenue is derived primarily from research collaboration agreements and milestone payments.' },
+        { label: 'Cloud SaaS',     variant: '',     text: 'The company develops and sells enterprise software platforms delivered as a service over the cloud. Core offerings include customer relationship management, workflow automation, and business intelligence dashboards. Revenue is subscription-based with multi-year enterprise contracts.' },
+        { label: 'Oil Pipeline',   variant: 'teal', text: 'The company owns and operates a network of crude oil and natural gas pipelines and storage facilities across the Gulf Coast region. Revenue is generated through long-term take-or-pay transportation and storage contracts with upstream producers.' },
+        { label: 'Semiconductor',  variant: 'teal', text: 'The company designs and manufactures integrated circuits and logic chips for data center, automotive, and consumer electronics applications. Revenue is driven by licensing, wafer sales, and long-term supply agreements with OEM customers.' },
+        { label: 'REIT',           variant: '',     text: 'The company is a real estate investment trust that owns a diversified portfolio of commercial office buildings and industrial warehouses. Income is generated through long-term net leases with institutional tenants across major metropolitan markets.' },
+    ];
+    const pillRow = document.getElementById('examples-row');
+    const textarea = document.getElementById('segment-input');
+    const label = document.createElement('span');
+    label.className = 'examples-label'; label.textContent = 'Try:';
+    pillRow.appendChild(label);
+    EXAMPLES.forEach(({ label: lbl, variant, text }) => {
+        const btn = document.createElement('button');
+        btn.className = 'pill-btn' + (variant ? ` ${variant}` : '');
+        btn.textContent = lbl;
+        btn.addEventListener('click', () => { textarea.value = text; textarea.focus(); triggerPhase(0); });
+        pillRow.appendChild(btn);
+    });
+
+    /* ── Feature 3: Animate benchmark bars on load ── */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        document.querySelectorAll('.bench-fill[data-target]').forEach(bar => {
+            bar.style.width = bar.dataset.target + '%';
+        });
+    }));
+
+    /* ── Feature 4: History ── */
+    const HIST_KEY = 'gecs_pred_history';
+    const MAX_HIST = 5;
+    let histOpen = true;
+
+    function loadHistory() { try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; } catch { return []; } }
+    function saveHistory(h) { localStorage.setItem(HIST_KEY, JSON.stringify(h)); }
+
+    function pushHistory(entry) {
+        const h = loadHistory();
+        h.unshift(entry);
+        if (h.length > MAX_HIST) h.splice(MAX_HIST);
+        saveHistory(h);
+        renderHistory();
+        document.getElementById('history-section').classList.remove('hidden');
+    }
+
+    function renderHistory() {
+        const h = loadHistory();
+        const list = document.getElementById('history-list');
+        const section = document.getElementById('history-section');
+        if (!h.length) { section.classList.add('hidden'); return; }
+        section.classList.remove('hidden');
+        list.innerHTML = h.map((item, i) => `
+            <div class="history-item" onclick="restoreHistory(${i})">
+                <span class="hist-label" title="${item.mstar_label}">${item.mstar_label}</span>
+                <span class="hist-code">${item.mstar_code}</span>
+                <span class="hist-conf">${Math.round(item.conf)}%</span>
+            </div>
+        `).join('');
+    }
+
+    window.restoreHistory = function(i) {
+        const item = loadHistory()[i];
+        if (!item || !item.text) return;
+        textarea.value = item.text;
+        textarea.focus();
+    };
+
+    document.getElementById('clear-history-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        saveHistory([]);
+        renderHistory();
+    });
+
+    document.getElementById('history-toggle').addEventListener('click', () => {
+        histOpen = !histOpen;
+        document.getElementById('history-list').classList.toggle('collapsed', !histOpen);
+        document.getElementById('hist-chevron').style.transform = histOpen ? '' : 'rotate(-90deg)';
+    });
+
+    renderHistory();
+
+    /* ── Feature 6: Count-up animation ── */
+    function countUp(el, target, duration = 850) {
+        const start = performance.now();
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            el.textContent = Math.round(target * easeOut(p)) + '%';
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = Math.round(target) + '%';
+        }
+        requestAnimationFrame(tick);
+    }
+
+    function setConf(task, pct) {
+        const val = pct != null ? pct : 0;
+        document.getElementById(`conf-bar-${task}`).style.width = val + '%';
+        const pctEl = document.getElementById(`conf-pct-${task}`);
+        if (val > 0) countUp(pctEl, val);
+        else pctEl.textContent = '—';
+    }
+
+    /* ── Feature 5: Crosswalk renderer ── */
+    function renderCrosswalk(map) {
+        if (!map) {
+            ['mstar','gics','naics','sic'].forEach(k => {
+                document.getElementById(`xw-${k}-code`).textContent = '—';
+                document.getElementById(`xw-${k}-name`).textContent = 'Not mapped';
+            });
+            return;
+        }
+        const fill = (key, obj) => {
+            document.getElementById(`xw-${key}-code`).textContent = (obj && obj.code) ? obj.code : '—';
+            document.getElementById(`xw-${key}-name`).textContent = (obj && obj.label) ? obj.label : '—';
+        };
+        fill('mstar', map.mstar);
+        fill('gics',  map.gics);
+        fill('naics', map.naics);
+        fill('sic',   map.sic);
+    }
+
+    /* ── Feature 1: Signal words ── */
+    function renderSignals(features) {
+        const section = document.getElementById('signal-section');
+        const chips   = document.getElementById('signal-chips');
+        if (!features || !features.length) { section.classList.add('hidden'); return; }
+        chips.innerHTML = features.slice(0, 10).map(w =>
+            `<span class="signal-chip">${w}</span>`
+        ).join('');
+        section.classList.remove('hidden');
+    }
+
+    /* ── Cascade path renderer ── */
+    function renderCascadePath(containerId, pathData, task) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = '';
+        if (!pathData) return;
+        const levels = task === 't1'
+            ? [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar]]
+            : [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar], ['Sub', pathData.sub]];
+        const winnerNode = levels[levels.length - 1];
+        levels.forEach(([level, node], i) => {
+            if (i > 0) { const arr = document.createElement('span'); arr.className = 'path-arrow'; arr.textContent = '›'; el.appendChild(arr); }
+            const div = document.createElement('div');
+            div.className = 'path-node' + (node === winnerNode ? ' winner' : '');
+            div.innerHTML = `<span class="path-level">${level}</span><span class="path-code">${node ? node.code : '?'}</span><span class="path-conf">${node ? Math.round(node.conf) + '%' : ''}</span>`;
+            el.appendChild(div);
+        });
+    }
+
+    /* ── Alt list renderer ── */
+    function renderAlts(containerId, alts) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = '';
+        (alts || []).slice(0, 3).forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'alt-row';
+            div.innerHTML = `<span><span class="rank">${a.rank}.</span>${a.label || a.code}</span><span class="alt-conf">${a.confidence}%</span>`;
+            el.appendChild(div);
+        });
+    }
+
+    /* ── Main predict handler ── */
+    const btn = document.getElementById('predict-btn');
     const resultsPanel = document.getElementById('results-panel');
     const errorToast   = document.getElementById('error-message');
 
@@ -493,35 +694,42 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = "Running cascade...";
         btn.disabled = true;
         resultsPanel.classList.add('hidden');
+        document.getElementById('signal-section').classList.add('hidden');
         errorToast.classList.add('hidden');
         triggerPhase(1);
         winnerIdx = -1;
 
         try {
-            const res  = await fetch('/api/predict', {
-                method:'POST', headers:{'Content-Type':'application/json'},
-                body: JSON.stringify({text})
-            });
+            const res  = await fetch('/api/predict', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({text}) });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Server inference failed.");
 
-            // ── Task 1 ──
+            // Task 1
             document.getElementById('mstar-label').textContent = data.mstar_label || '—';
             document.getElementById('mstar-code').textContent  = `GECS: ${data.mstar_code}`;
             setConf('t1', data.confidence_t1);
             renderCascadePath('cascade-path-t1', data.cascade_path_t1, 't1');
             renderAlts('alts-t1', data.alternatives_t1 || []);
 
-            // ── Task 2 ──
+            // Task 2
             document.getElementById('sub-label').textContent = data.sub_label || '—';
             document.getElementById('sub-code').textContent  = `Code: ${data.sub_code}`;
             setConf('t2', data.confidence_t2);
             renderCascadePath('cascade-path-t2', data.cascade_path_t2, 't2');
             renderAlts('alts-t2', data.alternatives_t2 || []);
 
-            // ── Winner node ──
-            const sector = (data.mstar_code || '').slice(0,2);
+            // Feature 1: signal words
+            renderSignals(data.features_t1);
+
+            // Feature 5: crosswalk
+            renderCrosswalk(data.taxonomy_map);
+
+            // Winner node on canvas
+            const sector = (data.mstar_code || '').slice(0, 2);
             winnerIdx = {'10':0,'20':2,'21':2,'30':1,'31':3,'11':4}[sector] ?? 1;
+
+            // Feature 4: push to history
+            pushHistory({ mstar_label: data.mstar_label, mstar_code: data.mstar_code, conf: data.confidence_t1 || 0, text });
 
             resultsPanel.classList.remove('hidden');
 
@@ -534,56 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    textarea.addEventListener('input', () => {
-        if (phase !== 1 && phase !== 2) triggerPhase(0);
-    });
-
-    function setConf(task, pct) {
-        const val = pct != null ? Math.round(pct) : 0;
-        document.getElementById(`conf-bar-${task}`).style.width = val + '%';
-        document.getElementById(`conf-pct-${task}`).textContent  = val > 0 ? val + '%' : '—';
-    }
-
-    function renderCascadePath(containerId, pathData, task) {
-        const el = document.getElementById(containerId);
-        el.innerHTML = '';
-        if (!pathData) return;
-
-        const levels = task === 't1'
-            ? [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar]]
-            : [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar], ['Sub', pathData.sub]];
-
-        const winnerLevel = levels[levels.length - 1];
-
-        levels.forEach(([level, node], i) => {
-            if (i > 0) {
-                const arr = document.createElement('span');
-                arr.className = 'path-arrow'; arr.textContent = '›'; el.appendChild(arr);
-            }
-            const div = document.createElement('div');
-            div.className = 'path-node' + (node === winnerLevel ? ' winner' : '');
-            div.innerHTML = `
-                <span class="path-level">${level}</span>
-                <span class="path-code">${node ? node.code : '?'}</span>
-                <span class="path-conf">${node ? Math.round(node.conf) + '%' : ''}</span>
-            `;
-            el.appendChild(div);
-        });
-    }
-
-    function renderAlts(containerId, alts) {
-        const el = document.getElementById(containerId);
-        el.innerHTML = '';
-        (alts || []).slice(0,3).forEach(a => {
-            const div = document.createElement('div');
-            div.className = 'alt-row';
-            div.innerHTML = `
-                <span><span class="rank">${a.rank}.</span>${a.label || a.code || a.label}</span>
-                <span class="alt-conf">${a.confidence}%</span>
-            `;
-            el.appendChild(div);
-        });
-    }
+    textarea.addEventListener('input', () => { if (phase !== 1 && phase !== 2) triggerPhase(0); });
 
     function showError(msg) {
         errorToast.textContent = msg;

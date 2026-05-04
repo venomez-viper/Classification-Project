@@ -105,8 +105,10 @@ def _load_json_labels(path: Path) -> dict:
     except Exception:
         return {}
 
-_sub_labels_ext  = _load_json_labels(_LABELS_JSON)
+_sub_labels_ext   = _load_json_labels(_LABELS_JSON)
 _mstar_labels_ext = _load_json_labels(_MSTAR_FULL_JSON)
+_CROSSWALK_JSON   = ROOT / "legendary_artifacts/taxonomy_crosswalk.json"
+CROSSWALK         = _load_json_labels(_CROSSWALK_JSON)
 
 
 def get_mstar_label(code: str) -> str:
@@ -158,7 +160,7 @@ def _extract_top_features(vec, X_sparse, model_artifact, n: int = 6) -> list[str
     try:
         if model_artifact.get("type") != "svm":
             return []
-        clf  = model_artifact["model"]
+        clf  = model_artifact.get("model") or model_artifact.get("value")
         sc   = clf.decision_function(X_sparse)
         idx  = int(np.argmax(sc[0] if np.ndim(sc) > 1 else sc))
         coef = clf.coef_[idx]
@@ -283,6 +285,8 @@ def execute_prediction():
             "alternatives_t2": alts_t2,
             "cascade_path_t2": cascade_path_t2,
             "features_t2":    [],
+            # Taxonomy crosswalk
+            "taxonomy_map": CROSSWALK.get(mstar_code),
             # Meta
             "model_t1": "cascade_svm",
             "model_t2": "hybrid_cascade",
