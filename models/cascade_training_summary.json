@@ -1,0 +1,23 @@
+{
+  "rows": 53585,
+  "sector_count": 11,
+  "group_count": 55,
+  "code_count": 145,
+  "vectorizer": {
+    "max_features": 50000,
+    "vocabulary_size": 50000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "sublinear_tf": true,
+    "stop_words": "english"
+  },
+  "artifacts": {
+    "l1_type": "svm",
+    "l2_total": 11,
+    "l2_constants": 0,
+    "l3_total": 55,
+    "l3_constants": 22
+  }
+}

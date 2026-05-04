@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 4 | GECS Industry Classification Engine</title>
+    <meta name="description" content="AI-powered Morningstar GECS industry classification using a 4-level cascade SVM built with breezeml.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background: #050810;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pipeline-canvas { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; }
+
+        .glass-container {
+            position: relative;
+            z-index: 10;
+            width: min(700px, 94vw);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 24px;
+            padding: 2.5rem 2.5rem 2rem;
+            box-shadow: 0 8px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
+            margin: 2rem auto;
+        }
+
+        /* ── Header ── */
+        .app-header { text-align: center; margin-bottom: 1.5rem; }
+        .app-header h1 {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+        .app-header p { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
+        .app-header strong { color: rgba(167,139,250,0.9); }
+
+        /* ── Score badges ── */
+        .score-badges {
+            display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 0.3rem;
+        }
+        .score-badge {
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em;
+            text-transform: uppercase; padding: 3px 10px; border-radius: 99px;
+        }
+        .badge-t1 {
+            background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3);
+            color: #a78bfa;
+        }
+        .badge-t2 {
+            background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.3);
+            color: #60a5fa;
+        }
+
+        /* ── Pipeline Steps ── */
+        .pipeline-steps {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.3rem; margin-bottom: 1.8rem; flex-wrap: wrap;
+        }
+        .step-pill {
+            font-size: 0.63rem; font-weight: 600; letter-spacing: 0.06em;
+            text-transform: uppercase; padding: 4px 9px; border-radius: 99px;
+            border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.04); transition: all 0.3s;
+        }
+        .step-pill.active {
+            color: #fff; border-color: rgba(167,139,250,0.6);
+            background: rgba(167,139,250,0.15); box-shadow: 0 0 12px rgba(167,139,250,0.3);
+        }
+        .step-arrow { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+
+        /* ── Input ── */
+        label {
+            display: block; font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            color: rgba(255,255,255,0.45); margin-bottom: 0.6rem;
+        }
+        textarea {
+            width: 100%; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
+            color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+            line-height: 1.6; padding: 1rem 1.1rem; resize: vertical; outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        textarea:focus {
+            border-color: rgba(167,139,250,0.5);
+            box-shadow: 0 0 0 3px rgba(167,139,250,0.12);
+        }
+        textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+        /* ── Button ── */
+        .glow-button {
+            width: 100%; margin-top: 1rem; padding: 0.9rem; border: none;
+            border-radius: 12px; font-family: 'Outfit', sans-serif;
+            font-size: 1rem; font-weight: 700; cursor: pointer;
+            background: linear-gradient(135deg, #7c3aed, #2563eb); color: #fff;
+            letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
+        }
+        .glow-button:hover:not(:disabled) {
+            opacity: 0.9; transform: translateY(-1px);
+            box-shadow: 0 8px 40px rgba(124,58,237,0.6);
+        }
+        .glow-button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+        /* ── Results grid ── */
+        .results-section {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1rem; margin-top: 1.4rem;
+        }
+        .results-section.hidden { display: none; }
+
+        .result-card {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 16px; padding: 1.2rem 1.2rem 1rem;
+            transition: box-shadow 0.4s; animation: fadeUp 0.5s ease both;
+        }
+        .result-card.t1-card { border-color: rgba(167,139,250,0.25); box-shadow: 0 0 30px rgba(167,139,250,0.1); }
+        .result-card.t2-card { border-color: rgba(96,165,250,0.25);  box-shadow: 0 0 30px rgba(96,165,250,0.1);  }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-subtitle {
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem;
+        }
+        .label-text {
+            font-size: 1.05rem; font-weight: 700; color: #fff;
+            line-height: 1.25; margin-bottom: 0.4rem;
+        }
+        .code-chip {
+            display: inline-block; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: rgba(255,255,255,0.4); padding: 2px 8px; letter-spacing: 0.05em;
+        }
+
+        /* ── Confidence bar ── */
+        .conf-row {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-top: 0.7rem;
+        }
+        .conf-label { font-size: 0.62rem; color: rgba(255,255,255,0.35); min-width: 32px; }
+        .conf-track {
+            flex: 1; height: 4px; background: rgba(255,255,255,0.07);
+            border-radius: 99px; overflow: hidden;
+        }
+        .conf-fill {
+            height: 100%; border-radius: 99px; transition: width 0.8s ease;
+            background: linear-gradient(90deg, #7c3aed, #60a5fa);
+        }
+        .conf-pct { font-size: 0.68rem; font-weight: 700; color: rgba(255,255,255,0.6); min-width: 36px; text-align: right; }
+
+        /* ── Cascade path ── */
+        .cascade-path {
+            display: flex; align-items: center; gap: 0.25rem;
+            margin-top: 0.8rem; flex-wrap: wrap;
+        }
+        .path-node {
+            display: flex; flex-direction: column; align-items: center;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px; padding: 3px 8px;
+        }
+        .path-level { font-size: 0.52rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
+        .path-code  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.65); }
+        .path-conf  { font-size: 0.5rem; color: rgba(52,211,153,0.7); }
+        .path-arrow { color: rgba(255,255,255,0.15); font-size: 0.65rem; }
+        .path-node.winner {
+            border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08);
+        }
+        .path-node.winner .path-code { color: #a78bfa; }
+
+        /* ── Alternatives ── */
+        .alts-header {
+            font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: rgba(255,255,255,0.25);
+            margin-top: 0.8rem; margin-bottom: 0.3rem;
+        }
+        .alt-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 2px 0; font-size: 0.7rem; color: rgba(255,255,255,0.4);
+        }
+        .alt-row span.rank { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; margin-right: 0.3rem; }
+        .alt-conf { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,0.25); }
+
+        /* ── Error ── */
+        .error-toast {
+            margin-top: 1rem; padding: 0.75rem 1rem;
+            background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 10px; font-size: 0.85rem; color: #fca5a5;
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+<canvas id="pipeline-canvas"></canvas>
+
+<main class="glass-container">
+    <header class="app-header">
+        <h1>GECS Classification Engine</h1>
+        <p>Powered by <strong>breezeml</strong> · 4-Level Cascade SVM · Group 4</p>
+        <div class="score-badges">
+            <span class="score-badge badge-t1">Task 1 — 88.90% Macro F1 · 145 classes</span>
+            <span class="score-badge badge-t2">Task 2 — 55.41% Macro F1 · 428 classes</span>
+        </div>
+    </header>
+
+    <div class="pipeline-steps">
+        <span class="step-pill" id="step-1">Text</span>
+        <span class="step-arrow">›</span>
+        <span class="step-pill" id="step-2">TF-IDF</span>
+        <span class="step-arrow">›</span>
+        <span class="step-pill" id="step-3">Sector</span>
+        <span class="step-arrow">›</span>
+        <span class="step-pill" id="step-4">Group</span>
+        <span class="step-arrow">›</span>
+        <span class="step-pill" id="step-5">Industry</span>
+        <span class="step-arrow">›</span>
+        <span class="step-pill" id="step-6">Sub-Industry</span>
+    </div>
+
+    <section class="input-section">
+        <div class="form-group">
+            <label for="segment-input">Company / Segment Description</label>
+            <textarea id="segment-input" rows="5" placeholder="Paste a company profile or business segment description here to run real-time GECS classification..."></textarea>
+        </div>
+        <button id="predict-btn" class="glow-button">Run Cascade Inference</button>
+    </section>
+
+    <section id="results-panel" class="results-section hidden">
+        <!-- Task 1 card -->
+        <div class="result-card t1-card">
+            <div class="card-subtitle">Task 1 — GECS Industry (88.90% F1)</div>
+            <div class="label-text" id="mstar-label">—</div>
+            <div class="code-chip" id="mstar-code">—</div>
+
+            <div class="conf-row">
+                <span class="conf-label">Conf</span>
+                <div class="conf-track"><div class="conf-fill" id="conf-bar-t1" style="width:0%"></div></div>
+                <span class="conf-pct" id="conf-pct-t1">—</span>
+            </div>
+
+            <div class="cascade-path" id="cascade-path-t1"></div>
+
+            <div class="alts-header">Other candidates</div>
+            <div id="alts-t1"></div>
+        </div>
+
+        <!-- Task 2 card -->
+        <div class="result-card t2-card">
+            <div class="card-subtitle">Task 2 — Sub-Industry (55.41% F1)</div>
+            <div class="label-text" id="sub-label">—</div>
+            <div class="code-chip" id="sub-code">—</div>
+
+            <div class="conf-row">
+                <span class="conf-label">Conf</span>
+                <div class="conf-track"><div class="conf-fill" id="conf-bar-t2" style="width:0%"></div></div>
+                <span class="conf-pct" id="conf-pct-t2">—</span>
+            </div>
+
+            <div class="cascade-path" id="cascade-path-t2"></div>
+
+            <div class="alts-header">Other candidates</div>
+            <div id="alts-t2"></div>
+        </div>
+    </section>
+
+    <div id="error-message" class="error-toast hidden"></div>
+</main>
+
+<!-- ══════════════ CANVAS ANIMATION ══════════════ -->
+<script>
+const canvas = document.getElementById('pipeline-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, phase = 0, phaseTimer = 0;
+
+const VOCAB = [
+    "TF-IDF","LinearSVC","sparse","vector","token","ngram","corpus",
+    "feature","weight","idf","tf","predict","matrix","class","label",
+    "banking","software","biotech","insurance","semiconductor","retail",
+    "revenue","segment","industry","equity","market","capital","asset",
+    "healthcare","energy","pipeline","manufacturing","cloud","AI","SaaS",
+    "0.812","0.034","0.421","0.007","0.291","0.663","0.104","0.889",
+    "cascade","L1","L2","L3","L4","sector","group","mstar","sub-industry",
+    "breezeml","classifier","balanced","dual=False","88.90%","55.41%",
+    "10320010","30820010","31130010","20527020","21022020","10110010",
+];
+
+class Token {
+    constructor() { this.reset(true); }
+    reset(init = false) {
+        this.x = Math.random() * W;
+        this.y = init ? Math.random() * H : -20;
+        this.word = VOCAB[Math.floor(Math.random() * VOCAB.length)];
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = 0.25 + Math.random() * 0.4;
+        this.alpha = 0.07 + Math.random() * 0.15;
+        this.size  = 9 + Math.random() * 4;
+        this.hue   = Math.random() > 0.5 ? 265 : 215;
+        this.rushX = 0; this.rushY = 0; this.rushing = false;
+    }
+    update() {
+        if (phase === 1 && this.rushing) {
+            this.x += (this.rushX - this.x) * 0.06;
+            this.y += (this.rushY - this.y) * 0.06;
+            this.alpha = Math.min(this.alpha + 0.01, 0.5);
+        } else if (phase === 0 || phase === 3) {
+            this.x += this.vx; this.y += this.vy;
+            this.rushing = false;
+            if (this.y > H + 20) this.reset();
+        }
+    }
+    draw() {
+        ctx.save(); ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = `hsl(${this.hue}, 70%, 78%)`;
+        ctx.font = `${this.size}px 'JetBrains Mono', monospace`;
+        ctx.fillText(this.word, this.x, this.y);
+        ctx.restore();
+    }
+}
+
+let tokens = [];
+function initTokens() { tokens = Array.from({length: 80}, () => new Token()); }
+
+let gridAlpha = 0, gridCells = [];
+const COLS = 22, ROWS = 14;
+function buildGrid() {
+    gridCells = [];
+    const cW = W/(COLS+2), cH = H/(ROWS+2);
+    for (let r = 0; r < ROWS; r++)
+        for (let c = 0; c < COLS; c++)
+            gridCells.push({
+                x: cW+c*cW, y: cH+r*cH,
+                v: Math.random()>0.75 ? Math.random().toFixed(3) : '0.000',
+                lit: Math.random()>0.75, pulse: Math.random()*Math.PI*2,
+            });
+}
+function drawGrid() {
+    if (gridAlpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = gridAlpha;
+    ctx.font = '9px JetBrains Mono, monospace';
+    gridCells.forEach(cell => {
+        const g = cell.lit ? (0.5+0.5*Math.sin(Date.now()*0.003+cell.pulse)) : 0;
+        ctx.fillStyle = cell.lit ? `hsla(265,80%,${60+g*30}%,${0.6+g*0.4})` : 'hsla(220,30%,60%,0.25)';
+        ctx.fillText(cell.v, cell.x, cell.y);
+    });
+    ctx.restore();
+}
+
+let svmProgress = 0;
+function drawSVM() {
+    if (phase < 2 || svmProgress <= 0) return;
+    const x = svmProgress * W;
+    const grad = ctx.createLinearGradient(x-80,0,x+80,0);
+    grad.addColorStop(0,'rgba(124,58,237,0)');
+    grad.addColorStop(0.5,`rgba(124,58,237,${0.55*svmProgress})`);
+    grad.addColorStop(1,'rgba(96,165,250,0)');
+    ctx.save(); ctx.globalAlpha = svmProgress;
+    ctx.strokeStyle = grad; ctx.lineWidth = 2;
+    ctx.shadowColor = '#7c3aed'; ctx.shadowBlur = 20;
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+    const rg = ctx.createLinearGradient(0,0,x,0);
+    rg.addColorStop(0,'rgba(52,211,153,0)');
+    rg.addColorStop(1,`rgba(52,211,153,${0.04*svmProgress})`);
+    ctx.fillStyle = rg; ctx.fillRect(0,0,x,H);
+    ctx.restore();
+}
+
+const NODES = [
+    {label:'Financial Services',color:'#60a5fa',x:.75,y:.25},
+    {label:'Technology',        color:'#a78bfa',x:.82,y:.50},
+    {label:'Healthcare',        color:'#34d399',x:.72,y:.70},
+    {label:'Industrials',       color:'#fb923c',x:.88,y:.35},
+    {label:'Energy',            color:'#fbbf24',x:.85,y:.65},
+];
+let nodesAlpha = 0, winnerIdx = -1;
+function drawNodes() {
+    if (nodesAlpha <= 0) return;
+    NODES.forEach((n,i) => {
+        const nx=n.x*W, ny=n.y*H, win=i===winnerIdx;
+        const p = 0.7+0.3*Math.sin(Date.now()*0.003+i);
+        const r = win ? 16+p*8 : 8;
+        ctx.save(); ctx.globalAlpha = nodesAlpha*(win?1:0.4);
+        if (win) { ctx.shadowColor=n.color; ctx.shadowBlur=40; }
+        ctx.beginPath(); ctx.arc(nx,ny,r,0,Math.PI*2);
+        ctx.fillStyle=n.color+(win?'cc':'44'); ctx.fill();
+        ctx.strokeStyle=n.color; ctx.lineWidth=1.5; ctx.stroke();
+        if (win || nodesAlpha>0.7) {
+            ctx.font=`${win?11:9}px Outfit,sans-serif`;
+            ctx.fillStyle='#fff'; ctx.globalAlpha=nodesAlpha*(win?1:0.3);
+            ctx.fillText(n.label, nx+r+6, ny+4);
+        }
+        ctx.restore();
+    });
+}
+
+let lineAlpha = 0;
+function drawConns() {
+    if (lineAlpha<=0||phase<1) return;
+    const cx=W/2, cy=H/2;
+    ctx.save(); ctx.globalAlpha=lineAlpha*0.12;
+    ctx.strokeStyle='#a78bfa'; ctx.lineWidth=0.5;
+    tokens.filter((_,i)=>i%4===0).forEach(t=>{
+        ctx.beginPath(); ctx.moveTo(t.x,t.y); ctx.lineTo(cx,cy); ctx.stroke();
+    });
+    ctx.restore();
+}
+
+function resize() {
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+    buildGrid(); initTokens();
+}
+
+let lastTime = 0;
+function loop(ts) {
+    const dt = Math.min(ts-lastTime,50); lastTime=ts; phaseTimer+=dt;
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H));
+    bg.addColorStop(0,'#0a0d1a'); bg.addColorStop(1,'#050810');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    if (phase===0) {
+        gridAlpha=Math.max(0,gridAlpha-.01); svmProgress=Math.max(0,svmProgress-.015);
+        nodesAlpha=Math.max(0,nodesAlpha-.01); lineAlpha=Math.max(0,lineAlpha-.01);
+    } else if (phase===1) {
+        gridAlpha=Math.min(.9,gridAlpha+.012); lineAlpha=Math.min(.8,lineAlpha+.015);
+        tokens.forEach((t,i)=>{
+            if (!t.rushing) {
+                t.rushing=true;
+                const cell=gridCells[i%gridCells.length];
+                t.rushX=cell?cell.x+(Math.random()-.5)*20:W/2;
+                t.rushY=cell?cell.y+(Math.random()-.5)*20:H/2;
+            }
+        });
+        if (phaseTimer>2000) triggerPhase(2);
+    } else if (phase===2) {
+        svmProgress=Math.min(1,svmProgress+.008); nodesAlpha=Math.min(1,nodesAlpha+.01);
+        if (phaseTimer>2500) triggerPhase(3);
+    } else if (phase===3) {
+        gridAlpha=Math.max(0,gridAlpha-.008); lineAlpha=Math.max(0,lineAlpha-.008);
+        nodesAlpha=Math.max(0,nodesAlpha-.003);
+    }
+
+    drawConns(); drawGrid(); drawSVM(); drawNodes();
+    tokens.forEach(t=>{t.update();t.draw();});
+    requestAnimationFrame(loop);
+}
+
+function triggerPhase(p) { phase=p; phaseTimer=0; highlightStep(p); }
+function highlightStep(p) {
+    document.querySelectorAll('.step-pill').forEach((el,i)=>el.classList.toggle('active',i<p));
+}
+
+window.addEventListener('resize',resize);
+resize();
+requestAnimationFrame(loop);
+</script>
+
+<!-- ════════���═════ UI LOGIC ══════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn          = document.getElementById('predict-btn');
+    const textarea     = document.getElementById('segment-input');
+    const resultsPanel = document.getElementById('results-panel');
+    const errorToast   = document.getElementById('error-message');
+
+    btn.addEventListener('click', async () => {
+        const text = textarea.value.trim();
+        if (!text) { showError("Please enter a business description first."); return; }
+
+        btn.textContent = "Running cascade...";
+        btn.disabled = true;
+        resultsPanel.classList.add('hidden');
+        errorToast.classList.add('hidden');
+        triggerPhase(1);
+        winnerIdx = -1;
+
+        try {
+            const res  = await fetch('/api/predict', {
+                method:'POST', headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({text})
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Server inference failed.");
+
+            // ── Task 1 ──
+            document.getElementById('mstar-label').textContent = data.mstar_label || '—';
+            document.getElementById('mstar-code').textContent  = `GECS: ${data.mstar_code}`;
+            setConf('t1', data.confidence_t1);
+            renderCascadePath('cascade-path-t1', data.cascade_path_t1, 't1');
+            renderAlts('alts-t1', data.alternatives_t1 || []);
+
+            // ── Task 2 ──
+            document.getElementById('sub-label').textContent = data.sub_label || '—';
+            document.getElementById('sub-code').textContent  = `Code: ${data.sub_code}`;
+            setConf('t2', data.confidence_t2);
+            renderCascadePath('cascade-path-t2', data.cascade_path_t2, 't2');
+            renderAlts('alts-t2', data.alternatives_t2 || []);
+
+            // ── Winner node ──
+            const sector = (data.mstar_code || '').slice(0,2);
+            winnerIdx = {'10':0,'20':2,'21':2,'30':1,'31':3,'11':4}[sector] ?? 1;
+
+            resultsPanel.classList.remove('hidden');
+
+        } catch (err) {
+            showError(err.message);
+            triggerPhase(0);
+        } finally {
+            btn.textContent = "Run Cascade Inference";
+            btn.disabled = false;
+        }
+    });
+
+    textarea.addEventListener('input', () => {
+        if (phase !== 1 && phase !== 2) triggerPhase(0);
+    });
+
+    function setConf(task, pct) {
+        const val = pct != null ? Math.round(pct) : 0;
+        document.getElementById(`conf-bar-${task}`).style.width = val + '%';
+        document.getElementById(`conf-pct-${task}`).textContent  = val > 0 ? val + '%' : '—';
+    }
+
+    function renderCascadePath(containerId, pathData, task) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = '';
+        if (!pathData) return;
+
+        const levels = task === 't1'
+            ? [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar]]
+            : [['Sector', pathData.sector], ['Group', pathData.group], ['Industry', pathData.mstar], ['Sub', pathData.sub]];
+
+        const winnerLevel = levels[levels.length - 1];
+
+        levels.forEach(([level, node], i) => {
+            if (i > 0) {
+                const arr = document.createElement('span');
+                arr.className = 'path-arrow'; arr.textContent = '›'; el.appendChild(arr);
+            }
+            const div = document.createElement('div');
+            div.className = 'path-node' + (node === winnerLevel ? ' winner' : '');
+            div.innerHTML = `
+                <span class="path-level">${level}</span>
+                <span class="path-code">${node ? node.code : '?'}</span>
+                <span class="path-conf">${node ? Math.round(node.conf) + '%' : ''}</span>
+            `;
+            el.appendChild(div);
+        });
+    }
+
+    function renderAlts(containerId, alts) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = '';
+        (alts || []).slice(0,3).forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'alt-row';
+            div.innerHTML = `
+                <span><span class="rank">${a.rank}.</span>${a.label || a.code || a.label}</span>
+                <span class="alt-conf">${a.confidence}%</span>
+            `;
+            el.appendChild(div);
+        });
+    }
+
+    function showError(msg) {
+        errorToast.textContent = msg;
+        errorToast.classList.remove('hidden');
+        setTimeout(() => errorToast.classList.add('hidden'), 6000);
+    }
+});
+</script>
+</body>
+</html>

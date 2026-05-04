@@ -6,4 +6,4 @@ scipy==1.13.1
 numpy==1.26.4
 pandas==2.2.2
 joblib==1.4.2
-breezeml>=0.2.5
+breezeml>=0.2.6

@@ -1,0 +1,26 @@
+{
+  "rows": 27537,
+  "train_rows": 22029,
+  "test_rows": 5508,
+  "sub_code_count": 428,
+  "mstar_count": 145,
+  "macro_f1": 0.5541,
+  "accuracy": 0.7435,
+  "mstar_accuracy": 0.8842,
+  "deberta_baseline": 36.39,
+  "oracle_ceiling": 62.26,
+  "l4_vectorizer": {
+    "max_features": 60000,
+    "vocabulary_size": 60000,
+    "text": "SegmentName + SegmentDescription",
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "l4_artifacts": {
+    "total": 145,
+    "trivial": 40
+  },
+  "t1_cascade_used_for": "L1->L2->L3 (MSTAR prediction)"
+}

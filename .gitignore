@@ -46,9 +46,6 @@ llm_finetuning/results/
 # Not needed for hosting
 notebooks/
 docs/
-scripts/
-static/
-templates/
 data_augmentation/
 graph_visualizer/
 reports/
