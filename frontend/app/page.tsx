@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import HowItWorks from "@/components/HowItWorks";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -179,6 +180,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="border-t border-white/6">
+        <HowItWorks compact />
+      </div>
 
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
