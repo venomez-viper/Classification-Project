@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 
 const STATS = [
   { label: "GECS Industries", value: 145, suffix: "" },
-  { label: "Subindustries", value: 450, suffix: "" },
+  { label: "Sub-Industries", value: 428, suffix: "" },
   { label: "Training Segments", value: 53587, suffix: "+" },
-  { label: "Macro F1 Score", value: 86.82, suffix: "%", decimal: true },
+  { label: "Task 1 Macro F1", value: 88.9, suffix: "%", decimal: true },
 ];
 
 function AnimatedCounter({ target, suffix, decimal = false }: { target: number; suffix: string; decimal?: boolean }) {
@@ -90,11 +90,11 @@ export default function Hero() {
           transition={{ delay: 0.5 }}
           className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-12"
         >
-          Automated Morningstar industry classification using{" "}
-          <span className="text-red-500 font-semibold">breezeml</span>,
-          TF-IDF sparse vectorization, and Linear SVM. We classify{" "}
-          <span className="text-white/80">145 industries</span> and{" "}
-          <span className="text-white/80">450 subindustries</span> in real time.
+          A 4-level cascade SVM built on{" "}
+          <span className="text-red-500 font-semibold">breezeml</span>{" "}
+          and 60K TF-IDF features. Classifies{" "}
+          <span className="text-white/80">145 GECS industries</span> at 88.90% Macro F1 and{" "}
+          <span className="text-white/80">428 sub-industries</span> at 55.41% — no GPU required.
         </motion.p>
 
         {/* Stats */}

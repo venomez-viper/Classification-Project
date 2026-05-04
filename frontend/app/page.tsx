@@ -37,9 +37,9 @@ const PAGES = [
   {
     href: "/model",
     title: "Model and Results",
-    desc: "Two Linear SVM models trained on sparse vectors, with Task 1 reaching 86.82% Macro F1.",
+    desc: "4-level cascade SVM: 88.90% Macro F1 on 145 industries, 55.41% on 428 sub-industries. Beats DeBERTa by +24.90 pp.",
     color: "cyan",
-    badge: "86.82%",
+    badge: "88.90%",
   },
   {
     href: "/graph",
@@ -79,8 +79,8 @@ const JOURNEY_STOPS = [
   },
   {
     step: "03",
-    title: "Compare SVM and LLM tracks",
-    desc: "A serious model decision shaped by Macro F1, cost, and deployment practicality.",
+    title: "Cascade SVM vs DeBERTa",
+    desc: "88.90% Macro F1 vs 64% — the cascade architecture outperformed the fine-tuned transformer on every metric.",
     href: "/model",
   },
   {

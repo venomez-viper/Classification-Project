@@ -6,36 +6,36 @@ const STEPS = [
   {
     step: "01",
     title: "Raw Text Input",
-    desc: "LongProfile + SegmentName + SegmentDescription concatenated into a single rich text string.",
+    desc: "LongProfile + SegmentName + SegmentDescription concatenated into a single rich text string per company segment.",
     code: 'df["Combined"] = df["LongProfile"] + " " + df["SegmentName"] + " " + df["SegmentDescription"]',
     color: "violet",
   },
   {
     step: "02",
     title: "TF-IDF Vectorization",
-    desc: "50,000 sublinear log-scaled features extracted via bigram TF-IDF. Sparse matrix output with no dense array conversion.",
-    code: 'TfidfVectorizer(max_features=50000, sublinear_tf=True, ngram_range=(1,2))',
+    desc: "60,000 sublinear log-scaled features extracted via bigram TF-IDF. Sparse CSR matrix — no dense conversion, no memory explosion.",
+    code: 'TfidfVectorizer(max_features=60000, sublinear_tf=True, ngram_range=(1,2))',
     color: "blue",
   },
   {
     step: "03",
-    title: "Sparse Matrix",
-    desc: "scipy.sparse CSR matrix fed directly into breezeml via X= keyword. No ColumnTransformer, no memory explosion.",
-    code: 'model, report = classifiers.linear_svm(X=X_vec, y=y)',
+    title: "L1 — Sector Classifier",
+    desc: "LinearSVC trained on 11 broad sectors. Routes each input to its economic sector before any fine-grained prediction.",
+    code: 'LinearSVC(C=1.0, dual=False, class_weight="balanced")  # 11 classes',
     color: "cyan",
   },
   {
     step: "04",
-    title: "Linear SVM",
-    desc: "LinearSVC with dual=False (primal formulation) and class_weight='balanced' for Macro F1 optimization.",
-    code: 'LinearSVC(C=1.0, dual=False, class_weight="balanced")',
+    title: "L2 & L3 — Group → MSTAR Cascade",
+    desc: "L2 narrows to an industry group within the predicted sector. L3 selects the final Morningstar GECS code from that group's candidates only.",
+    code: 'cascade_predict(text, assets)  # sector → group → mstar_code',
     color: "emerald",
   },
   {
     step: "05",
-    title: "GECS Classification",
-    desc: "Single predicted MstarGlobal code (Task 1) + Subindustry code (Task 2) returned in under 10ms.",
-    code: '"mstar_code": "10320020", "mstar_label": "Regional Banks"',
+    title: "L4 — Sub-Industry (Task 2)",
+    desc: "Each MSTAR code has 1–13 sub-industry candidates. A final LinearSVC chooses among them, reaching 55.41% Macro F1 across 428 classes.",
+    code: 'cascade_predict_t2(text, assets)  # mstar → sub_code (428 classes)',
     color: "amber",
   },
 ];
@@ -70,8 +70,8 @@ export default function ModelDevelopment() {
             The Classification Pipeline
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Five precise engineering stages from raw company text to a structured Morningstar
-            GECS code. All running in under 2 seconds.
+            A 4-level cascade reads the Morningstar taxonomy hierarchy instead of flattening it —
+            88.90% Macro F1 on 145 industries, 55.41% on 428 sub-industries. No GPU required.
           </p>
         </motion.div>
 
@@ -108,12 +108,12 @@ export default function ModelDevelopment() {
           className="mt-10 grid md:grid-cols-2 gap-6"
         >
           <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6">
-            <p className="text-red-300 font-bold mb-2">Task 1: Industry Model</p>
-            <p className="text-white/50 text-sm">Uses LongProfile + SegmentName + SegmentDescription. 50,000 features. Trained on 53,587 segments. Predicts 1 of 145 MstarGlobal codes.</p>
+            <p className="text-red-300 font-bold mb-2">Task 1 — Industry Cascade · 88.90% Macro F1</p>
+            <p className="text-white/50 text-sm">3-level cascade (Sector → Group → MSTAR). 60,000 TF-IDF features. Trained on 53,587 segments. Predicts 1 of 145 Morningstar GECS codes. Outperforms DeBERTa by +24.90 pp on CPU.</p>
           </div>
           <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-6">
-            <p className="text-blue-300 font-bold mb-2">Task 2: Subindustry Model</p>
-            <p className="text-white/50 text-sm">Rubric-compliant: SegmentName + SegmentDescription only. 10,000 features. Predicts 1 of 450 granular Subindustry activity codes.</p>
+            <p className="text-blue-300 font-bold mb-2">Task 2 — Sub-Industry Cascade · 55.41% Macro F1</p>
+            <p className="text-white/50 text-sm">4-level cascade adds an L4 step: routes through T1 MSTAR prediction, then picks among 1–13 sub-industry candidates per code. 428 classes. Oracle ceiling: 62.26%.</p>
           </div>
         </motion.div>
       </div>

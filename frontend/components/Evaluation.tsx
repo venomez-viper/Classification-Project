@@ -47,8 +47,8 @@ function Ring({ pct, color, label, sublabel }: { pct: number; color: string; lab
 }
 
 const METRICS = [
-  { pct: 86.82, color: "#dc2626", label: "Task 1 Macro F1", sublabel: "Industry Classification" },
-  { pct: 62.61, color: "#60a5fa", label: "Task 1 Accuracy", sublabel: "145 Classes" },
+  { pct: 88.90, color: "#dc2626", label: "Task 1 Macro F1", sublabel: "145-class cascade SVM" },
+  { pct: 55.41, color: "#60a5fa", label: "Task 2 Macro F1", sublabel: "428-class sub-industry" },
   { pct: 75,    color: "#34d399", label: "Rubric Threshold", sublabel: "Minimum Required F1" },
 ];
 
@@ -58,12 +58,12 @@ const INSIGHTS = [
     body: "With 145 classes of wildly varying sizes, raw accuracy gets inflated by majority classes. Macro F1 averages the F1 score equally across every class, so the model gets penalized for ignoring rare industries. This is the correct metric for imbalanced NLP classification.",
   },
   {
-    title: "Why 62% Accuracy is Excellent",
-    body: "Random guessing on 145 classes = 0.69% accuracy. Our model reaches 62.61%, which is outperforming baseline by 90x. Macro F1 of 86.82% exceeds the rubric threshold of 75% by 11.82 percentage points.",
+    title: "The Cascade Architecture Breakthrough",
+    body: "Instead of one flat 145-class SVM, we built a 3-level cascade: L1 predicts the sector (11 classes), L2 narrows to the group, L3 picks the final MSTAR code. Each level trains only on its relevant slice, boosting Task 1 Macro F1 from 59.7% flat → 88.90% cascade.",
   },
   {
-    title: "The class_weight='balanced' Breakthrough",
-    body: "Before this patch, the SVM ignored small classes (< 50 samples). Adding balanced weighting forces the loss function to penalize those misclassifications proportionally. F1 score jumped from 43% → 86.82% in a single library patch.",
+    title: "Task 2: 4-Level Sub-Industry Cascade",
+    body: "Task 2 extends the cascade with an L4 level that maps each MSTAR code to 1–13 sub-industry candidates. LinearSVC selects among those candidates, reaching 55.41% Macro F1 on 428 classes — nearly matching the oracle ceiling of 62.26%.",
   },
 ];
 
@@ -82,8 +82,9 @@ export default function Evaluation() {
             Model Performance Metrics
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Measured against the rubric's minimum threshold of Macro F1 of 0.75, exceeding it by{" "}
-            <span className="text-emerald-400 font-bold">11.82 percentage points</span>.
+            Task 1 cascade SVM exceeds the rubric threshold of 75% by{" "}
+            <span className="text-emerald-400 font-bold">+13.90 percentage points</span>.{" "}
+            Task 2 sub-industry cascade reaches <span className="text-blue-400 font-bold">55.41%</span> across 428 classes.
           </p>
         </motion.div>
 
@@ -102,7 +103,7 @@ export default function Evaluation() {
           className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 text-center mb-12"
         >
           <div className="text-emerald-400 text-4xl font-black font-mono mb-2">✓ PASSING</div>
-          <p className="text-white/60">Macro F1 <strong className="text-white">86.82%</strong> exceeds the required threshold of <strong className="text-white">75%</strong></p>
+          <p className="text-white/60">Task 1 Macro F1 <strong className="text-white">88.90%</strong> exceeds the required threshold of <strong className="text-white">75%</strong> — beats fine-tuned DeBERTa by <strong className="text-emerald-400">+24.90 pp</strong></p>
         </motion.div>
 
         {/* Insights */}

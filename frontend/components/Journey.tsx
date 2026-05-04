@@ -69,10 +69,10 @@ const PHASES = [
     number: "05",
     eyebrow: "Final verdict",
     icon: CheckCircle2,
-    title: "The LLM was respectable. The SVM was production-ready.",
+    title: "The LLM was respectable. The cascade SVM was production-ready.",
     description:
-      "DeBERTa reached around 64% Macro F1, which proved the training work was real. But the classic TF-IDF plus Linear SVM pipeline reached 86.82% Macro F1 and deployed with far less friction. That is the kind of result that changes a project from flashy to trustworthy.",
-    impact: "The simpler system won because it solved the actual business problem better.",
+      "DeBERTa reached 64% Macro F1, which proved the training work was real. But the 3-level cascade TF-IDF + LinearSVC pipeline reached 88.90% Macro F1 on Task 1 and 55.41% on 428 sub-industries — deployed on CPU with no GPU required. That is the kind of result that changes a project from flashy to trustworthy.",
+    impact: "The cascade system won because it read the taxonomy hierarchy instead of ignoring it.",
     glow: "emerald" as const,
   },
 ];
@@ -294,11 +294,13 @@ export default function Journey() {
             <div className="grid gap-6 lg:grid-cols-2">
               <GlowCard glowColor="emerald" className="border-white/8 bg-emerald-500/[0.06]">
                 <div className="text-xs uppercase tracking-[0.28em] text-emerald-300/75 mb-4">Production winner</div>
-                <h3 className="text-3xl font-black text-white mb-4">TF-IDF + Linear SVM</h3>
-                <div className="text-5xl font-black text-white mb-5">86.82%</div>
+                <h3 className="text-3xl font-black text-white mb-4">4-Level Cascade SVM</h3>
+                <div className="text-5xl font-black text-white mb-1">88.90%</div>
+                <div className="text-sm text-emerald-400 font-semibold mb-5">Task 1 · +13.90 pp over rubric threshold</div>
                 <p className="text-white/58 leading-8">
-                  Faster to serve, easier to reason about, and far more reliable across the industry classification task.
-                  It turned out to be the model that respected the data and the deployment target at the same time.
+                  Sector → Group → MSTAR → Sub-Industry. Reads the Morningstar taxonomy hierarchy
+                  instead of flattening it. 40× faster than DeBERTa on CPU, +24.90 pp better on Macro F1.
+                  Task 2 reaches 55.41% across 428 sub-industry classes.
                 </p>
               </GlowCard>
 
