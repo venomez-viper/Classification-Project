@@ -7,10 +7,12 @@ import { Menu, X } from "lucide-react";
 import { TextScramble } from "@/components/ui/text-scramble";
 
 const NAV = [
-  { label: "Home", href: "/" },
-  { label: "Journey", href: "/journey" },
-  { label: "Team", href: "/team" },
-  { label: "Demo", href: "/demo" },
+  { label: "Home",      href: "/" },
+  { label: "Demo",      href: "/demo" },
+  { label: "LLM",       href: "/llm" },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Journey",   href: "/journey" },
+  { label: "Team",      href: "/team" },
 ];
 
 function NavLink({ label, href, active }: { label: string; href: string; active: boolean }) {

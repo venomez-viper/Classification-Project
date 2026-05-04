@@ -1,31 +1,31 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const LLM_URL =
-  process.env.LLM_API_URL ??
-  process.env.NEXT_PUBLIC_LLM_API_URL ??
-  "http://localhost:5001";
+const LEGENDARY_URL =
+  process.env.LEGENDARY_API_URL ??
+  process.env.NEXT_PUBLIC_LEGENDARY_API_URL ??
+  "http://localhost:5003";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
   let upstream: Response;
   try {
-    upstream = await fetch(`${LLM_URL}/api/predict_llm`, {
+    upstream = await fetch(`${LEGENDARY_URL}/api/predict_legendary`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   } catch {
     return NextResponse.json(
-      { error: "Cannot reach the DeBERTa server. Make sure server_llm.py is running on port 5001." },
+      { error: "Cannot reach the legendary server. Check port 5003 or LEGENDARY_API_URL." },
       { status: 502 }
     );
   }
 
   const text = await upstream.text();
   if (!text) {
-    return NextResponse.json({ error: "DeBERTa server returned an empty response." }, { status: 503 });
+    return NextResponse.json({ error: "Legendary server returned empty response." }, { status: 503 });
   }
 
   try {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data, { status: upstream.status });
   } catch {
     return NextResponse.json(
-      { error: `DeBERTa server error (${upstream.status}): ${text.slice(0, 300)}` },
+      { error: `Legendary server error (${upstream.status}): ${text.slice(0, 300)}` },
       { status: 502 }
     );
   }

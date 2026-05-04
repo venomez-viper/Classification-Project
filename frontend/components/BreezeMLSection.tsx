@@ -71,6 +71,21 @@ const VERSIONS = [
       "Eliminates need for SMOTE oversampling entirely",
     ],
   },
+  {
+    version: "Level 2",
+    date: "May 2026",
+    title: "Hierarchical Cascade Classifier",
+    icon: TrendingUp,
+    color: "green",
+    critical: true,
+    changes: [
+      "Extended breezeml with a 3-level cascade: Sector → Industry Group → Morningstar Code",
+      "Each level uses a dedicated LinearSVC trained only on classes within that branch",
+      "Macro F1 jumped from 59.70% (flat) to 88.90% — a +29.2 percentage point gain",
+      "Rare-class F1 improved from 20.44% to 73.68% without any additional training data",
+      "Runs at 1,673 classifications per second on CPU — 40× faster than fine-tuned DeBERTa",
+    ],
+  },
 ];
 
 const colorMap: Record<string, string> = {
@@ -138,8 +153,10 @@ export default function BreezeMLSection() {
             machine learning framework built on top of scikit-learn, authored by{" "}
             <strong className="text-red-300">Akash Anipakalu Giridhar</strong>. It provides a clean,
             zero-boilerplate API for classification, regression, clustering, and model benchmarking.
-            During this Capstone, we identified critical performance limitations and systematically
-            patched each one and shipped 5 public versions to PyPI in a single engineering session.
+            During this Capstone, we identified critical performance limitations, shipped 5 public
+            versions to PyPI, and then extended breezeml into Level 2 — a hierarchical cascade
+            architecture that reached 88.90% Macro F1 on 145 industry classes, beating a fine-tuned
+            DeBERTa transformer by +24.9 percentage points.
           </p>
           <div className="mt-4 font-mono text-sm bg-black/40 rounded-lg p-4 text-white/70">
             <span className="text-red-400">from</span> breezeml <span className="text-red-400">import</span> classifiers<br />

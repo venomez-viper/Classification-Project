@@ -1,165 +1,144 @@
 import os
+import sys
 import json
 import torch
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
+# Make the project root importable so we can share label lookups
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from legendary.shared import get_label  # noqa: E402
+
 app = Flask(__name__)
 CORS(app)
 
-# ── GECS Human-Readable Label Lookup ───────────────────────────────────────────
-MSTAR_LABELS = {
-    "10320010": "Capital Markets",
-    "10320020": "Regional Banks",
-    "10320030": "Diversified Banks",
-    "10320040": "Insurance — Life & Health",
-    "10320050": "Insurance — Property & Casualty",
-    "10340010": "Asset Management",
-    "10340060": "Insurance — Multi-line",
-    "10310010": "Diversified Financial Services",
-    "30820010": "Internet Content & Information",
-    "30820020": "Software — Application",
-    "30820030": "Software — Infrastructure",
-    "30830010": "Internet Search & AI Services",
-    "31130010": "Semiconductors",
-    "31130020": "Semiconductor Equipment",
-    "31120060": "Scientific & Technical Instruments",
-    "30810010": "Electronic Components",
-    "30810020": "Electronic Manufacturing Services",
-    "20527020": "Biotechnology",
-    "20527010": "Drug Manufacturers — General",
-    "20527050": "Drug Manufacturers — Specialty & Generic",
-    "20528010": "Medical Devices",
-    "20528020": "Medical Instruments & Supplies",
-    "20524010": "Healthcare Plans",
-    "20525010": "Medical Care Facilities",
-    "20525040": "Packaged Foods",
-    "21022020": "Specialty Retail",
-    "21021010": "Discount Stores",
-    "21022030": "Department Stores",
-    "21012010": "Apparel Manufacturing",
-    "21012020": "Footwear & Accessories",
-    "20529010": "Consumer Electronics",
-    "31020010": "Aerospace & Defense",
-    "31020020": "Industrial Machinery",
-    "31020030": "Diversified Industrials",
-    "10310020": "Engineering & Construction",
-    "31120020": "Electrical Equipment & Parts",
-    "10110010": "Oil & Gas Integrated",
-    "10110020": "Oil & Gas E&P",
-    "10110030": "Oil & Gas Midstream",
-    "10130020": "Agricultural Inputs",
-    "10310015": "Diversified Chemicals",
-    "30610010": "REIT — Retail",
-    "30610020": "REIT — Office",
-    "30610030": "REIT — Industrial",
-    "30610040": "REIT — Healthcare",
-    "30620010": "Real Estate Services",
-    "30810030": "Telecom Services",
-    "30830020": "Entertainment",
-    "30830030": "Broadcasting & Media",
-    "31110030": "IT Services & Cloud Computing",
-    "20650010": "Medical Equipment & Instruments",
-    "30910020": "Oil & Gas Equipment & Services",
-}
 
-PREFIX_LABELS = {
-    "101": "Energy & Extraction",
-    "102": "Basic Materials & Consumer",
-    "103": "Financial Services",
-    "104": "Real Estate / Construction",
-    "205": "Healthcare & Pharma",
-    "206": "Medical Equipment",
-    "207": "Healthcare Services",
-    "210": "Consumer Retail",
-    "306": "Real Estate (REIT)",
-    "308": "Technology & Communications",
-    "309": "Energy Equipment",
-    "310": "Industrials & Manufacturing",
-    "311": "IT & Semiconductors",
-}
-
-def get_label(code, lookup):
-    return lookup.get(str(code), None)
-
-def get_fallback_label(code):
-    prefix = str(code)[:3]
-    broad_sector = PREFIX_LABELS.get(prefix, "Miscellaneous Industry")
-    return f"{broad_sector} (Code: {code})"
-
-# ── Load DeBERTa Model ────────────────────────────────────────────────────────
+# ── Load models ───────────────────────────────────────────────────────────────
 device = "cuda" if torch.cuda.is_available() else "cpu"
-MODEL_PATH = "llm_finetuning/results/task1_best_model"
-TOKENIZER_PATH = "microsoft/deberta-v3-small"
-JSON_MAP = "llm_finetuning/data/task1_idx_to_code.json"
+RESULTS_DIR    = "llm_finetuning/results"
+TOKENIZER_PATH = "microsoft/deberta-v3-small"  # local cache
 
-print("=" * 50)
-print(f"Loading DeBERTa-v3 LLM on {device.upper()}...")
-print("=" * 50)
+print("=" * 55)
+print(f"DeBERTa server — device: {device.upper()}")
+print("=" * 55)
 
-MODELS_READY = False
-try:
-    tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_PATH, local_files_only=True)
-    model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH, local_files_only=True)
-    model.to(device)
-    model.eval()
 
-    with open(JSON_MAP, "r") as f:
-        idx_to_code = {int(k): str(v) for k, v in json.load(f).items()}
+def _load_model(task: str):
+    model_dir = os.path.join(RESULTS_DIR, f"{task}_best_model")
+    idx_map   = os.path.join("llm_finetuning", "data", f"{task}_idx_to_code.json")
+    try:
+        tok = AutoTokenizer.from_pretrained(model_dir, local_files_only=True)
+        mdl = AutoModelForSequenceClassification.from_pretrained(model_dir, local_files_only=True)
+        mdl.to(device)
+        mdl.eval()
+        with open(idx_map, "r") as f:
+            code_map = {int(k): str(v) for k, v in json.load(f).items()}
+        print(f"  ✓ {task} model loaded  ({len(code_map)} classes)")
+        return tok, mdl, code_map, True, None
+    except Exception as exc:
+        print(f"  ✗ {task} model NOT loaded: {exc}")
+        return None, None, None, False, str(exc)
 
-    print("Model mounted successfully. Ready for inference.")
-    MODELS_READY = True
-except Exception as e:
-    print(f"ERROR loading model: {e}")
-    print("Ensure you have run the training script and the model exists in llm_finetuning/results/")
 
+T1_TOK, T1_MDL, T1_MAP, T1_READY, T1_ERR = _load_model("task1")
+T2_TOK, T2_MDL, T2_MAP, T2_READY, T2_ERR = _load_model("task2")
+
+print("=" * 55)
+if not T1_READY:
+    print("WARNING: Task-1 model unavailable. Train with:")
+    print("  python llm_finetuning/scripts/train_local.py --task task1")
+if not T2_READY:
+    print("Task-2 model not found. Train with:")
+    print("  python llm_finetuning/scripts/train_local.py --task task2")
+print("=" * 55)
+
+
+# ── Inference helper ──────────────────────────────────────────────────────────
+def _predict(text: str, tok, mdl, code_map: dict, top_n: int = 3) -> dict:
+    inputs = tok(
+        [text],
+        truncation=True,
+        padding="max_length",
+        max_length=128,
+        return_tensors="pt",
+    )
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+
+    with torch.no_grad():
+        logits = mdl(**inputs).logits[0]
+        probs  = torch.softmax(logits, dim=-1)
+        top_v, top_i = torch.topk(probs, k=min(top_n, probs.shape[0]))
+
+    best_code  = code_map.get(int(top_i[0].item()), "Unknown")
+    confidence = round(float(top_v[0].item()) * 100.0, 1)
+
+    alternatives = []
+    for rank, (prob, idx) in enumerate(zip(top_v.tolist(), top_i.tolist()), start=1):
+        code = code_map.get(int(idx), "Unknown")
+        alternatives.append({
+            "rank":       rank,
+            "code":       code,
+            "label":      get_label(code),
+            "confidence": round(float(prob) * 100.0, 1),
+        })
+
+    return {
+        "code":         best_code,
+        "label":        get_label(best_code),
+        "confidence":   confidence,
+        "alternatives": alternatives,
+    }
+
+
+# ── Routes ────────────────────────────────────────────────────────────────────
 @app.errorhandler(Exception)
 def handle_exception(e):
     return jsonify({"error": str(e)}), 500
 
+
+@app.route("/health")
+def health():
+    return jsonify({
+        "task1_ready": T1_READY, "task1_error": T1_ERR,
+        "task2_ready": T2_READY, "task2_error": T2_ERR,
+        "device":      device,
+    })
+
+
 @app.route("/api/predict_llm", methods=["POST"])
-def execute_llm_prediction():
-    if not MODELS_READY:
-        return jsonify({"error": "DeBERTa LLM offline. Please train the model first."}), 503
+def predict_llm():
+    if not T1_READY:
+        return jsonify({"error": "Task-1 DeBERTa model not loaded.", "details": T1_ERR}), 503
 
-    data = request.get_json(silent=True) or {}
-    raw_text = data.get("text", "")
-
-    if not raw_text.strip():
+    data     = request.get_json(silent=True) or {}
+    raw_text = data.get("text", "").strip()
+    if not raw_text:
         return jsonify({"error": "Empty text provided."}), 400
 
-    try:
-        # 1. Tokenize
-        inputs = tokenizer(
-            [raw_text], 
-            truncation=True, 
-            padding="max_length", 
-            max_length=512, 
-            return_tensors="pt"
-        )
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+    t1 = _predict(raw_text, T1_TOK, T1_MDL, T1_MAP)
 
-        # 2. Forward Pass
-        with torch.no_grad():
-            outputs = model(**inputs)
-            logits = outputs.logits
-            predicted_idx = logits.argmax(dim=-1).item()
+    response = {
+        "success":      True,
+        "engine":       "DeBERTa-v3-small",
+        "mstar_code":   t1["code"],
+        "mstar_label":  t1["label"],
+        "confidence":   t1["confidence"],
+        "alternatives": t1["alternatives"],
+        "task2_ready":  T2_READY,
+    }
 
-        # 3. Map to Industry Code
-        mstar_code = idx_to_code.get(predicted_idx, "Unknown")
-        mstar_label = get_label(mstar_code, MSTAR_LABELS) or get_fallback_label(mstar_code)
+    if T2_READY:
+        t2 = _predict(raw_text, T2_TOK, T2_MDL, T2_MAP)
+        response["sub_code"]         = t2["code"]
+        response["sub_label"]        = t2["label"]
+        response["sub_confidence"]   = t2["confidence"]
+        response["sub_alternatives"] = t2["alternatives"]
 
-        return jsonify({
-            "success": True,
-            "mstar_code": mstar_code,
-            "mstar_label": mstar_label,
-            # We didn't train task 2 for LLM, so we omit sub_code for the LLM UI
-            "sub_code": "N/A (LLM Task 1 Only)",
-            "sub_label": "N/A",
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    return jsonify(response)
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    from waitress import serve
+    print("DeBERTa server starting on http://localhost:5001")
+    serve(app, host="0.0.0.0", port=5001)

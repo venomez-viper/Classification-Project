@@ -22,12 +22,12 @@ const PIPELINE_STEPS = [
 ];
 
 const PERF_BARS = [
-  { label: "Task 1 Weighted F1", value: "86.82%", pct: 86.82, color: "#ef4444" },
-  { label: "Task 1 Macro F1",    value: "61.07%", pct: 61.07, color: "#f97316" },
-  { label: "Task 2 Weighted F1", value: "47.72%", pct: 47.72, color: "#3b82f6" },
-  { label: "Task 2 Macro F1",    value: "39.62%", pct: 39.62, color: "#8b5cf6" },
-  { label: "Rubric Threshold",   value: "75.00%", pct: 75,    color: "#10b981" },
-  { label: "Random Baseline",    value: "0.69%",  pct: 0.69,  color: "#374151" },
+  { label: "Cascade SVM — Macro F1 ★", value: "88.90%", pct: 88.90, color: "#22c55e" },
+  { label: "DeBERTa-v3-small (LLM)",   value: "64.00%", pct: 64.00, color: "#a855f7" },
+  { label: "Flat SVM — Weighted F1",   value: "86.82%", pct: 86.82, color: "#ef4444" },
+  { label: "Flat SVM — Macro F1",      value: "59.70%", pct: 59.70, color: "#f97316" },
+  { label: "Rubric Threshold",         value: "75.00%", pct: 75,    color: "#10b981" },
+  { label: "Random Baseline",          value: "0.69%",  pct: 0.69,  color: "#374151" },
 ];
 
 const EXAMPLES = [
@@ -39,12 +39,12 @@ const EXAMPLES = [
 ];
 
 const ACHIEVEMENT_STATS = [
-  { value: "53,585",   label: "Training Records",  sub: "company segments",        color: "#22c55e" },
-  { value: "86.82%",   label: "Weighted F1",        sub: "task 1 industry",         color: "#ef4444" },
-  { value: "90×",      label: "Above Baseline",     sub: "vs random 0.69%",         color: "#f59e0b" },
-  { value: "+11.82pp", label: "Rubric Exceeded",    sub: "above 75% threshold",     color: "#10b981" },
-  { value: "5",        label: "breezeml Patches",   sub: "versions shipped",        color: "#3b82f6" },
-  { value: "43→87%",   label: "F1 Breakthrough",   sub: "class_weight=balanced",   color: "#a855f7" },
+  { value: "88.90%",   label: "Cascade F1",         sub: "145 classes, 10,717 samples", color: "#22c55e" },
+  { value: "+24.9pp",  label: "vs DeBERTa",         sub: "transformer beaten by SVM",   color: "#f59e0b" },
+  { value: "+29.2pp",  label: "vs Flat SVM",        sub: "same architecture, 3 levels", color: "#ef4444" },
+  { value: "73.68%",   label: "Rare-class F1",      sub: "was 20.44% flat → +53pts",    color: "#10b981" },
+  { value: "1,673/s",  label: "Throughput",         sub: "CPU only, no GPU needed",     color: "#3b82f6" },
+  { value: "3-Level",  label: "Cascade SVM",        sub: "sector → group → code",       color: "#a855f7" },
 ];
 
 // ── GECS taxonomy helpers ──────────────────────────────────────────────────────
@@ -647,9 +647,9 @@ export default function Dashboard() {
         <div className="flex flex-wrap items-center gap-4 h-12 px-5 mb-6 border border-green-500/15 bg-green-500/[0.03] rounded-lg">
           <motion.div animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 2, repeat: Infinity }}
             className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0 shadow-[0_0_8px_#4ade80]" />
-          <span className="text-sm font-mono text-green-400/80 font-bold tracking-wider">GECS ENGINE v5.0 — ONLINE</span>
+          <span className="text-sm font-mono text-green-400/80 font-bold tracking-wider">BREEZEML LEVEL 2 — ONLINE</span>
           <span className="hidden md:block text-sm font-mono text-white/20">
-            breezeml · LinearSVC · TF-IDF · scipy.sparse · DePaul University · Group 4
+            Cascade SVM 88.90% F1 · +24.9pp vs DeBERTa · DePaul University · Group 4
           </span>
           <div className="ml-auto flex items-center gap-5">
             <span className="text-sm font-mono text-white/25">
@@ -815,7 +815,7 @@ export default function Dashboard() {
             <span className="text-sm font-mono text-white/25 uppercase tracking-widest">Model Evaluation</span>
             <div className="ml-auto flex items-center gap-2 border border-emerald-500/20 bg-emerald-500/[0.04] rounded-lg px-3 py-1.5">
               <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-xs font-mono text-emerald-400 font-bold">RUBRIC PASSED — 86.82% &gt; 75% threshold</span>
+              <span className="text-xs font-mono text-emerald-400 font-bold">LEVEL 2 — 88.90% Macro F1 · beats DeBERTa by +24.9pp</span>
             </div>
           </div>
 
@@ -876,9 +876,9 @@ export default function Dashboard() {
           {/* Key insight strip */}
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
-              { label: "F1 Before class_weight fix", value: "43%", sub: "LinearSVC default settings",       color: "#6b7280" },
-              { label: "F1 After class_weight fix",  value: "86.82%", sub: "class_weight='balanced'",       color: "#10b981" },
-              { label: "Improvement vs Baseline",    value: "90×",    sub: "vs random guess on 145 classes",color: "#f59e0b" },
+              { label: "Flat SVM Macro F1",      value: "59.70%",  sub: "same data, 145 classes flat",        color: "#f97316" },
+              { label: "Cascade SVM Macro F1 ★", value: "88.90%",  sub: "3-level hierarchy, same data",       color: "#22c55e" },
+              { label: "Cascade vs DeBERTa",     value: "+24.9pp", sub: "transformer architecture beaten",    color: "#f59e0b" },
             ].map(({ label, value, sub, color }) => (
               <div key={label} className="border border-white/[0.05] rounded-lg px-4 py-3 flex items-center gap-4">
                 <div className="text-2xl font-black font-mono flex-shrink-0" style={{ color }}>{value}</div>
@@ -906,7 +906,7 @@ export default function Dashboard() {
         {/* Footer */}
         <div className="mt-8 text-center">
           <span className="text-xs font-mono text-white/15 uppercase tracking-widest">
-            MGT 599 Capstone · Group 4 · DePaul University Chicago · Spring 2026 · breezeml v5.0
+            MGT 599 Capstone · Group 4 · DePaul University Chicago · Spring 2026 · BreezeML Level 2
           </span>
         </div>
       </div>

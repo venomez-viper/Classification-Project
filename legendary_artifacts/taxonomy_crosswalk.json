@@ -1,0 +1,992 @@
+{
+  "10110010": {
+    "mstar": {"code": "10110010", "label": "Oil & Gas Integrated"},
+    "gics": {"code": "10102010", "label": "Integrated Oil & Gas"},
+    "naics": {"code": "211120", "label": "Crude Petroleum Extraction"},
+    "sic": {"code": "2911", "label": "Petroleum Refining"}
+  },
+  "10110020": {
+    "mstar": {"code": "10110020", "label": "Oil & Gas E&P"},
+    "gics": {"code": "10102020", "label": "Oil & Gas Exploration & Production"},
+    "naics": {"code": "211120", "label": "Crude Petroleum Extraction"},
+    "sic": {"code": "1311", "label": "Crude Petroleum and Natural Gas"}
+  },
+  "10110030": {
+    "mstar": {"code": "10110030", "label": "Oil & Gas Midstream"},
+    "gics": {"code": "10102030", "label": "Oil & Gas Storage & Transportation"},
+    "naics": {"code": "486110", "label": "Pipeline Transportation of Crude Oil"},
+    "sic": {"code": "4922", "label": "Natural Gas Transmission"}
+  },
+  "10120010": {
+    "mstar": {"code": "10120010", "label": "Coal"},
+    "gics": {"code": "10102050", "label": "Coal & Consumable Fuels"},
+    "naics": {"code": "212111", "label": "Bituminous Coal and Lignite Surface Mining"},
+    "sic": {"code": "1220", "label": "Bituminous Coal and Lignite Surface Mining"}
+  },
+  "10130010": {
+    "mstar": {"code": "10130010", "label": "Specialty Chemicals"},
+    "gics": {"code": "15101010", "label": "Commodity Chemicals"},
+    "naics": {"code": "325110", "label": "Petrochemical Manufacturing"},
+    "sic": {"code": "2810", "label": "Industrial Chemicals and Synthetics"}
+  },
+  "10130020": {
+    "mstar": {"code": "10130020", "label": "Agricultural Inputs"},
+    "gics": {"code": "15101020", "label": "Fertilizers & Agricultural Chemicals"},
+    "naics": {"code": "325320", "label": "Pesticide and Other Agricultural Chemical Manufacturing"},
+    "sic": {"code": "2870", "label": "Agricultural Chemicals"}
+  },
+  "10140010": {
+    "mstar": {"code": "10140010", "label": "Gold Mining"},
+    "gics": {"code": "15104020", "label": "Gold & Silver Mining"},
+    "naics": {"code": "212221", "label": "Gold Ore Mining"},
+    "sic": {"code": "1040", "label": "Gold and Silver Ores Mining"}
+  },
+  "10140020": {
+    "mstar": {"code": "10140020", "label": "Steel"},
+    "gics": {"code": "15104040", "label": "Steel"},
+    "naics": {"code": "331110", "label": "Iron and Steel Mills and Ferroalloy Manufacturing"},
+    "sic": {"code": "3312", "label": "Steel Works, Blast Furnaces"}
+  },
+  "10150010": {
+    "mstar": {"code": "10150010", "label": "Aluminum"},
+    "gics": {"code": "15104010", "label": "Aluminum"},
+    "naics": {"code": "331313", "label": "Aluminum Refining and Primary Production"},
+    "sic": {"code": "3334", "label": "Primary Production of Aluminum"}
+  },
+  "10150020": {
+    "mstar": {"code": "10150020", "label": "Copper"},
+    "gics": {"code": "15104030", "label": "Copper"},
+    "naics": {"code": "212234", "label": "Copper Ore and Nickel Ore Mining"},
+    "sic": {"code": "1021", "label": "Copper Ore Mining"}
+  },
+  "10150030": {
+    "mstar": {"code": "10150030", "label": "Diversified Metals & Mining"},
+    "gics": {"code": "15104050", "label": "Diversified Metals & Mining"},
+    "naics": {"code": "212299", "label": "All Other Metal Ore Mining"},
+    "sic": {"code": "1090", "label": "Metal Mining Services"}
+  },
+  "10150040": {
+    "mstar": {"code": "10150040", "label": "Specialty Mining & Metals"},
+    "gics": {"code": "15104050", "label": "Diversified Metals & Mining"},
+    "naics": {"code": "212299", "label": "All Other Metal Ore Mining"},
+    "sic": {"code": "1094", "label": "Uranium-Radium-Vanadium Ores"}
+  },
+  "10150050": {
+    "mstar": {"code": "10150050", "label": "Silver Mining"},
+    "gics": {"code": "15104020", "label": "Gold & Silver Mining"},
+    "naics": {"code": "212222", "label": "Silver Ore Mining"},
+    "sic": {"code": "1044", "label": "Silver Ore Mining"}
+  },
+  "10150060": {
+    "mstar": {"code": "10150060", "label": "Uranium & Nuclear Fuels"},
+    "gics": {"code": "15104050", "label": "Diversified Metals & Mining"},
+    "naics": {"code": "212291", "label": "Uranium-Radium-Vanadium Ore Mining"},
+    "sic": {"code": "1094", "label": "Uranium-Radium-Vanadium Ores"}
+  },
+  "10160010": {
+    "mstar": {"code": "10160010", "label": "Forest Products"},
+    "gics": {"code": "15105010", "label": "Forest Products"},
+    "naics": {"code": "113110", "label": "Timber Tract Operations"},
+    "sic": {"code": "2411", "label": "Logging"}
+  },
+  "10160020": {
+    "mstar": {"code": "10160020", "label": "Paper & Paper Products"},
+    "gics": {"code": "15105020", "label": "Paper Products"},
+    "naics": {"code": "322121", "label": "Paper Mills"},
+    "sic": {"code": "2621", "label": "Paper Mills"}
+  },
+  "10200010": {
+    "mstar": {"code": "10200010", "label": "Auto & Truck Dealerships"},
+    "gics": {"code": "25102010", "label": "Automotive Retail"},
+    "naics": {"code": "441110", "label": "New Car Dealers"},
+    "sic": {"code": "5511", "label": "Motor Vehicle Dealers, New and Used"}
+  },
+  "10200020": {
+    "mstar": {"code": "10200020", "label": "Auto Parts"},
+    "gics": {"code": "25101020", "label": "Auto Parts & Equipment"},
+    "naics": {"code": "336350", "label": "Motor Vehicle Transmission and Power Train Parts Manufacturing"},
+    "sic": {"code": "3714", "label": "Motor Vehicle Parts and Accessories"}
+  },
+  "10200030": {
+    "mstar": {"code": "10200030", "label": "Auto Manufacturers"},
+    "gics": {"code": "25101010", "label": "Automobile Manufacturers"},
+    "naics": {"code": "336111", "label": "Automobile Manufacturing"},
+    "sic": {"code": "3711", "label": "Motor Vehicles and Passenger Car Bodies"}
+  },
+  "10200040": {
+    "mstar": {"code": "10200040", "label": "Recreational Vehicles"},
+    "gics": {"code": "25201040", "label": "Leisure Products"},
+    "naics": {"code": "336213", "label": "Motor Home Manufacturing"},
+    "sic": {"code": "3716", "label": "Motor Homes"}
+  },
+  "10220010": {
+    "mstar": {"code": "10220010", "label": "Consumer Electronics"},
+    "gics": {"code": "25201010", "label": "Consumer Electronics"},
+    "naics": {"code": "334310", "label": "Audio and Video Equipment Manufacturing"},
+    "sic": {"code": "3651", "label": "Household Audio and Video Equipment"}
+  },
+  "10230010": {
+    "mstar": {"code": "10230010", "label": "Residential Construction"},
+    "gics": {"code": "25201030", "label": "Homebuilding"},
+    "naics": {"code": "236115", "label": "New Single-Family Housing Construction"},
+    "sic": {"code": "1521", "label": "General Building Contractors, Residential Buildings"}
+  },
+  "10240010": {
+    "mstar": {"code": "10240010", "label": "Hotels & Motels"},
+    "gics": {"code": "25301010", "label": "Hotels, Resorts & Cruise Lines"},
+    "naics": {"code": "721110", "label": "Hotels and Motels"},
+    "sic": {"code": "7011", "label": "Hotels and Motels"}
+  },
+  "10240020": {
+    "mstar": {"code": "10240020", "label": "Casinos & Gaming"},
+    "gics": {"code": "25301030", "label": "Casinos & Gaming"},
+    "naics": {"code": "713210", "label": "Casinos (except Casino Hotels)"},
+    "sic": {"code": "7993", "label": "Video Amusement Game Arcades"}
+  },
+  "10240030": {
+    "mstar": {"code": "10240030", "label": "Restaurants"},
+    "gics": {"code": "25301040", "label": "Restaurants"},
+    "naics": {"code": "722511", "label": "Full-Service Restaurants"},
+    "sic": {"code": "5812", "label": "Eating Places"}
+  },
+  "10250010": {
+    "mstar": {"code": "10250010", "label": "Leisure Products"},
+    "gics": {"code": "25201040", "label": "Leisure Products"},
+    "naics": {"code": "339920", "label": "Sporting and Athletic Goods Manufacturing"},
+    "sic": {"code": "3949", "label": "Sporting & Athletic Goods"}
+  },
+  "10260010": {
+    "mstar": {"code": "10260010", "label": "Personal Products"},
+    "gics": {"code": "30201010", "label": "Personal Products"},
+    "naics": {"code": "325600", "label": "Soap, Cleaning Compound, and Toilet Preparation Manufacturing"},
+    "sic": {"code": "2844", "label": "Perfumes, Cosmetics, and Other Toilet Preparations"}
+  },
+  "10270010": {
+    "mstar": {"code": "10270010", "label": "Publishing & Media"},
+    "gics": {"code": "50202020", "label": "Publishing"},
+    "naics": {"code": "511120", "label": "Periodical Publishers"},
+    "sic": {"code": "2710", "label": "Newspapers: Publishing, or Publishing and Printing"}
+  },
+  "10280010": {
+    "mstar": {"code": "10280010", "label": "Apparel Retail"},
+    "gics": {"code": "25502020", "label": "Apparel Retail"},
+    "naics": {"code": "448110", "label": "Men's Clothing Stores"},
+    "sic": {"code": "5600", "label": "Retail Stores — Apparel & Accessory Stores"}
+  },
+  "10280020": {
+    "mstar": {"code": "10280020", "label": "Computer & Electronics Retail"},
+    "gics": {"code": "25502010", "label": "Computer & Electronics Retail"},
+    "naics": {"code": "443142", "label": "Electronics Stores"},
+    "sic": {"code": "5734", "label": "Computer and Computer Software Stores"}
+  },
+  "10280030": {
+    "mstar": {"code": "10280030", "label": "Home Improvement Retail"},
+    "gics": {"code": "25502030", "label": "Home Improvement Retail"},
+    "naics": {"code": "444110", "label": "Home Centers"},
+    "sic": {"code": "5211", "label": "Lumber & Building Material Dealers"}
+  },
+  "10280040": {
+    "mstar": {"code": "10280040", "label": "Automotive Retail"},
+    "gics": {"code": "25502050", "label": "Automotive Retail"},
+    "naics": {"code": "441110", "label": "New Car Dealers"},
+    "sic": {"code": "5511", "label": "Motor Vehicle Dealers"}
+  },
+  "10280050": {
+    "mstar": {"code": "10280050", "label": "Home Furnishing Retail"},
+    "gics": {"code": "25502040", "label": "Homefurnishing Retail"},
+    "naics": {"code": "442110", "label": "Furniture Stores"},
+    "sic": {"code": "5712", "label": "Furniture Stores"}
+  },
+  "10280060": {
+    "mstar": {"code": "10280060", "label": "Food Retail"},
+    "gics": {"code": "30301010", "label": "Food Retail"},
+    "naics": {"code": "445110", "label": "Supermarkets and Other Grocery Stores"},
+    "sic": {"code": "5411", "label": "Grocery Stores"}
+  },
+  "10290010": {
+    "mstar": {"code": "10290010", "label": "Beverages — Alcoholic"},
+    "gics": {"code": "30201020", "label": "Beverages — Alcoholic"},
+    "naics": {"code": "312120", "label": "Breweries"},
+    "sic": {"code": "2082", "label": "Malt Beverages"}
+  },
+  "10290020": {
+    "mstar": {"code": "10290020", "label": "Beverages — Non-Alcoholic"},
+    "gics": {"code": "30201030", "label": "Beverages — Non-Alcoholic"},
+    "naics": {"code": "312110", "label": "Soft Drink and Ice Manufacturing"},
+    "sic": {"code": "2086", "label": "Bottled and Canned Soft Drinks and Carbonated Waters"}
+  },
+  "10290030": {
+    "mstar": {"code": "10290030", "label": "Confectioners"},
+    "gics": {"code": "30202030", "label": "Packaged Foods & Meats"},
+    "naics": {"code": "311340", "label": "Non-Chocolate Confectionery Manufacturing"},
+    "sic": {"code": "2064", "label": "Candy and Other Confectionery Products"}
+  },
+  "10290040": {
+    "mstar": {"code": "10290040", "label": "Farm Products"},
+    "gics": {"code": "30202010", "label": "Agricultural Products"},
+    "naics": {"code": "111110", "label": "Soybean Farming"},
+    "sic": {"code": "0100", "label": "Agriculture — Crops"}
+  },
+  "10290050": {
+    "mstar": {"code": "10290050", "label": "Tobacco"},
+    "gics": {"code": "30203010", "label": "Tobacco"},
+    "naics": {"code": "312230", "label": "Tobacco Manufacturing"},
+    "sic": {"code": "2111", "label": "Cigarettes"}
+  },
+  "10310010": {
+    "mstar": {"code": "10310010", "label": "Diversified Financial Services"},
+    "gics": {"code": "40201020", "label": "Diversified Financial Services"},
+    "naics": {"code": "522298", "label": "All Other Nondepository Credit Intermediation"},
+    "sic": {"code": "6159", "label": "Federal-Sponsored Credit Agencies"}
+  },
+  "10310015": {
+    "mstar": {"code": "10310015", "label": "Diversified Chemicals"},
+    "gics": {"code": "15101010", "label": "Commodity Chemicals"},
+    "naics": {"code": "325100", "label": "Basic Chemical Manufacturing"},
+    "sic": {"code": "2819", "label": "Industrial Inorganic Chemicals"}
+  },
+  "10310020": {
+    "mstar": {"code": "10310020", "label": "Engineering & Construction"},
+    "gics": {"code": "20103010", "label": "Construction & Engineering"},
+    "naics": {"code": "236220", "label": "Commercial and Institutional Building Construction"},
+    "sic": {"code": "1541", "label": "General Building Contractors, Industrial Buildings"}
+  },
+  "10320010": {
+    "mstar": {"code": "10320010", "label": "Capital Markets"},
+    "gics": {"code": "40203010", "label": "Capital Markets"},
+    "naics": {"code": "523110", "label": "Investment Banking and Securities Dealing"},
+    "sic": {"code": "6211", "label": "Security Brokers, Dealers, and Flotation Companies"}
+  },
+  "10320020": {
+    "mstar": {"code": "10320020", "label": "Regional Banks"},
+    "gics": {"code": "40101015", "label": "Regional Banks"},
+    "naics": {"code": "522110", "label": "Commercial Banking"},
+    "sic": {"code": "6021", "label": "National Commercial Banks"}
+  },
+  "10320030": {
+    "mstar": {"code": "10320030", "label": "Diversified Banks"},
+    "gics": {"code": "40101010", "label": "Diversified Banks"},
+    "naics": {"code": "522110", "label": "Commercial Banking"},
+    "sic": {"code": "6020", "label": "Mutual Savings Banks"}
+  },
+  "10320040": {
+    "mstar": {"code": "10320040", "label": "Insurance - Life & Health"},
+    "gics": {"code": "40301010", "label": "Insurance - Life & Health"},
+    "naics": {"code": "524113", "label": "Direct Life Insurance Carriers"},
+    "sic": {"code": "6311", "label": "Life Insurance"}
+  },
+  "10320050": {
+    "mstar": {"code": "10320050", "label": "Insurance - Property & Casualty"},
+    "gics": {"code": "40301020", "label": "Insurance - Property & Casualty"},
+    "naics": {"code": "524126", "label": "Direct Property and Casualty Insurance Carriers"},
+    "sic": {"code": "6331", "label": "Fire, Marine & Casualty Insurance"}
+  },
+  "10330010": {
+    "mstar": {"code": "10330010", "label": "Credit Services"},
+    "gics": {"code": "40201010", "label": "Consumer Finance"},
+    "naics": {"code": "522291", "label": "Consumer Lending"},
+    "sic": {"code": "6141", "label": "Personal Credit Institutions"}
+  },
+  "10330020": {
+    "mstar": {"code": "10330020", "label": "Mortgage Finance"},
+    "gics": {"code": "40101030", "label": "Thrifts & Mortgage Finance"},
+    "naics": {"code": "522310", "label": "Mortgage and Nonmortgage Loan Brokers"},
+    "sic": {"code": "6159", "label": "Federal-Sponsored Credit Agencies"}
+  },
+  "10340010": {
+    "mstar": {"code": "10340010", "label": "Asset Management"},
+    "gics": {"code": "40203020", "label": "Asset Management & Custody Banks"},
+    "naics": {"code": "523920", "label": "Portfolio Management"},
+    "sic": {"code": "6282", "label": "Investment Advice"}
+  },
+  "10340020": {
+    "mstar": {"code": "10340020", "label": "Insurance — Life (Sub)"},
+    "gics": {"code": "40301010", "label": "Insurance - Life & Health"},
+    "naics": {"code": "524113", "label": "Direct Life Insurance Carriers"},
+    "sic": {"code": "6311", "label": "Life Insurance"}
+  },
+  "10340030": {
+    "mstar": {"code": "10340030", "label": "Insurance — Property (Sub)"},
+    "gics": {"code": "40301020", "label": "Insurance - Property & Casualty"},
+    "naics": {"code": "524126", "label": "Direct Property and Casualty Insurance Carriers"},
+    "sic": {"code": "6331", "label": "Fire, Marine & Casualty Insurance"}
+  },
+  "10340040": {
+    "mstar": {"code": "10340040", "label": "Reinsurance"},
+    "gics": {"code": "40301030", "label": "Multi-line Insurance"},
+    "naics": {"code": "524130", "label": "Reinsurance Carriers"},
+    "sic": {"code": "6321", "label": "Accident and Health Insurance"}
+  },
+  "10340050": {
+    "mstar": {"code": "10340050", "label": "Title Insurance"},
+    "gics": {"code": "40301020", "label": "Insurance - Property & Casualty"},
+    "naics": {"code": "524127", "label": "Direct Title Insurance Carriers"},
+    "sic": {"code": "6361", "label": "Title Insurance"}
+  },
+  "10340060": {
+    "mstar": {"code": "10340060", "label": "Insurance - Multi-line"},
+    "gics": {"code": "40301030", "label": "Multi-line Insurance"},
+    "naics": {"code": "524130", "label": "Reinsurance Carriers"},
+    "sic": {"code": "6321", "label": "Accident and Health Insurance"}
+  },
+  "10350010": {
+    "mstar": {"code": "10350010", "label": "Savings Banks & Thrifts"},
+    "gics": {"code": "40101030", "label": "Thrifts & Mortgage Finance"},
+    "naics": {"code": "522120", "label": "Savings Institutions, Federally Chartered"},
+    "sic": {"code": "6120", "label": "Savings Institution, Federally Chartered"}
+  },
+  "10350020": {
+    "mstar": {"code": "10350020", "label": "Specialty Finance"},
+    "gics": {"code": "40201020", "label": "Diversified Financial Services"},
+    "naics": {"code": "522291", "label": "Consumer Lending"},
+    "sic": {"code": "6153", "label": "Short-Term Business Credit Institutions"}
+  },
+  "10360010": {
+    "mstar": {"code": "10360010", "label": "Other Financial Services"},
+    "gics": {"code": "40201020", "label": "Diversified Financial Services"},
+    "naics": {"code": "522390", "label": "Other Activities Related to Credit Intermediation"},
+    "sic": {"code": "6199", "label": "Finance Services"}
+  },
+  "10410010": {
+    "mstar": {"code": "10410010", "label": "Electric Utilities"},
+    "gics": {"code": "55101010", "label": "Electric Utilities"},
+    "naics": {"code": "221122", "label": "Electric Power Distribution"},
+    "sic": {"code": "4911", "label": "Electric Services"}
+  },
+  "10410020": {
+    "mstar": {"code": "10410020", "label": "Gas Utilities"},
+    "gics": {"code": "55102010", "label": "Gas Utilities"},
+    "naics": {"code": "221210", "label": "Natural Gas Distribution"},
+    "sic": {"code": "4924", "label": "Natural Gas Distribution"}
+  },
+  "10410030": {
+    "mstar": {"code": "10410030", "label": "Water Utilities"},
+    "gics": {"code": "55103010", "label": "Water Utilities"},
+    "naics": {"code": "221310", "label": "Water Supply and Irrigation Systems"},
+    "sic": {"code": "4941", "label": "Water Supply"}
+  },
+  "10420010": {
+    "mstar": {"code": "10420010", "label": "Diversified Construction"},
+    "gics": {"code": "20103010", "label": "Construction & Engineering"},
+    "naics": {"code": "236210", "label": "Industrial Building Construction"},
+    "sic": {"code": "1540", "label": "General Building Contractors, Industrial Buildings"}
+  },
+  "10420020": {
+    "mstar": {"code": "10420020", "label": "Building Products & Equipment"},
+    "gics": {"code": "20102010", "label": "Building Products"},
+    "naics": {"code": "332321", "label": "Metal Window and Door Manufacturing"},
+    "sic": {"code": "3585", "label": "Air-Conditioning and Warm Air Heating Equipment"}
+  },
+  "10420030": {
+    "mstar": {"code": "10420030", "label": "Waste Management"},
+    "gics": {"code": "20104020", "label": "Environmental & Facilities Services"},
+    "naics": {"code": "562111", "label": "Solid Waste Collection"},
+    "sic": {"code": "4953", "label": "Refuse Systems"}
+  },
+  "10420040": {
+    "mstar": {"code": "10420040", "label": "Industrial Chemicals"},
+    "gics": {"code": "15101010", "label": "Commodity Chemicals"},
+    "naics": {"code": "325190", "label": "Other Basic Organic Chemical Manufacturing"},
+    "sic": {"code": "2860", "label": "Industrial Chemicals and Synthetics"}
+  },
+  "10420050": {
+    "mstar": {"code": "10420050", "label": "Rental & Leasing Services"},
+    "gics": {"code": "20201060", "label": "Diversified Support Services"},
+    "naics": {"code": "532111", "label": "Passenger Car Rental"},
+    "sic": {"code": "7515", "label": "Truck Rental and Leasing, Without Drivers"}
+  },
+  "10420060": {
+    "mstar": {"code": "10420060", "label": "Security Services"},
+    "gics": {"code": "20201050", "label": "Security & Alarm Services"},
+    "naics": {"code": "561611", "label": "Investigation Services"},
+    "sic": {"code": "7382", "label": "Home Security Services"}
+  },
+  "10420070": {
+    "mstar": {"code": "10420070", "label": "Engineering Services"},
+    "gics": {"code": "20103010", "label": "Construction & Engineering"},
+    "naics": {"code": "541330", "label": "Engineering Services"},
+    "sic": {"code": "8711", "label": "Engineering Services"}
+  },
+  "10420080": {
+    "mstar": {"code": "10420080", "label": "Staffing & Employment Services"},
+    "gics": {"code": "20201040", "label": "Human Resource & Employment Services"},
+    "naics": {"code": "561320", "label": "Temporary Help Services"},
+    "sic": {"code": "7363", "label": "Help Supply Services"}
+  },
+  "10420090": {
+    "mstar": {"code": "10420090", "label": "Diversified Business Services"},
+    "gics": {"code": "20201070", "label": "Diversified Support Services"},
+    "naics": {"code": "561499", "label": "All Other Business Support Services"},
+    "sic": {"code": "7389", "label": "Services to Buildings and Dwellings"}
+  },
+  "20510010": {
+    "mstar": {"code": "20510010", "label": "Biotechnology — Clinical Stage"},
+    "gics": {"code": "35201010", "label": "Biotechnology"},
+    "naics": {"code": "541714", "label": "Research and Development in Biotechnology"},
+    "sic": {"code": "8731", "label": "Commercial Physical & Biological Research"}
+  },
+  "20510020": {
+    "mstar": {"code": "20510020", "label": "Pharmaceuticals — Specialty"},
+    "gics": {"code": "35202010", "label": "Pharmaceuticals"},
+    "naics": {"code": "325412", "label": "Pharmaceutical Preparation Manufacturing"},
+    "sic": {"code": "2836", "label": "Pharmaceutical Preparations"}
+  },
+  "20520010": {
+    "mstar": {"code": "20520010", "label": "Medical Distributors"},
+    "gics": {"code": "35102010", "label": "Health Care Distributors"},
+    "naics": {"code": "423450", "label": "Medical and Hospital Equipment and Supplies Merchant Wholesalers"},
+    "sic": {"code": "5047", "label": "Medical and Hospital Equipment and Supplies"}
+  },
+  "20524010": {
+    "mstar": {"code": "20524010", "label": "Healthcare Plans"},
+    "gics": {"code": "35102030", "label": "Managed Health Care"},
+    "naics": {"code": "524114", "label": "Direct Health and Medical Insurance Carriers"},
+    "sic": {"code": "6324", "label": "Hospital and Medical Service Plans"}
+  },
+  "20525010": {
+    "mstar": {"code": "20525010", "label": "Medical Care Facilities"},
+    "gics": {"code": "35102015", "label": "Health Care Facilities"},
+    "naics": {"code": "622110", "label": "General Medical and Surgical Hospitals"},
+    "sic": {"code": "8062", "label": "General Medical and Surgical Hospitals"}
+  },
+  "20525020": {
+    "mstar": {"code": "20525020", "label": "Personal Care Products"},
+    "gics": {"code": "30201010", "label": "Personal Products"},
+    "naics": {"code": "325411", "label": "Medicinal and Botanical Manufacturing"},
+    "sic": {"code": "5912", "label": "Drug Stores and Proprietary Stores"}
+  },
+  "20525030": {
+    "mstar": {"code": "20525030", "label": "Dairy & Food Products"},
+    "gics": {"code": "30202030", "label": "Packaged Foods & Meats"},
+    "naics": {"code": "311500", "label": "Dairy Product Manufacturing"},
+    "sic": {"code": "2023", "label": "Dry, Condensed, and Evaporated Products"}
+  },
+  "20525040": {
+    "mstar": {"code": "20525040", "label": "Packaged Foods"},
+    "gics": {"code": "30202030", "label": "Packaged Foods & Meats"},
+    "naics": {"code": "311421", "label": "Fruit and Vegetable Canning"},
+    "sic": {"code": "2099", "label": "Food Preparations, NEC"}
+  },
+  "20527010": {
+    "mstar": {"code": "20527010", "label": "Drug Manufacturers - General"},
+    "gics": {"code": "35202010", "label": "Pharmaceuticals"},
+    "naics": {"code": "325412", "label": "Pharmaceutical Preparation Manufacturing"},
+    "sic": {"code": "2836", "label": "Pharmaceutical Preparations"}
+  },
+  "20527020": {
+    "mstar": {"code": "20527020", "label": "Biotechnology"},
+    "gics": {"code": "35201010", "label": "Biotechnology"},
+    "naics": {"code": "541714", "label": "Research and Development in Biotechnology"},
+    "sic": {"code": "8731", "label": "Commercial Physical & Biological Research"}
+  },
+  "20527050": {
+    "mstar": {"code": "20527050", "label": "Drug Manufacturers - Specialty & Generic"},
+    "gics": {"code": "35202010", "label": "Pharmaceuticals"},
+    "naics": {"code": "325416", "label": "Biological Product Manufacturing"},
+    "sic": {"code": "2833", "label": "Pharmaceutical Preparations"}
+  },
+  "20528010": {
+    "mstar": {"code": "20528010", "label": "Medical Devices"},
+    "gics": {"code": "35101010", "label": "Health Care Equipment"},
+    "naics": {"code": "339112", "label": "Surgical and Medical Instrument Manufacturing"},
+    "sic": {"code": "3841", "label": "Surgical & Medical Instruments & Apparatus"}
+  },
+  "20528020": {
+    "mstar": {"code": "20528020", "label": "Medical Instruments & Supplies"},
+    "gics": {"code": "35101020", "label": "Health Care Supplies"},
+    "naics": {"code": "339113", "label": "Surgical Appliance and Supplies Manufacturing"},
+    "sic": {"code": "3842", "label": "Orthopedic, Prosthetic, and Surgical Appliances"}
+  },
+  "20540010": {
+    "mstar": {"code": "20540010", "label": "Health Information Technology"},
+    "gics": {"code": "35103010", "label": "Health Care Technology"},
+    "naics": {"code": "541512", "label": "Computer Systems Design Services"},
+    "sic": {"code": "5047", "label": "Medical and Hospital Equipment and Supplies"}
+  },
+  "20550010": {
+    "mstar": {"code": "20550010", "label": "Drug Distribution"},
+    "gics": {"code": "35102010", "label": "Health Care Distributors"},
+    "naics": {"code": "424210", "label": "Drugs and Druggists' Sundries Merchant Wholesalers"},
+    "sic": {"code": "5122", "label": "Drugs, Drug Proprietaries and Druggists' Sundries"}
+  },
+  "20550020": {
+    "mstar": {"code": "20550020", "label": "Medical Supply Distribution"},
+    "gics": {"code": "35102010", "label": "Health Care Distributors"},
+    "naics": {"code": "423450", "label": "Medical and Hospital Equipment Merchant Wholesalers"},
+    "sic": {"code": "5047", "label": "Medical and Hospital Equipment and Supplies"}
+  },
+  "20550030": {
+    "mstar": {"code": "20550030", "label": "Specialty Pharmacy"},
+    "gics": {"code": "35102010", "label": "Health Care Distributors"},
+    "naics": {"code": "446110", "label": "Pharmacies and Drug Stores"},
+    "sic": {"code": "5912", "label": "Drug Stores and Proprietary Stores"}
+  },
+  "20560010": {
+    "mstar": {"code": "20560010", "label": "Diagnostics & Research"},
+    "gics": {"code": "35203010", "label": "Life Sciences Tools & Services"},
+    "naics": {"code": "621511", "label": "Medical Laboratories"},
+    "sic": {"code": "8734", "label": "Testing Laboratories"}
+  },
+  "20610010": {
+    "mstar": {"code": "20610010", "label": "Healthcare Services"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621498", "label": "All Other Outpatient Care Centers"},
+    "sic": {"code": "8099", "label": "Health Services, Not Elsewhere Classified"}
+  },
+  "20620010": {
+    "mstar": {"code": "20620010", "label": "Medical Laboratories"},
+    "gics": {"code": "35203010", "label": "Life Sciences Tools & Services"},
+    "naics": {"code": "621511", "label": "Medical Laboratories"},
+    "sic": {"code": "8071", "label": "Medical Laboratories"}
+  },
+  "20620020": {
+    "mstar": {"code": "20620020", "label": "Dental & Veterinary Services"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621210", "label": "Offices of Dentists"},
+    "sic": {"code": "8021", "label": "Offices and Clinics of Dentists"}
+  },
+  "20630010": {
+    "mstar": {"code": "20630010", "label": "Long-Term Care"},
+    "gics": {"code": "35102015", "label": "Health Care Facilities"},
+    "naics": {"code": "623110", "label": "Nursing Care Facilities (Skilled Nursing Facilities)"},
+    "sic": {"code": "8051", "label": "Skilled Nursing Care Facilities"}
+  },
+  "20645010": {
+    "mstar": {"code": "20645010", "label": "Health IT — Analytics"},
+    "gics": {"code": "35103010", "label": "Health Care Technology"},
+    "naics": {"code": "541519", "label": "Other Computer Related Services"},
+    "sic": {"code": "7372", "label": "Prepackaged Software"}
+  },
+  "20645020": {
+    "mstar": {"code": "20645020", "label": "Health IT — Platforms"},
+    "gics": {"code": "35103010", "label": "Health Care Technology"},
+    "naics": {"code": "541512", "label": "Computer Systems Design Services"},
+    "sic": {"code": "7371", "label": "Computer Programming Services"}
+  },
+  "20645030": {
+    "mstar": {"code": "20645030", "label": "Healthcare Technology"},
+    "gics": {"code": "35103010", "label": "Health Care Technology"},
+    "naics": {"code": "541512", "label": "Computer Systems Design Services"},
+    "sic": {"code": "7372", "label": "Prepackaged Software"}
+  },
+  "20650010": {
+    "mstar": {"code": "20650010", "label": "Medical Equipment & Instruments"},
+    "gics": {"code": "35101010", "label": "Health Care Equipment"},
+    "naics": {"code": "339112", "label": "Surgical and Medical Instrument Manufacturing"},
+    "sic": {"code": "3841", "label": "Surgical & Medical Instruments & Apparatus"}
+  },
+  "20650020": {
+    "mstar": {"code": "20650020", "label": "Medical Imaging & Diagnostics Equipment"},
+    "gics": {"code": "35101010", "label": "Health Care Equipment"},
+    "naics": {"code": "334510", "label": "Electromedical and Electrotherapeutic Apparatus Manufacturing"},
+    "sic": {"code": "3845", "label": "Electromedical Equipment"}
+  },
+  "20660010": {
+    "mstar": {"code": "20660010", "label": "Genomics & Precision Medicine"},
+    "gics": {"code": "35201010", "label": "Biotechnology"},
+    "naics": {"code": "541714", "label": "Research and Development in Biotechnology"},
+    "sic": {"code": "8731", "label": "Commercial Physical & Biological Research"}
+  },
+  "20670010": {
+    "mstar": {"code": "20670010", "label": "Animal Health"},
+    "gics": {"code": "35202010", "label": "Pharmaceuticals"},
+    "naics": {"code": "325412", "label": "Pharmaceutical Preparation Manufacturing"},
+    "sic": {"code": "2836", "label": "Pharmaceutical Preparations"}
+  },
+  "20710010": {
+    "mstar": {"code": "20710010", "label": "Physical Therapy & Rehabilitation"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621340", "label": "Offices of Physical, Occupational and Speech Therapists"},
+    "sic": {"code": "8049", "label": "Offices of Other Health Practitioners"}
+  },
+  "20710020": {
+    "mstar": {"code": "20710020", "label": "Home Health Services"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621610", "label": "Home Health Care Services"},
+    "sic": {"code": "8082", "label": "Home Health Care Services"}
+  },
+  "20720010": {
+    "mstar": {"code": "20720010", "label": "Specialty Hospitals"},
+    "gics": {"code": "35102015", "label": "Health Care Facilities"},
+    "naics": {"code": "622310", "label": "Specialty (except Psychiatric and Substance Abuse) Hospitals"},
+    "sic": {"code": "8093", "label": "Specialty Outpatient Facilities, NEC"}
+  },
+  "20720020": {
+    "mstar": {"code": "20720020", "label": "Ambulatory & Outpatient Care"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621493", "label": "Freestanding Ambulatory Surgical and Emergency Centers"},
+    "sic": {"code": "8011", "label": "Offices and Clinics of Doctors of Medicine"}
+  },
+  "20720030": {
+    "mstar": {"code": "20720030", "label": "Managed Care — Sub"},
+    "gics": {"code": "35102030", "label": "Managed Health Care"},
+    "naics": {"code": "524114", "label": "Direct Health and Medical Insurance Carriers"},
+    "sic": {"code": "6324", "label": "Hospital and Medical Service Plans"}
+  },
+  "20720040": {
+    "mstar": {"code": "20720040", "label": "Other Healthcare"},
+    "gics": {"code": "35102020", "label": "Health Care Services"},
+    "naics": {"code": "621999", "label": "All Other Miscellaneous Ambulatory Health Care Services"},
+    "sic": {"code": "8099", "label": "Health Services, NEC"}
+  },
+  "30610010": {
+    "mstar": {"code": "30610010", "label": "REIT - Retail"},
+    "gics": {"code": "60101040", "label": "Retail REITs"},
+    "naics": {"code": "525990", "label": "Other Financial Vehicles"},
+    "sic": {"code": "6798", "label": "Real Estate Investment Trusts"}
+  },
+  "30610020": {
+    "mstar": {"code": "30610020", "label": "REIT - Office"},
+    "gics": {"code": "60101010", "label": "Diversified REITs"},
+    "naics": {"code": "525990", "label": "Other Financial Vehicles"},
+    "sic": {"code": "6798", "label": "Real Estate Investment Trusts"}
+  },
+  "30610030": {
+    "mstar": {"code": "30610030", "label": "REIT - Industrial"},
+    "gics": {"code": "60101020", "label": "Industrial REITs"},
+    "naics": {"code": "525990", "label": "Other Financial Vehicles"},
+    "sic": {"code": "6798", "label": "Real Estate Investment Trusts"}
+  },
+  "30610040": {
+    "mstar": {"code": "30610040", "label": "REIT - Healthcare"},
+    "gics": {"code": "60101060", "label": "Health Care REITs"},
+    "naics": {"code": "525990", "label": "Other Financial Vehicles"},
+    "sic": {"code": "6798", "label": "Real Estate Investment Trusts"}
+  },
+  "30620010": {
+    "mstar": {"code": "30620010", "label": "Real Estate Services"},
+    "gics": {"code": "60102010", "label": "Real Estate Management & Development"},
+    "naics": {"code": "531210", "label": "Offices of Real Estate Agents and Brokers"},
+    "sic": {"code": "6552", "label": "Land Subdividers and Developers"}
+  },
+  "30810010": {
+    "mstar": {"code": "30810010", "label": "Electronic Components"},
+    "gics": {"code": "45203015", "label": "Electronic Components"},
+    "naics": {"code": "334416", "label": "Capacitor, Resistor, Coil, Transformer Manufacturing"},
+    "sic": {"code": "3678", "label": "Electronic Connectors"}
+  },
+  "30810020": {
+    "mstar": {"code": "30810020", "label": "Electronic Manufacturing Services"},
+    "gics": {"code": "45203020", "label": "Electronic Manufacturing Services"},
+    "naics": {"code": "334418", "label": "Printed Circuit Assembly Manufacturing"},
+    "sic": {"code": "3672", "label": "Printed Circuit Boards"}
+  },
+  "30810030": {
+    "mstar": {"code": "30810030", "label": "Telecom Services"},
+    "gics": {"code": "50101010", "label": "Diversified Telecommunication Services"},
+    "naics": {"code": "517110", "label": "Wired Telecommunications Carriers"},
+    "sic": {"code": "4813", "label": "Telephone Communications"}
+  },
+  "30820010": {
+    "mstar": {"code": "30820010", "label": "Internet Content & Information"},
+    "gics": {"code": "50203010", "label": "Interactive Media & Services"},
+    "naics": {"code": "519130", "label": "Internet Publishing and Web Search Portals"},
+    "sic": {"code": "7375", "label": "Computer Processing and Data Preparation"}
+  },
+  "30820020": {
+    "mstar": {"code": "30820020", "label": "Software - Application"},
+    "gics": {"code": "45103010", "label": "Application Software"},
+    "naics": {"code": "513210", "label": "Software Publishers"},
+    "sic": {"code": "7372", "label": "Prepackaged Software"}
+  },
+  "30820030": {
+    "mstar": {"code": "30820030", "label": "Software - Infrastructure"},
+    "gics": {"code": "45103020", "label": "Systems Software"},
+    "naics": {"code": "511210", "label": "Software Publishers"},
+    "sic": {"code": "7372", "label": "Prepackaged Software"}
+  },
+  "30820040": {
+    "mstar": {"code": "30820040", "label": "Software - Games & Mobile"},
+    "gics": {"code": "45103010", "label": "Application Software"},
+    "naics": {"code": "511210", "label": "Software Publishers"},
+    "sic": {"code": "7372", "label": "Prepackaged Software"}
+  },
+  "30830010": {
+    "mstar": {"code": "30830010", "label": "Internet Search & AI Services"},
+    "gics": {"code": "50203010", "label": "Interactive Media & Services"},
+    "naics": {"code": "519130", "label": "Internet Publishing and Web Search Portals"},
+    "sic": {"code": "7375", "label": "Computer Processing and Data Preparation"}
+  },
+  "30830020": {
+    "mstar": {"code": "30830020", "label": "Entertainment"},
+    "gics": {"code": "50202010", "label": "Movies & Entertainment"},
+    "naics": {"code": "512110", "label": "Motion Picture and Video Production"},
+    "sic": {"code": "7812", "label": "Motion Picture and Tape Distribution"}
+  },
+  "30830030": {
+    "mstar": {"code": "30830030", "label": "Broadcasting & Media"},
+    "gics": {"code": "50201010", "label": "Broadcasting"},
+    "naics": {"code": "515120", "label": "Television Broadcasting"},
+    "sic": {"code": "4833", "label": "Television Broadcasting Stations"}
+  },
+  "30910010": {
+    "mstar": {"code": "30910010", "label": "Oil & Gas Drilling"},
+    "gics": {"code": "10101010", "label": "Oil & Gas Drilling"},
+    "naics": {"code": "213111", "label": "Drilling Oil and Gas Wells"},
+    "sic": {"code": "1381", "label": "Drilling Oil and Gas Wells"}
+  },
+  "30910020": {
+    "mstar": {"code": "30910020", "label": "Oil & Gas Equipment & Services"},
+    "gics": {"code": "10101020", "label": "Oil & Gas Equipment & Services"},
+    "naics": {"code": "213112", "label": "Support Activities for Oil and Gas Operations"},
+    "sic": {"code": "1389", "label": "Services Incidental to Oil and Gas Field Exploration"}
+  },
+  "30910030": {
+    "mstar": {"code": "30910030", "label": "Oil & Gas Field Services"},
+    "gics": {"code": "10101020", "label": "Oil & Gas Equipment & Services"},
+    "naics": {"code": "213112", "label": "Support Activities for Oil and Gas Operations"},
+    "sic": {"code": "1382", "label": "Oil and Gas Field Services, NEC"}
+  },
+  "30910040": {
+    "mstar": {"code": "30910040", "label": "Oil & Gas Pipeline Services"},
+    "gics": {"code": "10102030", "label": "Oil & Gas Storage & Transportation"},
+    "naics": {"code": "486210", "label": "Pipeline Transportation of Natural Gas"},
+    "sic": {"code": "4922", "label": "Natural Gas Transmission"}
+  },
+  "30910050": {
+    "mstar": {"code": "30910050", "label": "Offshore Drilling"},
+    "gics": {"code": "10101010", "label": "Oil & Gas Drilling"},
+    "naics": {"code": "213111", "label": "Drilling Oil and Gas Wells"},
+    "sic": {"code": "1381", "label": "Drilling Oil and Gas Wells"}
+  },
+  "30910060": {
+    "mstar": {"code": "30910060", "label": "Oil & Gas Refining & Marketing"},
+    "gics": {"code": "10102010", "label": "Integrated Oil & Gas"},
+    "naics": {"code": "324110", "label": "Petroleum Refineries"},
+    "sic": {"code": "2911", "label": "Petroleum Refining"}
+  },
+  "30920010": {
+    "mstar": {"code": "30920010", "label": "Construction Materials"},
+    "gics": {"code": "15102010", "label": "Construction Materials"},
+    "naics": {"code": "327310", "label": "Cement Manufacturing"},
+    "sic": {"code": "3241", "label": "Cement, Hydraulic"}
+  },
+  "30920020": {
+    "mstar": {"code": "30920020", "label": "Packaging & Containers"},
+    "gics": {"code": "15102020", "label": "Metal, Glass & Plastic Containers"},
+    "naics": {"code": "332431", "label": "Metal Can Manufacturing"},
+    "sic": {"code": "3411", "label": "Metal Cans"}
+  },
+  "31010010": {
+    "mstar": {"code": "31010010", "label": "Defense Systems"},
+    "gics": {"code": "20101010", "label": "Aerospace & Defense"},
+    "naics": {"code": "336414", "label": "Guided Missile and Space Vehicle Manufacturing"},
+    "sic": {"code": "3761", "label": "Guided Missiles and Space Vehicles"}
+  },
+  "31020010": {
+    "mstar": {"code": "31020010", "label": "Aerospace & Defense"},
+    "gics": {"code": "20101010", "label": "Aerospace & Defense"},
+    "naics": {"code": "336411", "label": "Aircraft Manufacturing"},
+    "sic": {"code": "3812", "label": "Defense Electronics & Communication Equipment"}
+  },
+  "31020020": {
+    "mstar": {"code": "31020020", "label": "Industrial Machinery"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333249", "label": "Other Industrial Machinery Manufacturing"},
+    "sic": {"code": "3559", "label": "Special Industry Machinery"}
+  },
+  "31020030": {
+    "mstar": {"code": "31020030", "label": "Diversified Industrials"},
+    "gics": {"code": "20105010", "label": "Industrial Conglomerates"},
+    "naics": {"code": "551112", "label": "Offices of Other Holding Companies"},
+    "sic": {"code": "3990", "label": "Miscellaneous Manufacturing Industries"}
+  },
+  "31020040": {
+    "mstar": {"code": "31020040", "label": "Farm & Heavy Construction Equipment"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333111", "label": "Farm Machinery and Equipment Manufacturing"},
+    "sic": {"code": "3523", "label": "Farm Machinery and Equipment"}
+  },
+  "31020050": {
+    "mstar": {"code": "31020050", "label": "Specialty Industrial Machinery"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333249", "label": "Other Industrial Machinery Manufacturing"},
+    "sic": {"code": "3560", "label": "General Industrial Machinery and Equipment"}
+  },
+  "31030010": {
+    "mstar": {"code": "31030010", "label": "Environmental Services"},
+    "gics": {"code": "20104020", "label": "Environmental & Facilities Services"},
+    "naics": {"code": "562110", "label": "Hazardous Waste Collection"},
+    "sic": {"code": "4959", "label": "Services to Buildings and Dwellings"}
+  },
+  "31040010": {
+    "mstar": {"code": "31040010", "label": "Airlines"},
+    "gics": {"code": "20302010", "label": "Airlines"},
+    "naics": {"code": "481111", "label": "Scheduled Passenger Air Transportation"},
+    "sic": {"code": "4512", "label": "Air Transportation, Scheduled"}
+  },
+  "31040020": {
+    "mstar": {"code": "31040020", "label": "Railroads"},
+    "gics": {"code": "20304010", "label": "Railroads"},
+    "naics": {"code": "482111", "label": "Line-Haul Railroads"},
+    "sic": {"code": "4011", "label": "Railroads, Line-Haul Operating"}
+  },
+  "31040030": {
+    "mstar": {"code": "31040030", "label": "Marine Shipping"},
+    "gics": {"code": "20303010", "label": "Marine"},
+    "naics": {"code": "483111", "label": "Deep Sea Freight Transportation"},
+    "sic": {"code": "4412", "label": "Deep Sea Foreign Transportation of Freight"}
+  },
+  "31050010": {
+    "mstar": {"code": "31050010", "label": "Trucking & Logistics"},
+    "gics": {"code": "20305020", "label": "Trucking"},
+    "naics": {"code": "484110", "label": "General Freight Trucking, Local"},
+    "sic": {"code": "4210", "label": "Trucking and Courier Services"}
+  },
+  "31060010": {
+    "mstar": {"code": "31060010", "label": "Business Services"},
+    "gics": {"code": "20201070", "label": "Diversified Support Services"},
+    "naics": {"code": "561410", "label": "Document Preparation Services"},
+    "sic": {"code": "7389", "label": "Services to Buildings and Dwellings"}
+  },
+  "31070010": {
+    "mstar": {"code": "31070010", "label": "Packaging & Containers — Mfg"},
+    "gics": {"code": "15102020", "label": "Metal, Glass & Plastic Containers"},
+    "naics": {"code": "322211", "label": "Corrugated and Solid Fiber Box Manufacturing"},
+    "sic": {"code": "2650", "label": "Paperboard Containers and Boxes"}
+  },
+  "31070020": {
+    "mstar": {"code": "31070020", "label": "Plastics & Rubber Products"},
+    "gics": {"code": "15101010", "label": "Commodity Chemicals"},
+    "naics": {"code": "326199", "label": "All Other Plastics Product Manufacturing"},
+    "sic": {"code": "3089", "label": "Plastics Products, NEC"}
+  },
+  "31070030": {
+    "mstar": {"code": "31070030", "label": "Textile Manufacturing"},
+    "gics": {"code": "25301020", "label": "Diversified Consumer Services"},
+    "naics": {"code": "313110", "label": "Fiber, Yarn, and Thread Mills"},
+    "sic": {"code": "2281", "label": "Yarn Throwing and Winding Mills"}
+  },
+  "31070040": {
+    "mstar": {"code": "31070040", "label": "Commercial Printing"},
+    "gics": {"code": "20201070", "label": "Diversified Support Services"},
+    "naics": {"code": "323111", "label": "Commercial Printing"},
+    "sic": {"code": "2750", "label": "Commercial Printing"}
+  },
+  "31070050": {
+    "mstar": {"code": "31070050", "label": "Furniture Manufacturing"},
+    "gics": {"code": "25201020", "label": "Home Furnishings"},
+    "naics": {"code": "337110", "label": "Wood Kitchen Cabinet and Countertop Manufacturing"},
+    "sic": {"code": "2511", "label": "Wood Household Furniture"}
+  },
+  "31070060": {
+    "mstar": {"code": "31070060", "label": "Metal Fabrication"},
+    "gics": {"code": "20108010", "label": "Metal, Glass & Plastic Containers"},
+    "naics": {"code": "332322", "label": "Sheet Metal Work Manufacturing"},
+    "sic": {"code": "3440", "label": "Fabricated Structural Metal Products"}
+  },
+  "31080010": {
+    "mstar": {"code": "31080010", "label": "Pumps & Industrial Equipment"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333911", "label": "Pump and Pumping Equipment Manufacturing"},
+    "sic": {"code": "3561", "label": "Pumps and Pumping Equipment"}
+  },
+  "31080020": {
+    "mstar": {"code": "31080020", "label": "Valves & Industrial Controls"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "332911", "label": "Industrial Valve Manufacturing"},
+    "sic": {"code": "3491", "label": "Industrial Valves"}
+  },
+  "31080030": {
+    "mstar": {"code": "31080030", "label": "Power Generation Equipment"},
+    "gics": {"code": "20104010", "label": "Electrical Components & Equipment"},
+    "naics": {"code": "335311", "label": "Power, Distribution, and Specialty Transformer Manufacturing"},
+    "sic": {"code": "3612", "label": "Power, Distribution, and Specialty Transformers"}
+  },
+  "31080040": {
+    "mstar": {"code": "31080040", "label": "HVAC & Climate Control"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333415", "label": "Air-Conditioning and Warm Air Heating Equipment Manufacturing"},
+    "sic": {"code": "3585", "label": "Air-Conditioning and Warm Air Heating Equipment"}
+  },
+  "31080050": {
+    "mstar": {"code": "31080050", "label": "Process & Industrial Equipment"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "333994", "label": "Industrial Process Furnace and Oven Manufacturing"},
+    "sic": {"code": "3559", "label": "Special Industry Machinery"}
+  },
+  "31080060": {
+    "mstar": {"code": "31080060", "label": "Test & Measurement Equipment"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "334516", "label": "Analytical Laboratory Instrument Manufacturing"},
+    "sic": {"code": "3826", "label": "Laboratory Analytical Instruments"}
+  },
+  "31090010": {
+    "mstar": {"code": "31090010", "label": "Tools & Hardware"},
+    "gics": {"code": "20106010", "label": "Industrial Machinery"},
+    "naics": {"code": "332212", "label": "Hand and Edge Tool Manufacturing"},
+    "sic": {"code": "3423", "label": "Hand and Edge Tools, Except Machine Tools"}
+  },
+  "31110010": {
+    "mstar": {"code": "31110010", "label": "IT Consulting & Services"},
+    "gics": {"code": "45102010", "label": "IT Consulting & Other Services"},
+    "naics": {"code": "541511", "label": "Custom Computer Programming Services"},
+    "sic": {"code": "7371", "label": "Computer Programming Services"}
+  },
+  "31110020": {
+    "mstar": {"code": "31110020", "label": "Software - Security"},
+    "gics": {"code": "45103020", "label": "Systems Software"},
+    "naics": {"code": "511210", "label": "Software Publishers"},
+    "sic": {"code": "7382", "label": "Home Security Services"}
+  },
+  "31110030": {
+    "mstar": {"code": "31110030", "label": "IT Services & Cloud Computing"},
+    "gics": {"code": "45102020", "label": "IT Consulting & Other Services"},
+    "naics": {"code": "518210", "label": "Data Processing, Hosting, and Related Services"},
+    "sic": {"code": "7374", "label": "Computer Processing and Data Preparation"}
+  },
+  "31120010": {
+    "mstar": {"code": "31120010", "label": "Electronic Equipment"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "334419", "label": "Other Electronic Component Manufacturing"},
+    "sic": {"code": "3679", "label": "Electronic Components, NEC"}
+  },
+  "31120020": {
+    "mstar": {"code": "31120020", "label": "Electrical Equipment & Parts"},
+    "gics": {"code": "20104010", "label": "Electrical Components & Equipment"},
+    "naics": {"code": "335999", "label": "All Other Miscellaneous Electrical Equipment Manufacturing"},
+    "sic": {"code": "3621", "label": "Motors and Generators"}
+  },
+  "31120030": {
+    "mstar": {"code": "31120030", "label": "Photographic & Imaging Equipment"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "333316", "label": "Photographic and Photocopying Equipment Manufacturing"},
+    "sic": {"code": "3827", "label": "Optical Instruments and Lenses"}
+  },
+  "31120040": {
+    "mstar": {"code": "31120040", "label": "Optical Components & Imaging"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "333314", "label": "Optical Instrument and Lens Manufacturing"},
+    "sic": {"code": "3827", "label": "Optical Instruments and Lenses"}
+  },
+  "31120050": {
+    "mstar": {"code": "31120050", "label": "Test & Measurement Instruments"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "334515", "label": "Instrument Manufacturing for Measuring and Testing"},
+    "sic": {"code": "3825", "label": "Instruments for Measuring and Testing of Electricity"}
+  },
+  "31120060": {
+    "mstar": {"code": "31120060", "label": "Scientific & Technical Instruments"},
+    "gics": {"code": "45203010", "label": "Electronic Equipment & Instruments"},
+    "naics": {"code": "334519", "label": "Other Measuring and Controlling Device Manufacturing"},
+    "sic": {"code": "3825", "label": "Instruments for Measuring and Testing of Electricity"}
+  },
+  "31130010": {
+    "mstar": {"code": "31130010", "label": "Semiconductors"},
+    "gics": {"code": "45301020", "label": "Semiconductors"},
+    "naics": {"code": "334413", "label": "Semiconductor and Related Device Manufacturing"},
+    "sic": {"code": "3674", "label": "Semiconductors and Related Devices"}
+  },
+  "31130020": {
+    "mstar": {"code": "31130020", "label": "Semiconductor Equipment"},
+    "gics": {"code": "45301010", "label": "Semiconductor Materials & Equipment"},
+    "naics": {"code": "333242", "label": "Semiconductor Machinery Manufacturing"},
+    "sic": {"code": "3559", "label": "Special Industry Machinery"}
+  },
+  "31130030": {
+    "mstar": {"code": "31130030", "label": "Semiconductor Packaging & Advanced"},
+    "gics": {"code": "45301020", "label": "Semiconductors"},
+    "naics": {"code": "334413", "label": "Semiconductor and Related Device Manufacturing"},
+    "sic": {"code": "3674", "label": "Semiconductors and Related Devices"}
+  }
+}

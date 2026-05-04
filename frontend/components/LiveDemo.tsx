@@ -8,10 +8,13 @@ import {
   ChevronRight,
   Cpu,
   Database,
+  FileText,
   Gauge,
+  GitBranch,
+  Layers,
   Loader2,
+  Map,
   Radar,
-  Sparkles,
   Terminal,
   Zap,
 } from "lucide-react";
@@ -38,55 +41,87 @@ const EXAMPLES = [
 ];
 
 const PIPELINE = [
-  { id: "input", icon: Terminal, label: "Raw Text", detail: "Company description" },
-  { id: "tfidf", icon: Database, label: "TF-IDF", detail: "50,000 sparse features" },
-  { id: "sparse", icon: Cpu, label: "Sparse Matrix", detail: "CSR numerical representation" },
-  { id: "svm", icon: BrainCircuit, label: "Linear SVM", detail: "Balanced classifier verdict" },
+  { id: "input", icon: Terminal,    label: "Raw Text",    detail: "Company description" },
+  { id: "tfidf", icon: Database,    label: "TF-IDF",      detail: "50,000 sparse features" },
+  { id: "l1",    icon: Layers,      label: "L1 — Sector", detail: "11 broad sectors" },
+  { id: "l2",    icon: GitBranch,   label: "L2 — Group",  detail: "Industry group within sector" },
+  { id: "l3",    icon: BrainCircuit,label: "L3 — Code",   detail: "Final Morningstar GECS code" },
 ];
 
 const SYSTEM_NOTES = [
-  { label: "Serving model", value: "Linear SVM" },
-  { label: "Vector space", value: "50K TF-IDF" },
-  { label: "Best metric", value: "86.82% Macro F1" },
-  { label: "Deployment stance", value: "Fast and dependable" },
+  { label: "Architecture",      value: "BreezeML Level 2" },
+  { label: "Vector space",      value: "50K TF-IDF" },
+  { label: "Best metric",       value: "88.90% Macro F1" },
+  { label: "Deployment stance", value: "CPU · No cloud · No GPU" },
 ];
 
-type Alternative = {
-  rank: number;
-  code: string;
-  label: string;
-  confidence: number;
+const ENGINE_STYLES: Record<string, { badge: string; glow: "red" | "blue" | "cyan" | "amber" | "emerald" | "purple"; dot: string }> = {
+  "SVM Cascade":    { badge: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300", glow: "emerald", dot: "bg-emerald-400" },
+  "DeBERTa":        { badge: "border-cyan-500/30 bg-cyan-500/10 text-cyan-300",          glow: "cyan",    dot: "bg-cyan-400" },
+  "Consensus":      { badge: "border-purple-500/30 bg-purple-500/10 text-purple-300",    glow: "purple",  dot: "bg-purple-400" },
+  "Low Confidence": { badge: "border-amber-500/30 bg-amber-500/10 text-amber-300",       glow: "amber",   dot: "bg-amber-400" },
 };
+
+const TAXONOMY_META: Record<string, { abbr: string; color: string }> = {
+  mstar: { abbr: "MSTAR", color: "text-red-300"     },
+  gics:  { abbr: "GICS",  color: "text-cyan-300"    },
+  naics: { abbr: "NAICS", color: "text-emerald-300" },
+  sic:   { abbr: "SIC",   color: "text-amber-300"   },
+};
+
+type TaxonomyEntry = { code: string; label: string };
 
 type Result = {
+  success: boolean;
+  engine: string;
+  route_reason: string;
   mstar_code: string;
   mstar_label: string;
-  sub_code: string;
-  sub_label: string;
-  confidence_t1?: number | null;
-  confidence_t2?: number | null;
-  alternatives_t1?: Alternative[];
-  alternatives_t2?: Alternative[];
-  features_t1?: string[];
-  features_t2?: string[];
+  confidence: number;
+  alternatives?: { rank: number; code: string; label: string; confidence: number }[];
+  explanation?: string;
+  explanation_engine?: string;
+  taxonomy_map?: {
+    mstar?: TaxonomyEntry;
+    gics?: TaxonomyEntry;
+    naics?: TaxonomyEntry;
+    sic?: TaxonomyEntry;
+    status?: string;
+  };
 };
 
-function ConfidenceBar({ label, value, tone }: { label: string; value?: number | null; tone: "red" | "blue" }) {
+function ConfidenceBar({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value?: number | null;
+  tone: "red" | "blue" | "emerald" | "purple" | "amber";
+}) {
   const safeValue = Math.max(0, Math.min(100, value ?? 0));
-  const fillClass = tone === "red" ? "from-red-500 to-rose-400" : "from-cyan-500 to-blue-400";
+  const fill = {
+    red:    "from-red-500 to-rose-400",
+    blue:   "from-blue-500 to-indigo-400",
+    emerald:"from-emerald-500 to-teal-400",
+    purple: "from-purple-500 to-violet-400",
+    amber:  "from-amber-500 to-yellow-400",
+  }[tone];
 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between text-sm">
         <span className="text-white/55">{label}</span>
-        <span className="font-mono text-white">{value == null ? "N/A" : `${safeValue.toFixed(1)}%`}</span>
+        <span className="font-mono text-white">
+          {value == null ? "N/A" : `${safeValue.toFixed(1)}%`}
+        </span>
       </div>
       <div className="h-3 rounded-full bg-white/8 overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${safeValue}%` }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className={`h-full rounded-full bg-gradient-to-r ${fillClass}`}
+          className={`h-full rounded-full bg-gradient-to-r ${fill}`}
         />
       </div>
     </div>
@@ -107,15 +142,14 @@ export default function LiveDemo() {
     setLoading(true);
     setResult(null);
     setError("");
-    setActiveStep(0);
 
     for (let i = 0; i < PIPELINE.length; i++) {
       setActiveStep(i);
-      await new Promise((resolve) => setTimeout(resolve, 320));
+      await new Promise((resolve) => setTimeout(resolve, 280));
     }
 
     try {
-      const res = await fetch("/api/predict", {
+      const res = await fetch("/api/predict_legendary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
@@ -127,19 +161,26 @@ export default function LiveDemo() {
       }
 
       setResult(data);
-      setResultKey((key) => key + 1);
+      setResultKey((k) => k + 1);
       setActiveStep(PIPELINE.length);
-    } catch (err: any) {
-      setError(err.message || "Could not reach the classification server.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Could not reach the BreezeML Level 2 server (port 5003).";
+      setError(message);
       setActiveStep(-1);
     } finally {
       setLoading(false);
     }
   }
 
+  const engineStyle = result
+    ? (ENGINE_STYLES[result.engine] ?? ENGINE_STYLES["Low Confidence"])
+    : null;
+
   return (
     <section className="min-h-screen px-6 py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,22 +190,23 @@ export default function LiveDemo() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-red-300">
               <Radar className="h-3.5 w-3.5" />
-              Prediction Lab
+              BreezeML Level 2 — Live
             </div>
             <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white">
               Turn raw company language
-              <span className="block text-white/55">into a model verdict you can inspect.</span>
+              <span className="block text-white/55">into a Morningstar verdict.</span>
             </h1>
             <p className="mt-6 max-w-3xl text-lg sm:text-xl leading-relaxed text-white/55">
-              This is not just a text box. It is a full inference surface showing the sparse pipeline,
-              the predicted GECS labels, confidence estimates, competing classes, and the features that drove the decision.
+              88.90% Macro F1. 145 classes. 10,717 holdout samples. No GPU. No cloud. BreezeML Level 2 reads the Morningstar taxonomy hierarchy instead of flattening it — and outperforms a
+              fine-tuned DeBERTa neural network by{" "}
+              <span className="font-semibold text-white">+24.90 percentage points</span>.
             </p>
           </div>
 
           <GlowCard glowColor="cyan" className="border-white/8 bg-white/[0.03] p-0 overflow-hidden">
             <div className="border-b border-white/8 px-6 py-5">
-              <div className="text-xs uppercase tracking-[0.28em] text-cyan-300/80 mb-2">System frame</div>
-              <h2 className="text-2xl font-bold text-white">Why this demo matters</h2>
+              <div className="text-xs uppercase tracking-[0.28em] text-cyan-300/80 mb-2">Stack frame</div>
+              <h2 className="text-2xl font-bold text-white">BreezeML Level 2 — results</h2>
             </div>
             <div className="grid grid-cols-2 gap-px bg-white/8">
               {SYSTEM_NOTES.map((item) => (
@@ -177,7 +219,10 @@ export default function LiveDemo() {
           </GlowCard>
         </motion.div>
 
+        {/* Two-column layout */}
         <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr]">
+
+          {/* Left: input */}
           <div className="flex flex-col gap-6">
             <GlowCard glowColor="red" className="border-white/8 bg-black/55 p-8">
               <div className="mb-6 flex items-center justify-between border-b border-white/8 pb-4">
@@ -194,7 +239,7 @@ export default function LiveDemo() {
 
               <textarea
                 value={text}
-                onChange={(event) => setText(event.target.value)}
+                onChange={(e) => setText(e.target.value)}
                 rows={11}
                 placeholder="Paste a company description here..."
                 className="w-full resize-none bg-transparent text-lg leading-relaxed text-white outline-none placeholder:text-white/12 font-mono"
@@ -208,9 +253,7 @@ export default function LiveDemo() {
                     className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-left transition-colors hover:bg-white/[0.08]"
                   >
                     <div className="text-xs uppercase tracking-[0.24em] text-white/35 mb-1">{example.label}</div>
-                    <div className="text-sm text-white/58 leading-relaxed">
-                      {example.text.slice(0, 86)}...
-                    </div>
+                    <div className="text-sm text-white/58 leading-relaxed">{example.text.slice(0, 86)}...</div>
                   </button>
                 ))}
               </div>
@@ -219,18 +262,18 @@ export default function LiveDemo() {
             <div className="grid gap-4 md:grid-cols-3">
               <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
                 <Activity className="h-5 w-5 text-red-300 mb-3" />
-                <div className="text-sm font-semibold text-white mb-1">Fast verdicts</div>
-                <div className="text-sm text-white/52">Sparse inference keeps the experience responsive.</div>
+                <div className="text-sm font-semibold text-white mb-1">1,673 samples/sec</div>
+                <div className="text-sm text-white/52">40× faster than DeBERTa, on CPU only.</div>
               </div>
               <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
                 <Gauge className="h-5 w-5 text-cyan-300 mb-3" />
-                <div className="text-sm font-semibold text-white mb-1">Interpretable output</div>
-                <div className="text-sm text-white/52">Confidence bands and feature signals explain the result.</div>
+                <div className="text-sm font-semibold text-white mb-1">Confidence routing</div>
+                <div className="text-sm text-white/52">SVM → DeBERTa → Consensus, each explained.</div>
               </div>
               <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
-                <Sparkles className="h-5 w-5 text-emerald-300 mb-3" />
-                <div className="text-sm font-semibold text-white mb-1">Production stance</div>
-                <div className="text-sm text-white/52">The winning model is the one we could actually trust to ship.</div>
+                <Map className="h-5 w-5 text-emerald-300 mb-3" />
+                <div className="text-sm font-semibold text-white mb-1">4-taxonomy map</div>
+                <div className="text-sm text-white/52">Every code mapped to GICS, NAICS, SIC.</div>
               </div>
             </div>
 
@@ -242,23 +285,26 @@ export default function LiveDemo() {
               {loading ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  Running classification
+                  Running BreezeML inference
                 </>
               ) : (
                 <>
                   <Zap className="h-5 w-5" />
-                  Run prediction lab
+                  Run BreezeML classification
                 </>
               )}
             </button>
           </div>
 
+          {/* Right: pipeline + results */}
           <div className="flex flex-col gap-6">
+
+            {/* Pipeline visualiser */}
             <GlowCard glowColor="blue" className="border-white/8 bg-black/55 p-8">
               <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <div className="text-xs uppercase tracking-[0.28em] text-white/35 mb-2">Inference pipeline</div>
-                  <h2 className="text-2xl font-bold text-white">The classifier is not a black box.</h2>
+                  <div className="text-xs uppercase tracking-[0.28em] text-white/35 mb-2">BreezeML Level 2</div>
+                  <h2 className="text-2xl font-bold text-white">BreezeML reads the taxonomy structure.</h2>
                 </div>
                 <div className="font-mono text-xs text-white/25">
                   {activeStep < 0
@@ -273,7 +319,6 @@ export default function LiveDemo() {
                 {PIPELINE.map((step, index) => {
                   const active = activeStep === index;
                   const done = activeStep > index;
-
                   return (
                     <div key={step.id} className="flex items-center gap-5">
                       <motion.div
@@ -290,14 +335,12 @@ export default function LiveDemo() {
                       >
                         <step.icon className="h-5 w-5 text-white" />
                       </motion.div>
-
                       <div className="flex-1">
                         <div className={`text-lg font-semibold ${done ? "text-emerald-400" : active ? "text-red-400" : "text-white/40"}`}>
                           {step.label}
                         </div>
                         <div className="text-sm text-white/28">{step.detail}</div>
                       </div>
-
                       {done ? (
                         <span className="font-mono text-xs uppercase tracking-[0.24em] text-emerald-400">Done</span>
                       ) : active ? (
@@ -311,6 +354,7 @@ export default function LiveDemo() {
               </div>
             </GlowCard>
 
+            {/* Results */}
             <AnimatePresence mode="wait">
               {error ? (
                 <motion.div
@@ -322,6 +366,7 @@ export default function LiveDemo() {
                 >
                   {error}
                 </motion.div>
+
               ) : result ? (
                 <motion.div
                   key={`result-${resultKey}`}
@@ -331,8 +376,22 @@ export default function LiveDemo() {
                   transition={{ duration: 0.45 }}
                   className="flex flex-col gap-6"
                 >
-                  <GlowCard glowColor="red" className="border-white/8 bg-red-500/[0.05] p-8">
-                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">Task 1 verdict</div>
+                  {/* Engine badge + route reason */}
+                  <div className={`flex items-center gap-3 rounded-2xl border px-4 py-3 ${engineStyle?.badge}`}>
+                    <span className={`h-2 w-2 flex-shrink-0 rounded-full ${engineStyle?.dot}`} />
+                    <span className="font-semibold text-sm flex-shrink-0">{result.engine}</span>
+                    {result.route_reason && (
+                      <span className="text-xs text-white/40 ml-auto leading-tight line-clamp-2 text-right">
+                        {result.route_reason}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Main verdict */}
+                  <GlowCard glowColor={engineStyle?.glow ?? "red"} className="border-white/8 bg-red-500/[0.05] p-8">
+                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">
+                      Morningstar GECS verdict
+                    </div>
                     <TextScramble
                       key={`mstar-${resultKey}`}
                       as="h3"
@@ -345,36 +404,64 @@ export default function LiveDemo() {
                     <div className="mb-6 inline-flex items-center gap-3 rounded-2xl border border-red-500/15 bg-black/30 px-4 py-3 font-mono text-red-200">
                       <span>{result.mstar_code}</span>
                       <span className="text-white/20">|</span>
-                      <span className="text-white/45">MSTAR-GLOBAL</span>
+                      <span className="text-white/45">MSTAR-GECS</span>
                     </div>
-                    <ConfidenceBar label="Industry confidence" value={result.confidence_t1} tone="red" />
+                    <ConfidenceBar label="Classification confidence" value={result.confidence} tone="red" />
                   </GlowCard>
 
-                  <GlowCard glowColor="blue" className="border-white/8 bg-cyan-500/[0.04] p-8">
-                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-cyan-300/80">Task 2 verdict</div>
-                    <TextScramble
-                      key={`sub-${resultKey}`}
-                      as="h3"
-                      speed={0.02}
-                      duration={0.85}
-                      className="text-3xl sm:text-4xl font-bold text-white mb-4"
-                    >
-                      {result.sub_label}
-                    </TextScramble>
-                    <div className="mb-6 inline-flex items-center gap-3 rounded-2xl border border-cyan-500/15 bg-black/30 px-4 py-3 font-mono text-cyan-200">
-                      <span>{result.sub_code}</span>
-                      <span className="text-white/20">|</span>
-                      <span className="text-white/45">SUBINDUSTRY</span>
-                    </div>
-                    <ConfidenceBar label="Subindustry confidence" value={result.confidence_t2} tone="blue" />
-                  </GlowCard>
+                  {/* Analyst memo */}
+                  {result.explanation && (
+                    <GlowCard glowColor="blue" className="border-white/8 bg-blue-500/[0.04] p-6">
+                      <div className="mb-3 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-cyan-300" />
+                        <div className="text-xs uppercase tracking-[0.28em] text-cyan-300/80">Analyst Memo</div>
+                      </div>
+                      <p className="text-sm leading-relaxed text-white/70 italic">
+                        &ldquo;{result.explanation}&rdquo;
+                      </p>
+                    </GlowCard>
+                  )}
 
-                  <div className="grid gap-6 xl:grid-cols-2">
+                  {/* Cross-taxonomy grid */}
+                  {result.taxonomy_map?.status === "mapped" && (
+                    <GlowCard glowColor="emerald" className="border-white/8 bg-white/[0.03] p-6">
+                      <div className="mb-4 flex items-center gap-2">
+                        <Map className="h-4 w-4 text-emerald-300" />
+                        <div className="text-xs uppercase tracking-[0.28em] text-emerald-300/80">
+                          Cross-Taxonomy Map
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        {(["mstar", "gics", "naics", "sic"] as const).map((key) => {
+                          const entry = result.taxonomy_map?.[key];
+                          const meta = TAXONOMY_META[key];
+                          if (!entry) return null;
+                          return (
+                            <div key={key} className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
+                              <div className={`text-xs uppercase tracking-[0.22em] mb-1 ${meta.color}`}>
+                                {meta.abbr}
+                              </div>
+                              <div className="font-mono text-xs text-white/40 mb-1">{entry.code}</div>
+                              <div className="text-sm font-semibold text-white leading-tight">{entry.label}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </GlowCard>
+                  )}
+
+                  {/* Alternatives */}
+                  {result.alternatives && result.alternatives.length > 0 && (
                     <GlowCard glowColor="amber" className="border-white/8 bg-white/[0.03] p-6">
-                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-white/35">Top task 1 alternatives</div>
+                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-white/35">
+                        Top alternatives
+                      </div>
                       <div className="space-y-3">
-                        {(result.alternatives_t1 ?? []).slice(0, 3).map((alt) => (
-                          <div key={`${alt.rank}-${alt.code}`} className="rounded-2xl border border-white/8 bg-black/30 px-4 py-4">
+                        {result.alternatives.slice(0, 3).map((alt) => (
+                          <div
+                            key={`${alt.rank}-${alt.code}`}
+                            className="rounded-2xl border border-white/8 bg-black/30 px-4 py-4"
+                          >
                             <div className="flex items-center justify-between gap-4">
                               <div>
                                 <div className="text-sm text-white/40">Rank {alt.rank}</div>
@@ -387,22 +474,9 @@ export default function LiveDemo() {
                         ))}
                       </div>
                     </GlowCard>
-
-                    <GlowCard glowColor="emerald" className="border-white/8 bg-white/[0.03] p-6">
-                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-white/35">What pushed the model</div>
-                      <div className="flex flex-wrap gap-2">
-                        {(result.features_t1 ?? []).concat(result.features_t2 ?? []).slice(0, 10).map((feature) => (
-                          <span
-                            key={feature}
-                            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white/65"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </GlowCard>
-                  </div>
+                  )}
                 </motion.div>
+
               ) : (
                 <motion.div
                   key="placeholder"
@@ -411,7 +485,9 @@ export default function LiveDemo() {
                   className="rounded-[28px] border border-white/8 bg-white/[0.03] px-8 py-12 text-center"
                 >
                   <Cpu className="mx-auto mb-4 h-12 w-12 text-white/12" />
-                  <div className="text-xl font-mono text-white/25">Prediction lab is armed and ready.</div>
+                  <div className="text-xl font-mono text-white/25">
+                    Paste a company description to classify.
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
