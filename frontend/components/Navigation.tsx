@@ -8,9 +8,6 @@ import { TextScramble } from "@/components/ui/text-scramble";
 
 const NAV = [
   { label: "Home",      href: "/" },
-  { label: "Demo",      href: "/demo" },
-  { label: "LLM",       href: "/llm" },
-  { label: "Dashboard", href: "/dashboard" },
   { label: "Journey",   href: "/journey" },
   { label: "Team",      href: "/team" },
 ];
