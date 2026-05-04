@@ -1,8 +1,2 @@
 [phases.setup]
-aptPkgs = ["git", "git-lfs"]
-
-[phases.build]
-cmds = [
-  "git lfs install --force",
-  "git lfs pull || echo 'LFS pull failed — models may not load'"
-]
+aptPkgs = ["git-lfs"]
