@@ -1,6 +1,5 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import HowItWorks from "@/components/HowItWorks";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -162,12 +161,8 @@ export default function Home() {
       <Navigation />
       <Hero />
 
-      <div className="border-t border-white/6">
-        <HowItWorks compact />
-      </div>
-
-      <section className="relative px-6 pb-10">
-        <div className="max-w-6xl mx-auto -mt-14 relative z-10">
+      <section className="relative px-6 pt-10 pb-10">
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid gap-4 md:grid-cols-3">
             {PILLARS.map((pillar) => (
               <div
