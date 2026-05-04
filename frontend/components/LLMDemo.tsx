@@ -75,12 +75,19 @@ type Result = {
   mstar_label: string;
   confidence: number;
   alternatives?: Alternative[];
-  // task2 — only present after task2 model is trained
   task2_ready?: boolean;
   sub_code?: string;
   sub_label?: string;
   sub_confidence?: number;
   sub_alternatives?: Alternative[];
+};
+
+type T2Result = {
+  sub_code: string;
+  sub_label: string;
+  confidence_t2: number;
+  alternatives_t2?: Alternative[];
+  source: "deberta" | "cascade";
 };
 
 function ConfidenceBar({ value }: { value: number }) {
@@ -113,6 +120,7 @@ export default function LLMDemo() {
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(-1);
   const [result, setResult] = useState<Result | null>(null);
+  const [t2, setT2] = useState<T2Result | null>(null);
   const [error, setError] = useState("");
   const [resultKey, setResultKey] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
@@ -126,6 +134,7 @@ export default function LLMDemo() {
     if (!text.trim() || loading) return;
     setLoading(true);
     setResult(null);
+    setT2(null);
     setError("");
     setActiveStep(0);
     setLogs([]);
@@ -146,17 +155,29 @@ export default function LLMDemo() {
     }
 
     try {
-      const res = await fetch("/api/predict_llm", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Server error");
+      // Fetch DeBERTa + cascade in parallel
+      const [llmRes, cascadeRes] = await Promise.allSettled([
+        fetch("/api/predict_llm",  { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }),
+        fetch("/api/predict",      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }),
+      ]);
 
-      setResult(data);
+      if (llmRes.status === "rejected") throw new Error("Could not reach server_llm.py on port 5001.");
+      const llmData = await llmRes.value.json();
+      if (!llmRes.value.ok) throw new Error(llmData.error || "DeBERTa server error");
+
+      setResult(llmData);
       setResultKey((k) => k + 1);
       setActiveStep(PIPELINE.length);
+
+      // Resolve Task 2: prefer DeBERTa T2, fall back to cascade T2
+      if (llmData.task2_ready && llmData.sub_code) {
+        setT2({ sub_code: llmData.sub_code, sub_label: llmData.sub_label ?? llmData.sub_code, confidence_t2: llmData.sub_confidence ?? 0, sub_alternatives: llmData.sub_alternatives, source: "deberta" });
+      } else if (cascadeRes.status === "fulfilled" && cascadeRes.value.ok) {
+        const cData = await cascadeRes.value.json();
+        if (cData.sub_code && cData.sub_code !== "N/A") {
+          setT2({ sub_code: cData.sub_code, sub_label: cData.sub_label ?? cData.sub_code, confidence_t2: cData.confidence_t2 ?? 0, sub_alternatives: cData.alternatives_t2, source: "cascade" });
+        }
+      }
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Could not reach server_llm.py on port 5001.";
       setError(msg);
@@ -375,14 +396,14 @@ export default function LLMDemo() {
                   </GlowCard>
 
                   {/* Task 2 — subindustry */}
-                  {result.task2_ready && result.sub_code ? (
+                  {t2 ? (
                     <GlowCard glowColor="cyan" className="p-8 border-cyan-500/40 bg-cyan-950/10 backdrop-blur-md">
                       <div className="flex justify-between items-center mb-5">
                         <p className="text-xs text-cyan-400 uppercase tracking-[0.3em] font-mono">
-                          Subindustry — 407 classes
+                          Sub-Industry — 428 classes
                         </p>
-                        <span className="text-xs font-mono text-cyan-300/60 bg-cyan-400/10 px-2 py-1 rounded border border-cyan-400/20">
-                          Task 2
+                        <span className={`text-xs font-mono px-2 py-1 rounded border ${t2.source === "deberta" ? "text-purple-300/60 bg-purple-400/10 border-purple-400/20" : "text-cyan-300/60 bg-cyan-400/10 border-cyan-400/20"}`}>
+                          {t2.source === "deberta" ? "DeBERTa T2" : "Cascade SVM"}
                         </span>
                       </div>
 
@@ -393,20 +414,32 @@ export default function LLMDemo() {
                         duration={0.85}
                         className="text-3xl sm:text-4xl font-bold text-white mb-2 text-center tracking-tight"
                       >
-                        {result.sub_label ?? result.sub_code}
+                        {t2.sub_label}
                       </TextScramble>
-                      <p className="text-center font-mono text-sm text-cyan-300/50 mb-5">{result.sub_code}</p>
+                      <p className="text-center font-mono text-sm text-cyan-300/50 mb-5">{t2.sub_code}</p>
 
-                      <ConfidenceBar value={result.sub_confidence ?? 0} />
+                      <ConfidenceBar value={t2.confidence_t2} />
+
+                      {t2.sub_alternatives && t2.sub_alternatives.length > 1 && (
+                        <div className="mt-5 space-y-2">
+                          <p className="text-xs text-white/30 uppercase tracking-widest font-mono mb-2">Alternatives</p>
+                          {t2.sub_alternatives.slice(1, 3).map((alt) => (
+                            <div key={alt.code} className="flex items-center justify-between gap-3 rounded border border-white/8 bg-black/30 px-3 py-2">
+                              <div>
+                                <div className="text-sm text-white/70">{alt.label}</div>
+                                <code className="font-mono text-xs text-white/30">{alt.code}</code>
+                              </div>
+                              <div className="font-mono text-xs text-cyan-300 flex-shrink-0">{alt.confidence.toFixed(1)}%</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </GlowCard>
-                  ) : !result.task2_ready ? (
+                  ) : result && (
                     <div className="rounded border border-dashed border-cyan-500/20 bg-cyan-950/10 px-6 py-5 font-mono text-xs text-cyan-400/40 text-center">
-                      Task 2 subindustry model not yet trained.<br />
-                      <span className="text-cyan-300/60 mt-1 block">
-                        python llm_finetuning/scripts/train_local.py --task task2
-                      </span>
+                      Sub-industry model offline — start server.py on port 5000 for cascade fallback.
                     </div>
-                  ) : null}
+                  )}
                 </motion.div>
               )}
 
