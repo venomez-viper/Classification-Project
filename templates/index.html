@@ -191,6 +191,58 @@
         .bench-pct.hero { color: #a78bfa; }
         .bench-delta { font-size: 0.65rem; color: #34d399; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
 
+        /* ── How it works panel ── */
+        .hiw-wrap { margin-bottom: 1.2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; background: rgba(255,255,255,0.02); }
+        .hiw-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; color: rgba(255,255,255,0.5); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+        .hiw-toggle:hover { color: rgba(255,255,255,0.8); }
+        .hiw-chevron { font-size: 0.65rem; transition: transform 0.25s; }
+        .hiw-body { padding: 0 1.1rem 1.2rem; display: none; }
+        .hiw-body.open { display: block; }
+
+        .hiw-intro { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 1rem; padding-top: 0.2rem; }
+        .hiw-intro strong { color: rgba(255,255,255,0.75); }
+
+        /* Cascade flow */
+        .hiw-flow { display: flex; align-items: stretch; gap: 0; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 0.2rem; }
+        .hiw-node { display: flex; flex-direction: column; align-items: center; padding: 0.6rem 0.75rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); min-width: 90px; flex-shrink: 0; }
+        .hiw-node.l1 { border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.08); }
+        .hiw-node.l2 { border-color: rgba(59,130,246,0.4);  background: rgba(59,130,246,0.08); }
+        .hiw-node.l3 { border-color: rgba(6,182,212,0.4);   background: rgba(6,182,212,0.08); }
+        .hiw-node.l4 { border-color: rgba(16,185,129,0.4);  background: rgba(16,185,129,0.08); }
+        .hiw-level { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; font-family: 'JetBrains Mono', monospace; }
+        .hiw-node.l1 .hiw-level { color: #a78bfa; }
+        .hiw-node.l2 .hiw-level { color: #60a5fa; }
+        .hiw-node.l3 .hiw-level { color: #22d3ee; }
+        .hiw-node.l4 .hiw-level { color: #34d399; }
+        .hiw-name  { font-size: 0.75rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .hiw-count { font-size: 0.6rem; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
+        .hiw-eg    { font-size: 0.6rem; color: rgba(255,255,255,0.45); font-style: italic; text-align: center; }
+        .hiw-arrow { display: flex; align-items: center; padding: 0 4px; color: rgba(255,255,255,0.2); font-size: 0.8rem; flex-shrink: 0; }
+
+        /* Walk-through */
+        .hiw-walk { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+        .hiw-walk-title { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(22,211,200,0.7); padding: 0.5rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(6,182,212,0.05); }
+        .hiw-walk-row { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.38rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .hiw-walk-row:last-child { border-bottom: none; }
+        .hiw-walk-lbl { width: 56px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.25); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+        .hiw-walk-val { font-size: 0.78rem; font-weight: 600; }
+        .hiw-walk-val.inp { color: rgba(255,255,255,0.4); font-style: italic; font-weight: 400; }
+        .hiw-walk-val.l1v { color: #a78bfa; }
+        .hiw-walk-val.l2v { color: #60a5fa; }
+        .hiw-walk-val.l3v { color: #22d3ee; }
+        .hiw-walk-val.l4v { color: #34d399; }
+
+        /* Tasks */
+        .hiw-tasks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .hiw-task { border-radius: 10px; padding: 0.7rem 0.85rem; border: 1px solid; }
+        .hiw-task.t1 { border-color: rgba(239,68,68,0.25); background: rgba(239,68,68,0.05); }
+        .hiw-task.t2 { border-color: rgba(59,130,246,0.25); background: rgba(59,130,246,0.05); }
+        .hiw-task-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+        .hiw-task.t1 .hiw-task-title { color: #fca5a5; }
+        .hiw-task.t2 .hiw-task-title { color: #93c5fd; }
+        .hiw-task-f1   { font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 2px; }
+        .hiw-task-desc { font-size: 0.68rem; color: rgba(255,255,255,0.4); line-height: 1.4; }
+
         /* ── Error ── */
         .error-toast { margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; font-size: 0.85rem; color: #fca5a5; }
         .hidden { display: none !important; }
@@ -210,6 +262,76 @@
             <span class="score-badge badge-t2">Task 2 — 55.41% Macro F1 · 428 classes</span>
         </div>
     </header>
+
+    <!-- How it works (collapsible) -->
+    <div class="hiw-wrap">
+        <button class="hiw-toggle" id="hiw-toggle" onclick="toggleHiw()">
+            <span>ℹ &nbsp;How this works — the 4-level cascade explained</span>
+            <span class="hiw-chevron" id="hiw-chevron">▼</span>
+        </button>
+        <div class="hiw-body" id="hiw-body">
+            <p class="hiw-intro">
+                We built a <strong>4-level cascade classifier</strong> that reads any company description and assigns
+                a <strong>Morningstar GECS industry code</strong>. Instead of forcing one model to pick from
+                145 completely different industries all at once, the cascade routes each input through the
+                taxonomy hierarchy — the same way an analyst would think about it.
+            </p>
+
+            <!-- Cascade flow diagram -->
+            <div class="hiw-flow">
+                <div class="hiw-node l1">
+                    <span class="hiw-level">L1</span>
+                    <span class="hiw-name">Sector</span>
+                    <span class="hiw-count">11 classes</span>
+                    <span class="hiw-eg">Financial Services</span>
+                </div>
+                <div class="hiw-arrow">›</div>
+                <div class="hiw-node l2">
+                    <span class="hiw-level">L2</span>
+                    <span class="hiw-name">Group</span>
+                    <span class="hiw-count">~30 classes</span>
+                    <span class="hiw-eg">Banks</span>
+                </div>
+                <div class="hiw-arrow">›</div>
+                <div class="hiw-node l3">
+                    <span class="hiw-level">L3</span>
+                    <span class="hiw-name">Industry</span>
+                    <span class="hiw-count">145 classes</span>
+                    <span class="hiw-eg">Regional Banks</span>
+                </div>
+                <div class="hiw-arrow">›</div>
+                <div class="hiw-node l4">
+                    <span class="hiw-level">L4</span>
+                    <span class="hiw-name">Sub-Industry</span>
+                    <span class="hiw-count">428 classes</span>
+                    <span class="hiw-eg">Retail Banking &amp; Mortgage</span>
+                </div>
+            </div>
+
+            <!-- Banking walk-through -->
+            <div class="hiw-walk">
+                <div class="hiw-walk-title">Live walk-through — "The company provides retail mortgage loans and deposit accounts..."</div>
+                <div class="hiw-walk-row"><span class="hiw-walk-lbl">L1</span><span class="hiw-walk-val l1v">Financial Services</span></div>
+                <div class="hiw-walk-row"><span class="hiw-walk-lbl">L2</span><span class="hiw-walk-val l2v">Banks</span></div>
+                <div class="hiw-walk-row"><span class="hiw-walk-lbl">L3</span><span class="hiw-walk-val l3v">Regional Banks · code 10320020 &nbsp;← Task 1 output</span></div>
+                <div class="hiw-walk-row"><span class="hiw-walk-lbl">L4</span><span class="hiw-walk-val l4v">Retail Banking &amp; Mortgage Lending · code 1032002001 &nbsp;← Task 2 output</span></div>
+            </div>
+
+            <!-- Task 1 vs Task 2 -->
+            <div class="hiw-tasks">
+                <div class="hiw-task t1">
+                    <div class="hiw-task-title">Task 1 · 3-Level Cascade</div>
+                    <div class="hiw-task-f1">88.90%</div>
+                    <div class="hiw-task-desc">Macro F1 · 145 GECS industry codes · L1→L2→L3</div>
+                </div>
+                <div class="hiw-task t2">
+                    <div class="hiw-task-title">Task 2 · 4-Level Cascade</div>
+                    <div class="hiw-task-f1">55.41%</div>
+                    <div class="hiw-task-desc">Macro F1 · 428 sub-industry codes · L1→L2→L3→L4</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Pipeline steps -->
     <div class="pipeline-steps">
@@ -743,6 +865,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     textarea.addEventListener('input', () => { if (phase !== 1 && phase !== 2) triggerPhase(0); });
+
+    /* ── How-it-works toggle ── */
+    window.toggleHiw = function() {
+        const body = document.getElementById('hiw-body');
+        const chevron = document.getElementById('hiw-chevron');
+        const open = body.classList.toggle('open');
+        chevron.style.transform = open ? 'rotate(180deg)' : '';
+    };
 
     function showError(msg) {
         errorToast.textContent = msg;

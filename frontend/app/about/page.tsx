@@ -1,52 +1,34 @@
+import Navigation from "@/components/Navigation";
+import HowItWorks from "@/components/HowItWorks";
 import Link from "next/link";
 import {
-  ArrowRight,
-  BrainCircuit,
-  Database,
-  GitBranch,
-  LayoutDashboard,
-  Rocket,
-  Scale,
-  ShieldCheck,
-  Sparkles,
+  ArrowRight, CheckCircle2, GitBranch, Rocket, Scale,
+  Database, BrainCircuit, LayoutDashboard,
 } from "lucide-react";
-import Navigation from "@/components/Navigation";
 
 const STACK = [
-  { label: "Dataset frame", value: "Morningstar company and segment descriptions" },
-  { label: "Vectorization", value: "TF-IDF with 50K sparse features" },
-  { label: "Primary model", value: "Linear SVM with balanced class weighting" },
-  { label: "LLM track", value: "DeBERTa-v3-small fine-tuning experiments" },
-  { label: "SVM host", value: "Flask on Railway" },
-  { label: "LLM host", value: "Hugging Face Spaces" },
-  { label: "Frontend", value: "Next.js 15 on Vercel" },
-  { label: "Reusable library", value: "breezeml" },
-];
-
-const ARCHITECTURE = [
-  {
-    icon: Database,
-    title: "Data to features",
-    desc: "Raw Morningstar text is cleaned, normalized, and transformed into sparse numerical features that the production model can score efficiently.",
-  },
-  {
-    icon: BrainCircuit,
-    title: "Models under pressure",
-    desc: "Classical ML and transformer-based experiments were both tested against real imbalance, deployment cost, and interpretability needs.",
-  },
-  {
-    icon: LayoutDashboard,
-    title: "Product surface",
-    desc: "The frontend is not only a report. It acts like a control room for the system narrative, prediction flow, and deployment story.",
-  },
+  { label: "Text vectorization",  value: "TF-IDF · 60,000 bigram features · scipy.sparse CSR" },
+  { label: "Cascade classifier",  value: "LinearSVC (scikit-learn) · class_weight='balanced'" },
+  { label: "LLM track",           value: "DeBERTa-v3-small fine-tuned on RTX 3050" },
+  { label: "ML library",          value: "breezeml (our open-source wrapper)" },
+  { label: "SVM API server",      value: "Flask + Waitress → Railway (Docker)" },
+  { label: "LLM API server",      value: "Flask + PyTorch → Hugging Face Spaces" },
+  { label: "Frontend",            value: "Next.js 15 + Tailwind CSS → Vercel" },
+  { label: "Taxonomy data",       value: "Morningstar GECS + GICS / NAICS / SIC crosswalk" },
 ];
 
 const TEAM = [
-  { name: "Akash Anipakalu Giridhar", role: "ML engineering and library architecture" },
-  { name: "Subasree Segar", role: "Data science and model evaluation" },
-  { name: "Vishal Shaileshkumar Rathod", role: "Feature engineering" },
-  { name: "Srilaxmi Ganjipalli", role: "Data exploration and preprocessing" },
-  { name: "Tserennadmid Batkhuu", role: "Reporting and documentation" },
+  { name: "Akash Anipakalu Giridhar",   role: "ML engineering, cascade architecture, deployment" },
+  { name: "Subasree Segar",             role: "Model evaluation, benchmarking, per-class diagnostics" },
+  { name: "Vishal Shaileshkumar Rathod",role: "Feature engineering, TF-IDF pipeline" },
+  { name: "Srilaxmi Ganjipalli",        role: "Data preprocessing, exploration, cleaning" },
+  { name: "Tserennadmid Batkhuu",       role: "Documentation, reporting, project coordination" },
+];
+
+const ARCHITECTURE = [
+  { icon: Database,       title: "Data → features", desc: "Raw Morningstar descriptions cleaned and converted to 60K-dimensional sparse TF-IDF vectors. No dense matrices — scipy CSR throughout." },
+  { icon: BrainCircuit,   title: "Cascade inference", desc: "4-level LinearSVC chain reads the taxonomy hierarchy. Each level only competes within its parent's slice — not against all 145 codes at once." },
+  { icon: LayoutDashboard, title: "Production surface", desc: "Flask API on Railway serves predictions in under 10 ms. Next.js frontend on Vercel. DeBERTa comparison on Hugging Face Spaces." },
 ];
 
 export default function AboutPage() {
@@ -54,83 +36,79 @@ export default function AboutPage() {
     <main className="min-h-screen bg-black text-white">
       <Navigation />
 
-      <section className="relative overflow-hidden px-6 pt-36 pb-20">
+      {/* ── Hero ── */}
+      <section className="relative overflow-hidden px-6 pt-36 pb-12">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-8 left-[10%] h-72 w-72 rounded-full bg-red-600/14 blur-[120px]" />
-          <div className="absolute top-40 right-[8%] h-80 w-80 rounded-full bg-cyan-500/10 blur-[140px]" />
-          <div className="absolute inset-0 opacity-25" style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+          <div className="absolute top-8 left-[10%] h-72 w-72 rounded-full bg-red-600/12 blur-[120px]" />
+          <div className="absolute top-40 right-[8%] h-80 w-80 rounded-full bg-violet-500/10 blur-[140px]" />
+          <div className="absolute inset-0 opacity-20" style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px)",
             backgroundSize: "68px 68px",
           }} />
         </div>
 
         <div className="relative mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-red-300">
-                <Sparkles className="h-3.5 w-3.5" />
-                Project Page
+              <div className="inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-red-300 mb-6">
+                MGT 599 Capstone · Group 4 · DePaul University
               </div>
-              <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight">
-                This capstone became a
-                <span className="block text-white/55">production-minded classification system.</span>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95]">
+                We automated how<br />
+                <span className="text-white/50">Morningstar classifies</span><br />
+                the equity universe.
               </h1>
-              <p className="mt-6 max-w-3xl text-lg sm:text-xl leading-relaxed text-white/55">
-                TAVSS is the full story: raw financial text, feature engineering, model experiments,
-                deployment tradeoffs, and the evidence that a classical sparse pipeline beat the louder deep-learning route.
+              <p className="mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-white/55">
+                TAVSS is a 4-level cascade classifier that reads a company description and
+                assigns a Morningstar GECS industry code — beating a fine-tuned transformer
+                by <span className="text-emerald-400 font-bold">+24.90 percentage points</span>, on CPU, with no GPU required.
               </p>
-              <div className="mt-10 flex flex-wrap gap-3">
-                <Link
-                  href="/journey"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-red-50 transition-colors"
-                >
-                  Read the journey
-                  <ArrowRight className="h-4 w-4" />
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/demo"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-bold text-black hover:bg-red-50 transition-colors">
+                  Try the live demo <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link
-                  href="/team"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/78 hover:text-white hover:border-white/25 transition-colors"
-                >
-                  Meet the team
-                  <ArrowRight className="h-4 w-4" />
+                <Link href="/journey"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/78 hover:text-white hover:border-white/25 transition-colors">
+                  Read the journey <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
 
-            <div className="rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-xl overflow-hidden">
-              <div className="border-b border-white/8 px-6 py-5">
-                <div className="text-xs uppercase tracking-[0.28em] text-cyan-300/80 mb-2">Executive snapshot</div>
-                <h2 className="text-2xl font-bold text-white">Why this project matters</h2>
-              </div>
-              <div className="grid grid-cols-2 gap-px bg-white/8">
-                <div className="bg-black/65 px-6 py-6">
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/35">Industry classes</div>
-                  <div className="mt-2 text-3xl font-black text-white">145</div>
+            {/* Key numbers */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { v: "88.90%", l: "Task 1 Macro F1",    s: "145 GECS industry codes",     c: "text-red-400",     b: "border-red-500/20 bg-red-500/5" },
+                { v: "55.41%", l: "Task 2 Macro F1",    s: "428 sub-industry codes",       c: "text-blue-400",    b: "border-blue-500/20 bg-blue-500/5" },
+                { v: "+24.9pp",l: "vs DeBERTa",         s: "fine-tuned transformer",        c: "text-emerald-400", b: "border-emerald-500/20 bg-emerald-500/5" },
+                { v: "40×",    l: "Faster than DeBERTa",s: "CPU · no GPU required",         c: "text-violet-400",  b: "border-violet-500/20 bg-violet-500/5" },
+                { v: "53K+",   l: "Training segments",  s: "Morningstar company data",      c: "text-amber-400",   b: "border-amber-500/20 bg-amber-500/5" },
+                { v: "60K",    l: "TF-IDF features",    s: "bigram sparse vectorization",   c: "text-cyan-400",    b: "border-cyan-500/20 bg-cyan-500/5" },
+              ].map((s) => (
+                <div key={s.l} className={`rounded-2xl border ${s.b} px-5 py-4`}>
+                  <div className={`text-2xl font-black ${s.c} mb-1`}>{s.v}</div>
+                  <div className="text-sm font-semibold text-white">{s.l}</div>
+                  <div className="text-xs text-white/35 mt-0.5">{s.s}</div>
                 </div>
-                <div className="bg-black/65 px-6 py-6">
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/35">Subindustries</div>
-                  <div className="mt-2 text-3xl font-black text-white">450+</div>
-                </div>
-                <div className="bg-black/65 px-6 py-6">
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/35">Winning metric</div>
-                  <div className="mt-2 text-3xl font-black text-white">86.82%</div>
-                </div>
-                <div className="bg-black/65 px-6 py-6">
-                  <div className="text-xs uppercase tracking-[0.24em] text-white/35">Operating thesis</div>
-                  <div className="mt-2 text-base font-semibold text-white">Simple, fast, explainable</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
+      {/* ── How it works (cascade explainer) ── */}
+      <div className="border-t border-white/6">
+        <HowItWorks />
+      </div>
+
+      {/* ── System architecture ── */}
       <section className="px-6 py-20 border-t border-white/6">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12">
+          <div className="mb-10">
             <div className="text-xs uppercase tracking-[0.3em] text-red-300/80 mb-4">System architecture</div>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight">Built like a serious pipeline, not a class demo.</h2>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+              Built like a real production pipeline.
+            </h2>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {ARCHITECTURE.map((item) => (
@@ -139,18 +117,65 @@ export default function AboutPage() {
                   <item.icon className="h-5 w-5 text-white/80" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
-                <p className="text-white/55 leading-relaxed">{item.desc}</p>
+                <p className="text-white/50 leading-relaxed text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── Model decision ── */}
       <section className="px-6 py-20 border-t border-white/6">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-cyan-300/80 mb-4">Stack map</div>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight">Every layer has a job.</h2>
+          <div className="mb-10">
+            <div className="text-xs uppercase tracking-[0.3em] text-emerald-300/80 mb-4">Model decision</div>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+              The cascade SVM won. The evidence was clear.
+            </h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-[32px] border border-emerald-500/20 bg-emerald-500/[0.05] p-8">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-emerald-300">
+                <CheckCircle2 className="h-3.5 w-3.5" /> Production winner
+              </div>
+              <h3 className="text-3xl font-black text-white mb-2">4-Level Cascade SVM</h3>
+              <div className="text-5xl font-black text-white mb-1">88.90%</div>
+              <div className="text-sm text-emerald-400 font-semibold mb-5">+13.90 pp over rubric threshold of 75%</div>
+              <p className="text-white/55 leading-8 mb-5 text-sm">
+                Sector → Group → Industry → Sub-Industry. Each classifier trains only on its slice of the taxonomy.
+                Runs on CPU, deploys in a Docker container, serves predictions in under 10 ms.
+                Task 2 adds 428 sub-industry classes at 55.41% Macro F1.
+              </p>
+              <div className="flex items-center gap-2 text-sm text-emerald-300/90">
+                <Rocket className="h-4 w-4" /> Fast, explainable, no GPU required.
+              </div>
+            </div>
+            <div className="rounded-[32px] border border-purple-500/20 bg-white/[0.03] p-8">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-purple-300">
+                <Scale className="h-3.5 w-3.5" /> Valuable challenger
+              </div>
+              <h3 className="text-3xl font-black text-white mb-2">DeBERTa-v3 Small</h3>
+              <div className="text-5xl font-black text-white mb-1">64.00%</div>
+              <div className="text-sm text-purple-400 font-semibold mb-5">−24.90 pp vs cascade · GPU required</div>
+              <p className="text-white/55 leading-8 mb-5 text-sm">
+                Fine-tuned on the same data with class-weighted loss. Proved the training approach
+                was sound — but didn't outperform the classical pipeline on Macro F1.
+                3+ hour training epochs on an RTX 3050 with 4 GB VRAM.
+              </p>
+              <div className="flex items-center gap-2 text-sm text-purple-300/90">
+                <GitBranch className="h-4 w-4" /> Important experiment, not the production answer.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Tech stack ── */}
+      <section className="px-6 py-20 border-t border-white/6">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10">
+            <div className="text-xs uppercase tracking-[0.3em] text-cyan-300/80 mb-4">Tech stack</div>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Every layer has a job.</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {STACK.map((item) => (
@@ -163,95 +188,44 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── Team ── */}
       <section className="px-6 py-20 border-t border-white/6">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-emerald-300/80 mb-4">Model decision wall</div>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
-              The final choice was not about trendiness.
-              <span className="block text-white/55">It was about operational proof.</span>
-            </h2>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[32px] border border-emerald-500/20 bg-emerald-500/[0.06] p-8">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-emerald-300">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                Production winner
-              </div>
-              <h3 className="text-3xl font-black text-white mb-3">TF-IDF + Linear SVM</h3>
-              <div className="text-5xl font-black text-white mb-6">86.82%</div>
-              <p className="text-white/58 leading-8 mb-6">
-                It delivered better macro performance, lower serving friction, easier reasoning, and a cleaner path to real deployment.
-                The winning system was not the one with the most attention layers. It was the one that solved the task better.
-              </p>
-              <div className="flex items-center gap-2 text-sm text-emerald-300/90">
-                <Rocket className="h-4 w-4" />
-                Faster to host, easier to trust, better aligned with the problem.
-              </div>
-            </div>
-
-            <div className="rounded-[32px] border border-purple-500/20 bg-white/[0.03] p-8">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-purple-300">
-                <Scale className="h-3.5 w-3.5" />
-                Valuable challenger
-              </div>
-              <h3 className="text-3xl font-black text-white mb-3">DeBERTa-v3 Small</h3>
-              <div className="text-5xl font-black text-white mb-6">64.00%</div>
-              <p className="text-white/58 leading-8 mb-6">
-                The transformer track still mattered. It taught the team how to handle compute ceilings, class imbalance,
-                augmentation strategy, and model-hosting pressure. But in the final ledger, it did not outperform the sparse baseline.
-              </p>
-              <div className="flex items-center gap-2 text-sm text-purple-300/90">
-                <GitBranch className="h-4 w-4" />
-                Important experiment, but not the final production answer.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-20 border-t border-white/6">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12">
-            <div className="text-xs uppercase tracking-[0.3em] text-rose-300/80 mb-4">Who built it</div>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight">A five-person systems team.</h2>
+          <div className="mb-10">
+            <div className="text-xs uppercase tracking-[0.3em] text-rose-300/80 mb-4">The team</div>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">Five people. One finished system.</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {TEAM.map((member) => (
               <div key={member.name} className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
                 <div className="text-lg font-semibold text-white mb-2">{member.name}</div>
-                <div className="text-sm uppercase tracking-[0.24em] text-white/35 mb-3">{member.role}</div>
-                <div className="text-sm text-white/55">
-                  The project only works because each role fed into the same end-to-end system.
-                </div>
+                <div className="text-sm text-white/40 leading-relaxed">{member.role}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-6 py-20 border-t border-white/6">
-        <div className="mx-auto max-w-6xl text-center">
-          <div className="text-sm text-white/40 mb-6">Want the full narrative or the people behind it?</div>
+      {/* ── CTA ── */}
+      <section className="px-6 py-16 border-t border-white/6">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-2xl font-black text-white mb-6">Ready to see it in action?</h2>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/journey"
-              className="inline-flex items-center gap-2 rounded-2xl bg-red-600 px-6 py-3.5 text-sm font-bold text-white hover:bg-red-500 transition-colors"
-            >
-              Open journey page
-              <ArrowRight className="h-4 w-4" />
+            <Link href="/demo"
+              className="inline-flex items-center gap-2 rounded-2xl bg-red-600 px-6 py-3.5 text-sm font-bold text-white hover:bg-red-500 transition-colors">
+              Run a live classification <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              href="/team"
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/15 px-6 py-3.5 text-sm font-bold text-white/80 hover:text-white hover:border-white/25 transition-colors"
-            >
-              Open team page
-              <ArrowRight className="h-4 w-4" />
+            <Link href="/llm"
+              className="inline-flex items-center gap-2 rounded-2xl border border-white/15 px-6 py-3.5 text-sm font-bold text-white/80 hover:text-white hover:border-white/25 transition-colors">
+              Compare with DeBERTa <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-white/6 py-8 text-center text-xs text-white/20">
+        © 2026 TAVSS · MGT 599 Capstone · Group 4 · DePaul University Chicago
+      </footer>
     </main>
   );
 }
