@@ -460,20 +460,28 @@ export default function LiveDemo() {
               )}
             </button>
 
-            {/* Feature 3: Benchmark scorecard */}
+            {/* Model performance reference — NOT per-prediction confidence */}
             <div ref={benchRef}>
               <GlowCard glowColor="purple" className="border-white/8 bg-black/40 p-6">
-                <div className="flex items-center gap-2 mb-5">
-                  <TrendingUp className="h-4 w-4 text-violet-300" />
-                  <div className="text-xs uppercase tracking-[0.28em] text-white/35">
-                    Model Benchmark - audited Task 1 holdout Macro F1
+                <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-violet-300" />
+                    <div className="text-xs uppercase tracking-[0.28em] text-white/35">
+                      Model training results
+                    </div>
                   </div>
+                  <span className="text-[10px] font-mono text-white/25 border border-white/10 px-2 py-1 rounded">
+                    Audited · not per-prediction
+                  </span>
                 </div>
                 <div className="flex flex-col gap-3">
                   {BENCHMARKS.map((b) => (
                     <BenchmarkBar key={b.label} {...b} animate={benchVisible} />
                   ))}
                 </div>
+                <p className="text-[10px] text-white/25 mt-4 font-mono">
+                  These are overall model F1 scores on the held-out test set — not confidence scores for your specific input above.
+                </p>
               </GlowCard>
             </div>
           </div>
@@ -645,25 +653,44 @@ export default function LiveDemo() {
                   )}
 
                   {/* T1 Alternatives */}
-                  {result.alternatives_t1 && result.alternatives_t1.length > 0 && (
-                    <GlowCard glowColor="amber" className="border-white/8 bg-white/[0.03] p-6">
-                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-white/35">Top industry alternatives</div>
-                      <div className="space-y-3">
-                        {result.alternatives_t1.slice(0, 3).map((alt) => (
-                          <div key={`${alt.rank}-${alt.code}`} className="rounded-2xl border border-white/8 bg-black/30 px-4 py-4">
-                            <div className="flex items-center justify-between gap-4">
-                              <div>
-                                <div className="text-sm text-white/40">Rank {alt.rank}</div>
-                                <div className="font-semibold text-white">{alt.label}</div>
-                                <div className="font-mono text-xs text-white/35 mt-1">{alt.code}</div>
-                              </div>
-                              <div className="font-mono text-amber-300">{alt.confidence.toFixed(1)}%</div>
+                  {result.alternatives_t1 && result.alternatives_t1.length > 0 && (() => {
+                    const alts = result.alternatives_t1.slice(0, 3);
+                    const isConstant = alts.length === 1 && alts[0].confidence >= 99;
+                    return (
+                      <GlowCard glowColor="amber" className="border-white/8 bg-white/[0.03] p-6">
+                        <div className="mb-4 flex items-center justify-between">
+                          <div className="text-xs uppercase tracking-[0.28em] text-white/35">Top industry alternatives</div>
+                          <span className="text-[10px] font-mono text-white/25">from this prediction</span>
+                        </div>
+                        {isConstant ? (
+                          <div className="rounded-2xl border border-white/8 bg-black/30 px-4 py-4 text-center">
+                            <div className="font-semibold text-white mb-1">{alts[0].label}</div>
+                            <div className="font-mono text-xs text-white/35 mb-3">{alts[0].code}</div>
+                            <div className="text-xs text-white/30 leading-relaxed">
+                              The cascade routed this description to a single-class group — no competing alternatives exist at this taxonomy level.
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    </GlowCard>
-                  )}
+                        ) : (
+                          <div className="space-y-3">
+                            {alts.map((alt) => (
+                              <div key={`${alt.rank}-${alt.code}`} className="rounded-2xl border border-white/8 bg-black/30 px-4 py-4">
+                                <div className="flex items-center justify-between gap-4">
+                                  <div>
+                                    <div className="text-sm text-white/40">#{alt.rank}</div>
+                                    <div className="font-semibold text-white">{alt.label}</div>
+                                    <div className="font-mono text-xs text-white/35 mt-1">{alt.code}</div>
+                                  </div>
+                                  <div className={`font-mono font-bold ${alt.rank === 1 ? "text-amber-300" : "text-white/40"}`}>
+                                    {alt.confidence.toFixed(1)}%
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </GlowCard>
+                    );
+                  })()}
 
                   {result.trace && Object.keys(result.trace).length > 0 && (
                     <GlowCard glowColor="purple" className="border-white/8 bg-white/[0.03] p-6">

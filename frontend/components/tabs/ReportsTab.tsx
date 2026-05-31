@@ -202,14 +202,17 @@ export default function ReportsTab() {
       {/* ── Section 1: F1 Rings ──────────────────────────────────────── */}
       <GlowCard glowColor="red" className="p-8 border-red-500/20 bg-[#060606]/90 backdrop-blur-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 blur-[100px] rounded-full pointer-events-none" />
-        <div className="flex items-center gap-3 mb-8 relative z-10">
-          <Award className="w-5 h-5 text-red-500" />
-          <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 1 - Industry Classification · Primary Evaluation</h3>
+        <div className="flex items-center justify-between mb-8 relative z-10">
+          <div className="flex items-center gap-3">
+            <Award className="w-5 h-5 text-red-500" />
+            <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 1 - Industry Classification · Primary Evaluation</h3>
+          </div>
+          <span className="text-[10px] font-mono text-white/25 border border-white/10 px-2 py-1 rounded">Locked model metrics · not per-prediction</span>
         </div>
         <div className="grid grid-cols-3 gap-8 mb-8 relative z-10">
-          <Ring pct={75.0} color="#ef4444" label="Ensemble F1" sublabel="Task 1 · Locked" />
-          <Ring pct={62} color="#3b82f6" label="Accuracy" sublabel="145 Industry Classes" />
-          <Ring pct={75} color="#10b981" label="Rubric Threshold" sublabel="Minimum Required" />
+          <Ring pct={75.0} color="#ef4444" label="Macro F1" sublabel="Calibrated ensemble · locked" />
+          <Ring pct={91.4} color="#3b82f6" label="Top-3 Accuracy" sublabel="Company-disjoint test" />
+          <Ring pct={75} color="#10b981" label="Rubric Threshold" sublabel="Minimum required" />
         </div>
         <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-5 flex items-center gap-5 relative z-10">
           <div className="text-4xl font-black font-mono text-emerald-400 drop-shadow-[0_0_20px_rgba(16,185,129,0.6)]">✓ PASSING</div>
