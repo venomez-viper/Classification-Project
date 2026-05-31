@@ -300,7 +300,7 @@ export default function HFPage() {
                       )}
                     </div>
                   ) : (
-                    <div className="rounded-xl border border-dashed border-white/10 px-6 py-4 font-mono text-xs text-white/25 text-center">
+                    <div className="rounded-xl border border-white/10 px-6 py-4 font-mono text-xs text-white/25 text-center">
                       Sub-industry not available for this industry code
                     </div>
                   )}

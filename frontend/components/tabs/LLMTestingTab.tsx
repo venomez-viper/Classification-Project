@@ -297,7 +297,7 @@ export default function LLMTestingTab() {
           <AnimatePresence mode="wait">
             {!result && !error && (
               <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="flex-1 border border-dashed border-purple-500/15 rounded-xl flex flex-col items-center justify-center p-6 text-center min-h-[400px]">
+                className="flex-1 border border-purple-500/15 rounded-xl flex flex-col items-center justify-center p-6 text-center min-h-[400px]">
                 <BrainCircuit className="w-10 h-10 text-purple-500/20 mb-4" />
                 <p className="text-white/20 font-mono text-xs">Awaiting neural inference input</p>
               </motion.div>

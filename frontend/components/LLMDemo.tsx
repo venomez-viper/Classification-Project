@@ -436,7 +436,7 @@ export default function LLMDemo() {
                       )}
                     </GlowCard>
                   ) : result && (
-                    <div className="rounded border border-dashed border-cyan-500/20 bg-cyan-950/10 px-6 py-5 font-mono text-xs text-cyan-400/40 text-center">
+                    <div className="rounded border border-cyan-500/20 bg-cyan-950/10 px-6 py-5 font-mono text-xs text-cyan-400/40 text-center">
                       Sub-industry model offline — start server.py on port 5000 for cascade fallback.
                     </div>
                   )}
