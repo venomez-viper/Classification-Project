@@ -1,5 +1,12 @@
 {
   "framework": "nextjs",
   "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build",
+  "env": {
+    "HF_SPACE_URL": "https://akash-ag-gecs-classifier-space.hf.space",
+    "GECS_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
+    "NEXT_PUBLIC_GECS_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
+    "NEXT_PUBLIC_SVM_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
+    "NEXT_PUBLIC_LLM_API_URL": "https://akash-ag-gecs-classifier-space.hf.space"
+  }
 }
