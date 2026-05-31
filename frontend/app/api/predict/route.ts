@@ -44,9 +44,13 @@ function flattenResponse(data: JsonObject): JsonObject {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  let body: JsonObject;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
 
-  let upstream: Response;
   const payload = {
     ...body,
     company_text: body.company_text ?? body.text,
@@ -54,6 +58,7 @@ export async function POST(req: NextRequest) {
     include_reasoning: body.include_reasoning ?? true,
   };
 
+  let upstream: Response;
   try {
     upstream = await fetch(`${GECS_API_URL}/api/predict`, {
       method: "POST",
@@ -62,19 +67,36 @@ export async function POST(req: NextRequest) {
     });
   } catch {
     return NextResponse.json(
-      { error: "Cannot reach the GECS-Sage Flask classifier." },
+      { error: "HF Space is unreachable — it may still be waking up. Wait 30 seconds and try again." },
       { status: 502 }
     );
   }
 
-  const text = await upstream.text();
-  if (!text) {
-    return NextResponse.json({ error: "GECS-Sage returned an empty response." }, { status: 503 });
+  let text: string;
+  try {
+    text = await upstream.text();
+  } catch {
+    return NextResponse.json({ error: "HF Space closed the connection unexpectedly." }, { status: 502 });
   }
+
+  if (!text || !text.trim()) {
+    return NextResponse.json({ error: "HF Space returned an empty response — model may still be loading." }, { status: 503 });
+  }
+
   try {
     const data = JSON.parse(text);
     return NextResponse.json(flattenResponse(asObject(data)), { status: upstream.status });
   } catch {
-    return NextResponse.json({ error: `GECS-Sage error (${upstream.status}): ${text.slice(0, 300)}` }, { status: 502 });
+    const preview = text.slice(0, 200).replace(/\n/g, " ");
+    if (upstream.status === 503 || upstream.status === 502) {
+      return NextResponse.json(
+        { error: "HF Space is still starting up — wait 30 seconds and try again." },
+        { status: 503 }
+      );
+    }
+    return NextResponse.json(
+      { error: `Unexpected response from HF Space (HTTP ${upstream.status}): ${preview}` },
+      { status: 502 }
+    );
   }
 }
