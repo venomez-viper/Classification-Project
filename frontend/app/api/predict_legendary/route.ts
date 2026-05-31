@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const LEGENDARY_URL =
+const GECS_API_URL =
+  process.env.GECS_API_URL ??
+  process.env.NEXT_PUBLIC_GECS_API_URL ??
   process.env.LEGENDARY_API_URL ??
   process.env.NEXT_PUBLIC_LEGENDARY_API_URL ??
   "http://localhost:5003";
@@ -11,21 +13,26 @@ export async function POST(req: NextRequest) {
 
   let upstream: Response;
   try {
-    upstream = await fetch(`${LEGENDARY_URL}/api/predict_legendary`, {
+    upstream = await fetch(`${GECS_API_URL}/api/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        ...body,
+        company_text: body.company_text ?? body.text,
+        segment_text: body.segment_text ?? body.text,
+        include_reasoning: body.include_reasoning ?? true,
+      }),
     });
   } catch {
     return NextResponse.json(
-      { error: "Cannot reach the legendary server. Check port 5003 or LEGENDARY_API_URL." },
+      { error: "Cannot reach the GECS-Sage server. Check port 5003 or GECS_API_URL." },
       { status: 502 }
     );
   }
 
   const text = await upstream.text();
   if (!text) {
-    return NextResponse.json({ error: "Legendary server returned empty response." }, { status: 503 });
+    return NextResponse.json({ error: "GECS-Sage server returned empty response." }, { status: 503 });
   }
 
   try {
@@ -33,7 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data, { status: upstream.status });
   } catch {
     return NextResponse.json(
-      { error: `Legendary server error (${upstream.status}): ${text.slice(0, 300)}` },
+      { error: `GECS-Sage server error (${upstream.status}): ${text.slice(0, 300)}` },
       { status: 502 }
     );
   }
