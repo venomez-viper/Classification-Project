@@ -1,4 +1,6 @@
-{
+import json, pathlib
+
+LABELS = {
   "10110010": "Agricultural Inputs",
   "10120010": "Building Materials",
   "10130010": "Chemicals",
@@ -143,5 +145,15 @@
   "31120060": "Scientific & Technical Instruments",
   "31130010": "Semiconductor Equipment & Materials",
   "31130020": "Semiconductors",
-  "31130030": "Solar"
+  "31130030": "Solar",
 }
+
+assert len(LABELS) == 145, f"Expected 145, got {len(LABELS)}"
+
+out = json.dumps(LABELS, indent=2, ensure_ascii=False)
+pathlib.Path("hf_space/models/mstar_labels_full.json").write_text(out, encoding="utf-8")
+pathlib.Path("models/mstar_labels_full.json").write_text(out, encoding="utf-8")
+print(f"Written {len(LABELS)} clean labels to both locations.")
+print()
+for code in ["10250010", "10260010", "10310010", "20610010", "31010010", "20525040"]:
+    print(f"  {code}: {LABELS[code]}")
