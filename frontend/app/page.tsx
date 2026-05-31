@@ -1,5 +1,7 @@
+"use client";
+import dynamic from "next/dynamic";
 import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
+const Hero = dynamic(() => import("@/components/Hero"), { ssr: false });
 import HowItWorks from "@/components/HowItWorks";
 import Link from "next/link";
 import {
