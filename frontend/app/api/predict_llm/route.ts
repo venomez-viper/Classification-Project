@@ -4,13 +4,10 @@ import type { NextRequest } from "next/server";
 export const maxDuration = 60;
 
 const GECS_API_URL =
-  process.env.GECS_API_URL ??
-  process.env.NEXT_PUBLIC_GECS_API_URL ??
-  process.env.LEGENDARY_API_URL ??
-  process.env.NEXT_PUBLIC_LEGENDARY_API_URL ??
+  process.env.MODERNBERT_API_URL ??
   process.env.LLM_API_URL ??
   process.env.NEXT_PUBLIC_LLM_API_URL ??
-  "http://localhost:5003";
+  "https://akash-ag-gecs-modernbert.hf.space";
 
 type JsonObject = Record<string, unknown>;
 
@@ -60,7 +57,7 @@ export async function POST(req: NextRequest) {
     });
   } catch {
     return NextResponse.json(
-      { error: "Cannot reach GECS-Sage. Make sure server_legendary.py is running on port 5003." },
+      { error: "Cannot reach ModernBERT Space. It may be waking up — wait 30 seconds and try again." },
       { status: 502 }
     );
   }

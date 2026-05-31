@@ -7,6 +7,8 @@
     "GECS_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
     "NEXT_PUBLIC_GECS_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
     "NEXT_PUBLIC_SVM_API_URL": "https://akash-ag-gecs-classifier-space.hf.space",
-    "NEXT_PUBLIC_LLM_API_URL": "https://akash-ag-gecs-classifier-space.hf.space"
+    "MODERNBERT_API_URL": "https://akash-ag-gecs-modernbert.hf.space",
+    "LLM_API_URL": "https://akash-ag-gecs-modernbert.hf.space",
+    "NEXT_PUBLIC_LLM_API_URL": "https://akash-ag-gecs-modernbert.hf.space"
   }
 }
