@@ -32,7 +32,7 @@ const PIPELINE = [
 ];
 
 const LOGS = [
-  "> CUDA:0 initialized - RTX 3050 (8GB VRAM)",
+  "> Cloud GPU initialized - Hugging Face Spaces (A10G VRAM)",
   "> Loading ModernBERT-large checkpoint (395M params)...",
   "> Tokenizing input → 512-token sequence",
   "> Executing forward pass - Layer  1/12 ████░░░░░░░░",
@@ -133,7 +133,7 @@ export default function LLMTestingTab() {
       if (!res.ok) throw new Error(data.error || "Server error");
       setResult(data); setResultKey(k => k + 1); setActiveStep(PIPELINE.length);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Cannot reach GECS-Sage on port 5003.");
+      setError(e instanceof Error ? e.message : "Cannot reach Hugging Face Space endpoint.");
       setActiveStep(-1);
     } finally {
       setLoading(false); clearInterval(logId);
@@ -156,14 +156,14 @@ export default function LLMTestingTab() {
             ModernBERT-v3 Neural Inference Facility
           </TextScramble>
           <p className="text-sm text-purple-500/50 mt-1 font-mono tracking-widest uppercase">
-            Port 5001 · Production Track · 395M Parameters · CUDA:0 RTX 3050
+            Hugging Face Space · Production Track · 395M Parameters · Cloud Inference
           </p>
         </div>
         <div className="flex items-center gap-3">
           {[
             { icon: Server,   label: "modernbert-large", color: "text-purple-400" },
             { icon: Cpu,      label: "395M params",       color: "text-cyan-400" },
-            { icon: Activity, label: "CUDA:0 online",     color: "text-emerald-400" },
+            { icon: Activity, label: "HF Space online",     color: "text-emerald-400" },
           ].map(s => (
             <div key={s.label} className={`flex items-center gap-1.5 text-[10px] font-mono ${s.color}`}>
               <s.icon className="w-3 h-3" /> {s.label}

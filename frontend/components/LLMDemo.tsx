@@ -51,8 +51,8 @@ const PIPELINE = [
 ];
 
 const TERMINAL_LOGS = [
-  "> Initialising CUDA device 0  [RTX 3050]...",
-  "> Allocating 1.2 GB VRAM...",
+  "> Connecting to Hugging Face Space...",
+  "> Allocating Cloud VRAM...",
   "> Loading ModernBERT-large weights (395 M params)...",
   "> Model weights loaded. Status: ONLINE",
   "> Tokenising input sequence...",
@@ -161,9 +161,9 @@ export default function LLMDemo() {
         fetch("/api/predict",      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ company_text: text, segment_text: text }) }),
       ]);
 
-      if (llmRes.status === "rejected") throw new Error("Could not reach GECS-Sage on port 5003.");
+      if (llmRes.status === "rejected") throw new Error("Could not reach Hugging Face endpoint.");
       const llmData = await llmRes.value.json();
-      if (!llmRes.value.ok) throw new Error(llmData.error || "GECS-Sage server error");
+      if (!llmRes.value.ok) throw new Error(llmData.error || "Hugging Face Space error");
 
       setResult(llmData);
       setResultKey((k) => k + 1);
@@ -179,7 +179,7 @@ export default function LLMDemo() {
         }
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Could not reach GECS-Sage on port 5003.";
+      const msg = e instanceof Error ? e.message : "Could not reach Hugging Face endpoint.";
       setError(msg);
       setActiveStep(-1);
     } finally {
@@ -208,7 +208,7 @@ export default function LLMDemo() {
           <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-mono text-purple-300">
             <span className="flex items-center gap-2"><Server className="w-4 h-4 text-purple-500" /> MODEL: MODERNBERT-V3-SMALL</span>
             <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-cyan-500" /> PARAMS: 395,000,000</span>
-            <span className="flex items-center gap-2"><Activity className="w-4 h-4 text-emerald-500" /> ACCELERATOR: CUDA:0</span>
+            <span className="flex items-center gap-2"><Activity className="w-4 h-4 text-emerald-500" /> INFRA: HUGGING FACE SPACES</span>
           </div>
           <div className="text-xs font-mono px-3 py-1 bg-purple-500/10 border border-purple-500/30 rounded text-purple-400">
             SYSTEM STATUS: ONLINE
@@ -342,7 +342,7 @@ export default function LLMDemo() {
                   <p className="font-bold mb-2">INFERENCE ERROR</p>
                   <p>{error}</p>
                   <p className="mt-3 text-red-300/60 text-xs">
-                    Make sure GECS-Sage is running: <span className="text-red-200">python server_legendary.py</span>
+                    Please ensure the Hugging Face Space is active and responding.
                   </p>
                 </motion.div>
               )}
@@ -437,7 +437,7 @@ export default function LLMDemo() {
                     </GlowCard>
                   ) : result && (
                     <div className="rounded border border-cyan-500/20 bg-cyan-950/10 px-6 py-5 font-mono text-xs text-cyan-400/40 text-center">
-                      Sub-industry model offline - start server.py on port 5000 for cascade fallback.
+                      Sub-industry model offline - Hugging Face cascade fallback unavailable.
                     </div>
                   )}
                 </motion.div>
