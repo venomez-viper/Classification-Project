@@ -21,7 +21,7 @@ const SECTIONS = [
             <p>The system performs <strong className="text-white">two cascading classification tasks:</strong></p>
             <ul className="list-none space-y-2 mt-2">
               <li className="flex gap-3"><span className="text-red-500 font-bold font-mono">T1</span><span>Industry Classification — 145 classes mapped to 8-digit Morningstar codes</span></li>
-              <li className="flex gap-3"><span className="text-blue-400 font-bold font-mono">T2</span><span>Subindustry Classification — 407 classes mapped to 10-digit GECS codes</span></li>
+              <li className="flex gap-3"><span className="text-blue-400 font-bold font-mono">T2</span><span>Subindustry Classification — 428 classes mapped to 10-digit GECS codes</span></li>
             </ul>
           </div>
         )
@@ -92,7 +92,7 @@ const SECTIONS = [
                 ["Step 1", "Drop all NaN descriptions", "text-emerald-400"],
                 ["Step 2", "Convert GECS codes to integer labels", "text-blue-400"],
                 ["Step 3", "Filter classes with < 5 samples (prevents stratification errors)", "text-amber-400"],
-                ["Step 4", "80/20 stratified train/test split preserving long-tail distribution", "text-red-400"],
+                ["Step 4", "Company-disjoint split — no company appears on both sides (GroupShuffleSplit by CompanyId)", "text-red-400"],
               ].map(([step, desc, color]) => (
                 <div key={step} className="flex gap-3 items-start bg-black/40 border border-white/5 rounded-lg px-3 py-2">
                   <span className={`font-bold flex-shrink-0 ${color}`}>{step}</span>
@@ -203,18 +203,18 @@ const SECTIONS = [
         )
       },
       {
-        title: "4.2 Experimental Track — DeBERTa-v3",
+        title: "4.2 Transformer Track — ModernBERT-large",
         content: (
           <div className="space-y-3 text-sm text-white/60">
-            <div className="p-3 bg-amber-500/5 border border-amber-500/20 rounded-lg text-xs font-mono text-amber-400">
-              ⚠ EXPERIMENTAL: This track is NOT production-deployed. Port 5001 only.
+            <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg text-xs font-mono text-purple-400">
+              Trained on Colab A100 · 40 min/epoch · 6 parallel variants · Epoch 3 checkpoint is best
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: "Model", value: "deberta-v3-small", color: "#a855f7" },
-                { label: "Parameters", value: "141M", color: "#a855f7" },
-                { label: "Macro F1 (full)", value: "64.0%", color: "#22d3ee" },
-                { label: "Latency", value: "1,850ms", color: "#f97316" },
+                { label: "Model", value: "ModernBERT-large", color: "#a855f7" },
+                { label: "Best epoch F1", value: "70.29%", color: "#10b981" },
+                { label: "Greedy ensemble", value: "73.95%", color: "#22d3ee" },
+                { label: "Calibrated final", value: "75.0%", color: "#ef4444" },
               ].map((s) => (
                 <div key={s.label} className="bg-black/60 border border-white/5 rounded-lg px-3 py-2">
                   <div className="text-[10px] text-white/30 font-mono mb-1">{s.label}</div>
@@ -222,6 +222,7 @@ const SECTIONS = [
                 </div>
               ))}
             </div>
+            <p className="text-xs text-white/45 leading-relaxed">Six training variants ran in parallel: raw text, segment-aware, revenue-weighted, knowledge distillation, seed 42, seed 7. Greedy ensemble of seed 42 + seed 7 reached 73.95% before calibration.</p>
           </div>
         )
       }
@@ -235,26 +236,26 @@ const SECTIONS = [
     badge: "Ops",
     entries: [
       {
-        title: "5.1 Microservice Architecture",
+        title: "5.1 Production Deployment",
         content: (
           <div className="space-y-3 text-sm text-white/60">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-black/60 border border-emerald-500/20 rounded-lg p-4">
-                <div className="text-xs font-mono text-emerald-400 mb-2">PORT 5000 — Primary SVM</div>
+                <div className="text-xs font-mono text-emerald-400 mb-2">VERCEL — Next.js Frontend</div>
                 <ul className="text-xs space-y-1 font-mono text-white/50">
-                  <li>• Flask + Waitress WSGI</li>
-                  <li>• LinearSVC + TF-IDF</li>
-                  <li>• scipy.sparse CSR pipeline</li>
-                  <li>• /api/predict endpoint</li>
+                  <li>• Next.js 15 App Router</li>
+                  <li>• Server-side API proxy routes</li>
+                  <li>• maxDuration=60 for HF cold starts</li>
+                  <li>• Auto-deploy on git push to main</li>
                 </ul>
               </div>
-              <div className="bg-black/60 border border-purple-500/20 rounded-lg p-4">
-                <div className="text-xs font-mono text-purple-400 mb-2">PORT 5001 — LLM Service</div>
+              <div className="bg-black/60 border border-red-500/20 rounded-lg p-4">
+                <div className="text-xs font-mono text-red-400 mb-2">HF SPACE — Cascade SVM</div>
                 <ul className="text-xs space-y-1 font-mono text-white/50">
-                  <li>• Flask + DeBERTa-v3</li>
-                  <li>• PyTorch CUDA inference</li>
-                  <li>• RTX 3050 (8GB VRAM)</li>
-                  <li>• /api/predict_llm endpoint</li>
+                  <li>• FastAPI + Gradio (Docker SDK)</li>
+                  <li>• LinearSVC cascade — 4-level</li>
+                  <li>• POST /api/predict endpoint</li>
+                  <li>• akash-ag-gecs-classifier-space</li>
                 </ul>
               </div>
             </div>
@@ -262,13 +263,13 @@ const SECTIONS = [
         )
       },
       {
-        title: "5.2 Long-Tail Pruning Strategy (Academic Validity)",
+        title: "5.2 The Leakage Fix That Changed Everything",
         content: (
           <div className="space-y-3 text-sm text-white/60">
-            <p>The DeBERTa LLM achieves near-zero F1 on minority classes because it is mathematically impossible to learn a complex financial taxonomy from fewer than 5 training examples.</p>
-            <p>We implement a <strong className="text-white">Certified Operational Scope</strong>: evaluating only on classes with ≥100 test examples. This is the standard industry practice (equivalent to a hardware spec sheet listing operating range).</p>
+            <p>The original 88.90% result used a row-level random split. The same company's text appeared on both sides — 97.2% of the 10,717 test rows had been seen during training. The model was recalling, not generalizing.</p>
+            <p>The fix was a <strong className="text-white">company-disjoint split</strong> using <code className="text-red-400">GroupShuffleSplit(groups=CompanyId)</code>. CompanyId was recovered from LongProfile prefix joins (98.3% match rate). This dropped the headline from 88.90% to an honest 59.65% — the only defensible starting point.</p>
             <div className="p-3 bg-cyan-500/5 border border-cyan-500/20 rounded-lg text-xs font-mono text-cyan-400">
-              DeBERTa result: 64.0% Macro F1 on 145 classes — valuable experiment, not the production headline. Production: ModernBERT-large ensemble at 75.0% Macro F1.
+              Verified: zero company overlap between train (42,868 rows, 5,341 companies) and test (10,717 rows, 1,336 companies).
             </div>
           </div>
         )
@@ -288,7 +289,7 @@ const SECTIONS = [
           <div className="space-y-3 text-sm font-mono">
             <div className="text-xs text-white/30 uppercase tracking-widest">Request</div>
             <div className="bg-black/80 border border-white/10 rounded-lg p-4 text-xs space-y-1">
-              <div className="text-blue-400">POST http://localhost:5000/api/predict</div>
+              <div className="text-blue-400">POST https://akash-ag-gecs-classifier-space.hf.space/api/predict</div>
               <div className="text-white/30">Content-Type: application/json</div>
               <div className="text-amber-300 mt-2">{"{ \"text\": \"Company description here...\" }"}</div>
             </div>
@@ -304,12 +305,12 @@ const SECTIONS = [
         content: (
           <div className="space-y-3 text-sm font-mono">
             <div className="bg-black/80 border border-purple-500/20 rounded-lg p-4 text-xs space-y-1">
-              <div className="text-purple-400">POST http://localhost:5001/api/predict_llm</div>
+              <div className="text-purple-400">POST https://akash-ag-gecs-modernbert.hf.space/api/predict</div>
               <div className="text-white/30">Content-Type: application/json</div>
               <div className="text-amber-300 mt-2">{"{ \"text\": \"Company description here...\" }"}</div>
             </div>
-            <div className="p-3 bg-amber-500/5 border border-amber-500/20 rounded-lg text-xs text-amber-400">
-              ⚠ Requires CUDA GPU. Latency: ~1,850ms. Must start LLM server separately.
+            <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg text-xs text-purple-400">
+              ModernBERT-large HF Space. Cold-start: 30–60s. Vercel proxy adds maxDuration=60 to handle warm-up.
             </div>
           </div>
         )
