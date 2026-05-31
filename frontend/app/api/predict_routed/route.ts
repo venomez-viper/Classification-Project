@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+export const maxDuration = 60;
+
 const GECS_API_URL =
   process.env.GECS_API_URL ??
   process.env.NEXT_PUBLIC_GECS_API_URL ??
