@@ -70,7 +70,7 @@ const SNIPPETS = [
     file: "breezeml/classifiers.py",
     lang: "Python",
     color: "#a855f7",
-    description: "The heart of the breezeml library — a parallel, sparse-aware classifier comparison engine published to PyPI.",
+    description: "The heart of the breezeml library - a parallel, sparse-aware classifier comparison engine published to PyPI.",
     lines: [
       L(["from ", C.keyword], ["sklearn.svm ", C.class], ["import ", C.keyword], ["LinearSVC", C.class]),
       L(["from ", C.keyword], ["scipy.sparse ", C.class], ["import ", C.keyword], ["issparse", C.func]),
@@ -105,7 +105,7 @@ const SNIPPETS = [
     file: "train_model.py",
     lang: "Python",
     color: "#f59e0b",
-    description: "The full training pipeline — TF-IDF vectorization into sparse CSR matrices followed by LinearSVC training with balanced class weights.",
+    description: "The full training pipeline - TF-IDF vectorization into sparse CSR matrices followed by LinearSVC training with balanced class weights.",
     lines: [
       L(["from ", C.keyword], ["sklearn.feature_extraction.text ", C.class], ["import ", C.keyword], ["TfidfVectorizer", C.class]),
       L(["from ", C.keyword], ["sklearn.svm ", C.class], ["import ", C.keyword], ["LinearSVC", C.class]),
@@ -140,7 +140,7 @@ const SNIPPETS = [
     file: "scripts/build_disjoint_split.py",
     lang: "Python",
     color: "#10b981",
-    description: "The split that made the project honest. Row-level random splits memorized 97.2% of test rows. This script groups by CompanyId and assigns entire companies to train or test — no company appears on both sides.",
+    description: "The split that made the project honest. Row-level random splits memorized 97.2% of test rows. This script groups by CompanyId and assigns entire companies to train or test - no company appears on both sides.",
     lines: [
       L(["import ", C.keyword], ["pandas ", C.class], ["as ", C.keyword], ["pd", C.class]),
       L(["from ", C.keyword], ["sklearn.model_selection ", C.class], ["import ", C.keyword], ["GroupShuffleSplit", C.func]),
@@ -172,7 +172,7 @@ const SNIPPETS = [
     file: "colab/train_modernbert_large.py",
     lang: "Python",
     color: "#a855f7",
-    description: "The ModernBERT-large fine-tuning loop that reached 70.29% Macro F1 on epoch 3 — trained on Colab A100 in ~40 min/epoch vs 8–15h on CPU. CLS embeddings from this checkpoint fed the greedy ensemble.",
+    description: "The ModernBERT-large fine-tuning loop that reached 70.29% Macro F1 on epoch 3 - trained on Colab A100 in ~40 min/epoch vs 8–15h on CPU. CLS embeddings from this checkpoint fed the greedy ensemble.",
     lines: [
       L(["from ", C.keyword], ["transformers ", C.class], ["import ", C.keyword], ["AutoModelForSequenceClassification, Trainer", C.class]),
       L(["from ", C.keyword], ["transformers ", C.class], ["import ", C.keyword], ["TrainingArguments", C.class]),
@@ -191,7 +191,7 @@ const SNIPPETS = [
       L(["    weight_decay=", C.plain], ["0.01", C.number], [",", C.plain]),
       L(["    evaluation_strategy=", C.plain], ["'epoch'", C.string], [",", C.plain]),
       L(["    metric_for_best_model=", C.plain], ["'eval_macro_f1'", C.string], [",", C.plain]),
-      L(["    fp16=", C.plain], ["True", C.keyword], [",   ", C.plain], ["# A100 native fp16 — 20× speedup over CPU", C.comment]),
+      L(["    fp16=", C.plain], ["True", C.keyword], [",   ", C.plain], ["# A100 native fp16 - 20× speedup over CPU", C.comment]),
       L([")", C.plain]),
       L(["", C.plain]),
       L(["trainer = Trainer(model=model, args=args,", C.plain]),

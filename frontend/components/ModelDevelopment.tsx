@@ -4,20 +4,20 @@ import { ArrowRight, CheckCircle2, FlaskConical, Layers, Microscope, Cpu } from 
 import { GlowCard } from "@/components/ui/spotlight-card";
 
 const LEADERBOARD = [
-  { version: "V1 (leaked)",       f1: 88.90, label: "Row-level split — test rows memorized",          fake: true  },
+  { version: "V1 (leaked)",       f1: 88.90, label: "Row-level split - test rows memorized",          fake: true  },
   { version: "V2 honest baseline",f1: 59.65, label: "Company-disjoint split, TF-IDF cascade",         fake: false },
   { version: "V5 hybrid",         f1: 67.11, label: "TF-IDF + MiniLM embeddings + 3 engineered feats",fake: false },
   { version: "V8 mega-ensemble",  f1: 68.42, label: "All encoders + TF-IDF + BGE ensembled",          fake: false },
   { version: "ModernBERT-large",  f1: 70.29, label: "Single checkpoint, epoch 3, Colab A100",         fake: false },
   { version: "Greedy ensemble",   f1: 73.95, label: "2 ModernBERT-large variants, seed 42 + seed 7",  fake: false },
-  { version: "Final locked",      f1: 75.00, label: "Calibrated ensemble (τ=0.2) — headline result",  hero: true  },
+  { version: "Final locked",      f1: 75.00, label: "Calibrated ensemble (τ=0.2) - headline result",  hero: true  },
 ];
 
 const CASCADE_LEVELS = [
-  { level: "L1 — Sector",    color: "#ef4444", desc: "11 top-level GECS sectors",         example: "Technology · Financials · Healthcare" },
-  { level: "L2 — Group",     color: "#f97316", desc: "~40 industry groups within sectors", example: "Software & Services · Banks · Pharma" },
-  { level: "L3 — Industry",  color: "#eab308", desc: "145 GECS industry codes (Task 1)",   example: "Software—Application · Regional Banks" },
-  { level: "L4 — Sub",       color: "#22d3ee", desc: "428 sub-industry codes (Task 2)",    example: "Enterprise SaaS · Commercial Banking" },
+  { level: "L1 - Sector",    color: "#ef4444", desc: "11 top-level GECS sectors",         example: "Technology · Financials · Healthcare" },
+  { level: "L2 - Group",     color: "#f97316", desc: "~40 industry groups within sectors", example: "Software & Services · Banks · Pharma" },
+  { level: "L3 - Industry",  color: "#eab308", desc: "145 GECS industry codes (Task 1)",   example: "Software-Application · Regional Banks" },
+  { level: "L4 - Sub",       color: "#22d3ee", desc: "428 sub-industry codes (Task 2)",    example: "Enterprise SaaS · Commercial Banking" },
 ];
 
 const INNOVATIONS = [
@@ -25,7 +25,7 @@ const INNOVATIONS = [
     icon: Microscope,
     color: "#ef4444",
     title: "Company-Disjoint Splits",
-    body: "The original row-level random split allowed the same company's text to appear on both sides, memorizing 97.2% of the test set. Rebuilding with company-disjoint splits dropped the headline from 88.90% to an honest 59.65% — the only defensible starting point.",
+    body: "The original row-level random split allowed the same company's text to appear on both sides, memorizing 97.2% of the test set. Rebuilding with company-disjoint splits dropped the headline from 88.90% to an honest 59.65% - the only defensible starting point.",
   },
   {
     icon: Layers,
@@ -37,13 +37,13 @@ const INNOVATIONS = [
     icon: Cpu,
     color: "#22d3ee",
     title: "ModernBERT-Large on A100",
-    body: "Six parallel training variants (raw text, segment-aware, revenue-weighted, knowledge distillation, ensemble seeds) ran on Colab A100 — 40 min/epoch vs 8–15h on CPU. Best single checkpoint: ModernBERT-large epoch 3 at 70.29% Macro F1.",
+    body: "Six parallel training variants (raw text, segment-aware, revenue-weighted, knowledge distillation, ensemble seeds) ran on Colab A100 - 40 min/epoch vs 8–15h on CPU. Best single checkpoint: ModernBERT-large epoch 3 at 70.29% Macro F1.",
   },
   {
     icon: FlaskConical,
     color: "#10b981",
     title: "Calibration Audit",
-    body: "Per-class threshold calibration hit 77.51% on test — but 5-fold cross-validation brought it back to 73.96%, confirming overfitting to the test set. Light temperature scaling (τ=0.2) added 0.09pp without overfitting. Headline locked at 75.0%.",
+    body: "Per-class threshold calibration hit 77.51% on test - but 5-fold cross-validation brought it back to 73.96%, confirming overfitting to the test set. Light temperature scaling (τ=0.2) added 0.09pp without overfitting. Headline locked at 75.0%.",
   },
 ];
 
@@ -66,7 +66,7 @@ export default function ModelDevelopment() {
             14 Versions. One Honest Number.
           </h2>
           <p className="text-white/50 text-lg max-w-3xl mx-auto">
-            From 88.90% that was memorization to 75.0% that generalizes — the full progression
+            From 88.90% that was memorization to 75.0% that generalizes - the full progression
             of the GECS-Sage cascade, rebuilt after a 97.2% leakage audit.
           </p>
         </motion.div>
@@ -77,7 +77,7 @@ export default function ModelDevelopment() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-amber-400/80 mb-4 font-mono">Model progression — Macro F1 on company-disjoint test set</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-amber-400/80 mb-4 font-mono">Model progression - Macro F1 on company-disjoint test set</p>
           <GlowCard glowColor="amber" className="border-white/8 bg-black/40 p-6">
             <div className="space-y-3">
               {LEADERBOARD.map((row) => {
@@ -119,7 +119,7 @@ export default function ModelDevelopment() {
               })}
             </div>
             <p className="mt-5 pt-4 border-t border-white/6 text-xs text-white/25">
-              The red bar (88.90%) is struck through — generated from memorized test data, not generalization. Every other number was earned on rows the model had never seen.
+              The red bar (88.90%) is struck through - generated from memorized test data, not generalization. Every other number was earned on rows the model had never seen.
             </p>
           </GlowCard>
         </motion.div>
@@ -146,7 +146,7 @@ export default function ModelDevelopment() {
             ))}
           </div>
           <p className="mt-4 text-xs text-white/25 font-mono">
-            Each level is a separate LinearSVC trained on the subset of training rows belonging to its parent node. Task 1 error propagates down — an L1 sector misclassification cannot be recovered at L3.
+            Each level is a separate LinearSVC trained on the subset of training rows belonging to its parent node. Task 1 error propagates down - an L1 sector misclassification cannot be recovered at L3.
           </p>
         </motion.div>
 
@@ -210,7 +210,7 @@ export default function ModelDevelopment() {
             <div className="text-5xl font-black text-white mb-1">~76%</div>
             <div className="text-sm text-red-400 font-semibold mb-4">Data-bound, not model-bound</div>
             <div className="text-xs text-white/45 leading-relaxed font-mono">
-              55.2% of rows have label ambiguity — same LongProfile, different code per conglomerate segment. A perfect classifier on single-code companies + 60% on multi-code caps Macro F1 near 76%.
+              55.2% of rows have label ambiguity - same LongProfile, different code per conglomerate segment. A perfect classifier on single-code companies + 60% on multi-code caps Macro F1 near 76%.
             </div>
           </GlowCard>
         </div>
@@ -219,9 +219,9 @@ export default function ModelDevelopment() {
         <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 flex items-center gap-5">
           <CheckCircle2 className="w-8 h-8 text-emerald-400 flex-shrink-0" />
           <div>
-            <div className="text-white font-bold text-lg mb-1">75.0% Macro F1 — rubric threshold met</div>
+            <div className="text-white font-bold text-lg mb-1">75.0% Macro F1 - rubric threshold met</div>
             <div className="text-white/40 text-sm font-mono">
-              Calibrated greedy ensemble of 2 ModernBERT-large variants. Cross-validated at 73.96%. Test-tuned upper bound 77.51% disclosed in methods — not reported as the headline.
+              Calibrated greedy ensemble of 2 ModernBERT-large variants. Cross-validated at 73.96%. Test-tuned upper bound 77.51% disclosed in methods - not reported as the headline.
             </div>
           </div>
         </div>

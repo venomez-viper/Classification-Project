@@ -88,7 +88,7 @@ export default function HowItWorks({ compact = false }: { compact?: boolean }) {
             One description. Four decisions. One industry route.
           </h2>
           <p className="mt-4 max-w-3xl text-lg text-white/50 leading-relaxed">
-            GECS-Sage routes text through the Morningstar hierarchy instead of flattening the full taxonomy into one opaque decision. The final build ships a calibrated ModernBERT-large ensemble at 75.0% Macro F1 — earned after catching a 97.2% leakage in the original 88.90% result and rebuilding from scratch.
+            GECS-Sage routes text through the Morningstar hierarchy instead of flattening the full taxonomy into one opaque decision. The final build ships a calibrated ModernBERT-large ensemble at 75.0% Macro F1 - earned after catching a 97.2% leakage in the original 88.90% result and rebuilding from scratch.
           </p>
         </motion.div>
 

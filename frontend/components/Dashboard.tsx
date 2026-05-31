@@ -17,8 +17,8 @@ const PIPELINE_STEPS = [
   { icon: Terminal, label: "TEXT INGESTION",  detail: "Tokenise raw description" },
   { icon: Database, label: "TF-IDF ENCODE",   detail: "60,000 bigram features"   },
   { icon: Layers,   label: "SPARSE CSR",      detail: "scipy.sparse matrix"      },
-  { icon: Cpu,      label: "LINEARSVC — T1",  detail: "145 industry classes"      },
-  { icon: Zap,      label: "LINEARSVC — T2",  detail: "428 subindustry classes"   },
+  { icon: Cpu,      label: "LINEARSVC - T1",  detail: "145 industry classes"      },
+  { icon: Zap,      label: "LINEARSVC - T2",  detail: "428 subindustry classes"   },
 ];
 
 const PERF_BARS = [
@@ -169,7 +169,7 @@ function CodeChip({ code, label, type }: { code: string; label: string; type: "m
                   <span className="text-white font-bold text-xs">{label}</span>
                 </div>
                 <div className="text-xs font-mono text-white/20">
-                  Source: Morningstar Global Equity Classification Standard (GECS) — used by institutional analysts to classify publicly traded companies worldwide.
+                  Source: Morningstar Global Equity Classification Standard (GECS) - used by institutional analysts to classify publicly traded companies worldwide.
                 </div>
               </div>
             </motion.div>
@@ -300,7 +300,7 @@ function ConfidencePopup({
   );
 }
 
-// Large confidence arc gauge — click to explain
+// Large confidence arc gauge - click to explain
 function ConfidenceGauge({
   pct, color, alts = [],
 }: {
@@ -416,7 +416,7 @@ function FeatureTags({ features, color }: { features: string[]; color: string })
   );
 }
 
-// Right panel idle state — ML analyst stats
+// Right panel idle state - ML analyst stats
 function IdlePanel() {
   return (
     <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -474,7 +474,7 @@ function IdlePanel() {
   );
 }
 
-// Right panel result state — the hero
+// Right panel result state - the hero
 function ResultPanel({ result, resultKey }: { result: Result; resultKey: number }) {
   return (
     <motion.div key={`result-${resultKey}`}
@@ -486,7 +486,7 @@ function ResultPanel({ result, resultKey }: { result: Result; resultKey: number 
       {/* ── TASK 1 ── */}
       <div className="border border-red-500/20 bg-red-500/[0.03] rounded-xl p-6 flex-1">
         <div className="text-xs font-mono text-red-400/50 uppercase tracking-widest mb-1">
-          Task 1 — Global Industry Classification
+          Task 1 - Global Industry Classification
         </div>
         <div className="text-xs font-mono text-white/15 mb-6">
           LinearSVC · 145 Classes · 60,000 TF-IDF Features
@@ -516,7 +516,7 @@ function ResultPanel({ result, resultKey }: { result: Result; resultKey: number 
       {/* ── TASK 2 ── */}
       <div className="border border-blue-500/20 bg-blue-500/[0.03] rounded-xl p-6 flex-1">
         <div className="text-xs font-mono text-blue-400/50 uppercase tracking-widest mb-1">
-          Task 2 — Granular Subindustry Classification
+          Task 2 - Granular Subindustry Classification
         </div>
         <div className="text-xs font-mono text-white/15 mb-6">
           LinearSVC · 428 Classes · 10,000 TF-IDF Features
@@ -584,7 +584,7 @@ export default function Dashboard() {
     setLatencyMs(null);
     setStepTimes(Array(5).fill(null));
 
-    // Run animation and fetch in parallel — total time = max(anim, api) not sum
+    // Run animation and fetch in parallel - total time = max(anim, api) not sum
     const t0 = performance.now();
 
     const animPromise = (async () => {
@@ -684,7 +684,7 @@ export default function Dashboard() {
                 <span className="w-3 h-3 rounded-full bg-red-500/80" />
                 <span className="w-3 h-3 rounded-full bg-amber-400/80" />
                 <span className="w-3 h-3 rounded-full bg-green-500/80" />
-                <span className="ml-3 text-xs font-mono text-white/25">gecs_classifier.py — inference terminal</span>
+                <span className="ml-3 text-xs font-mono text-white/25">gecs_classifier.py - inference terminal</span>
               </div>
               <div className="flex-1 p-5 font-mono flex flex-col">
                 <div className="text-green-400/40 text-xs mb-1">$ breezeml.predict(</div>
@@ -781,7 +781,7 @@ export default function Dashboard() {
                         {isActive &&
                           <motion.span animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 0.5, repeat: Infinity }}
                             className="text-xs font-mono text-red-400">RUN</motion.span>}
-                        {!isActive && !isDone && <span className="text-xs font-mono text-white/10">—</span>}
+                        {!isActive && !isDone && <span className="text-xs font-mono text-white/10">-</span>}
                       </div>
                     </div>
                   );
@@ -816,21 +816,21 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ── MODEL EVALUATION — always visible ── */}
+        {/* ── MODEL EVALUATION - always visible ── */}
         <div className="mt-5 border border-white/[0.06] rounded-xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <BarChart3 className="w-4 h-4 text-white/25" />
             <span className="text-sm font-mono text-white/25 uppercase tracking-widest">Model Evaluation</span>
             <div className="ml-auto flex items-center gap-2 border border-emerald-500/20 bg-emerald-500/[0.04] rounded-lg px-3 py-1.5">
               <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-xs font-mono text-emerald-400 font-bold">LOCKED — 75.0% Macro F1 · 91.4% top-3 · cross-validated</span>
+              <span className="text-xs font-mono text-emerald-400 font-bold">LOCKED - 75.0% Macro F1 · 91.4% top-3 · cross-validated</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Task 1 metrics */}
             <div>
-              <div className="text-xs font-mono text-red-400/60 uppercase tracking-widest mb-4">Task 1 — Industry (145 Classes)</div>
+              <div className="text-xs font-mono text-red-400/60 uppercase tracking-widest mb-4">Task 1 - Industry (145 Classes)</div>
               <div className="space-y-3.5">
                 {[
                   { label: "Macro F1 ★",      value: "75.0%",  pct: 75.0,  color: "#22c55e" },
@@ -856,7 +856,7 @@ export default function Dashboard() {
 
             {/* Task 2 metrics */}
             <div>
-              <div className="text-xs font-mono text-blue-400/60 uppercase tracking-widest mb-4">Task 2 — Subindustry (428 Classes)</div>
+              <div className="text-xs font-mono text-blue-400/60 uppercase tracking-widest mb-4">Task 2 - Subindustry (428 Classes)</div>
               <div className="space-y-3.5">
                 {[
                   { label: "Macro F1 ★",      value: "55.41%", pct: 55.41, color: "#22d3ee" },

@@ -32,7 +32,7 @@ const ALERTS: AlertItem[] = [
     id: "ALT-001",
     source: "HF Space",
     title: "HF Space cold start latency spike",
-    detail: "Inference latency crossed 35s during cold start — Space was sleeping.",
+    detail: "Inference latency crossed 35s during cold start - Space was sleeping.",
     time: "2 min ago",
     severity: "critical",
     owner: "Akash",

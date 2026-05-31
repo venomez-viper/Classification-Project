@@ -5,7 +5,7 @@ import { AlertTriangle, CheckCircle2, Shield, Terminal, Loader2 } from "lucide-r
 type ServiceStatus = { ok: boolean; latency: number; label: string };
 type HealthData = { timestamp: string; services: { vercel: ServiceStatus; railway: ServiceStatus; hf: ServiceStatus } };
 
-// ─── ONE batched tick drives ALL live data — zero separate intervals ──────────
+// ─── ONE batched tick drives ALL live data - zero separate intervals ──────────
 type SeriesState = {
   latency: number[];
   throughput: number[];
@@ -29,7 +29,7 @@ const INIT: SeriesState = {
   mem:        [62,63,64,63,65,64,62,63,64,65,63,62,64,63,65,64,62,63,64,65],
 };
 
-// ─── Cheap SVG line graph — no Framer Motion ─────────────────────────────────
+// ─── Cheap SVG line graph - no Framer Motion ─────────────────────────────────
 function Graph({ data, color, h = 55 }: { data: number[]; color: string; h?: number }) {
   const W = 300;
   const lo = Math.min(...data) * 0.95;
@@ -54,18 +54,18 @@ function Graph({ data, color, h = 55 }: { data: number[]; color: string; h?: num
 // ─── Alert types ──────────────────────────────────────────────────────────────
 type Alert = { time: string; msg: string; level: "ok" | "warn" | "info" };
 const INIT_ALERTS: Alert[] = [
-  { time: "14:58:02", msg: "GECS Cascade SVM — All systems nominal", level: "ok" },
-  { time: "14:55:41", msg: "HF Space cold-start — cascade SVM loaded in 38s", level: "warn" },
-  { time: "14:52:19", msg: "Task 1 inference batch completed — 539 records · 75.0% Macro F1", level: "ok" },
-  { time: "14:49:03", msg: "TF-IDF vectorizer cache refreshed — 60K bigram features", level: "info" },
-  { time: "14:45:55", msg: "breezeml v0.2.5 — scipy.sparse pipeline healthy", level: "ok" },
+  { time: "14:58:02", msg: "GECS Cascade SVM - All systems nominal", level: "ok" },
+  { time: "14:55:41", msg: "HF Space cold-start - cascade SVM loaded in 38s", level: "warn" },
+  { time: "14:52:19", msg: "Task 1 inference batch completed - 539 records · 75.0% Macro F1", level: "ok" },
+  { time: "14:49:03", msg: "TF-IDF vectorizer cache refreshed - 60K bigram features", level: "info" },
+  { time: "14:45:55", msg: "breezeml v0.2.5 - scipy.sparse pipeline healthy", level: "ok" },
 ];
 const MSGS: Alert[] = [
-  { time: "", msg: "Task 1 prediction served — 145-class cascade complete", level: "ok" },
-  { time: "", msg: "scipy.sparse CSR matrix — memory stable", level: "ok" },
-  { time: "", msg: "HF Space /api/predict — 200 OK", level: "ok" },
-  { time: "", msg: "HF Space inference latency elevated — space warming up", level: "warn" },
-  { time: "", msg: "Task 2 constrained cascade — 428 sub-industry codes", level: "info" },
+  { time: "", msg: "Task 1 prediction served - 145-class cascade complete", level: "ok" },
+  { time: "", msg: "scipy.sparse CSR matrix - memory stable", level: "ok" },
+  { time: "", msg: "HF Space /api/predict - 200 OK", level: "ok" },
+  { time: "", msg: "HF Space inference latency elevated - space warming up", level: "warn" },
+  { time: "", msg: "Task 2 constrained cascade - 428 sub-industry codes", level: "info" },
   { time: "", msg: "Company-disjoint split validation passed", level: "ok" },
   { time: "", msg: "Cascade path: Sector → Group → Industry → Sub-industry", level: "info" },
 ];
@@ -90,7 +90,7 @@ export default function MonitoringTab() {
     return () => clearInterval(id);
   }, []);
 
-  // Single interval — all updates batched into one setState call each
+  // Single interval - all updates batched into one setState call each
   useEffect(() => {
     const tick = () => {
       setClock(new Date().toISOString().replace("T", " ").slice(0, 19) + " UTC");
@@ -132,7 +132,7 @@ export default function MonitoringTab() {
         <div className="flex items-center gap-4">
           <span className="text-xs font-mono text-emerald-400 tabular-nums">{clock}</span>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-            {/* CSS pulse only — no framer-motion */}
+            {/* CSS pulse only - no framer-motion */}
             <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse" />
             <span className="text-xs font-mono font-bold text-emerald-400 tracking-widest">ALL SYSTEMS GO</span>
           </div>
@@ -160,7 +160,7 @@ export default function MonitoringTab() {
       {/* Main grid */}
       <div className="grid grid-cols-12 gap-3 flex-1 min-h-0">
 
-        {/* Graphs — 8 cols */}
+        {/* Graphs - 8 cols */}
         <div className="col-span-8 grid grid-rows-3 gap-3 min-h-0">
 
           {/* Row 1 */}
@@ -213,10 +213,10 @@ export default function MonitoringTab() {
           </div>
         </div>
 
-        {/* Right panel — 4 cols */}
+        {/* Right panel - 4 cols */}
         <div className="col-span-4 flex flex-col gap-3 min-h-0">
 
-          {/* Service health — live polled every 30s */}
+          {/* Service health - live polled every 30s */}
           <div className="bg-black/60 border border-white/5 rounded-xl p-4 flex-shrink-0">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="w-3.5 h-3.5 text-emerald-500" />
@@ -244,7 +244,7 @@ export default function MonitoringTab() {
             </div>
           </div>
 
-          {/* Log — no AnimatePresence, plain divs */}
+          {/* Log - no AnimatePresence, plain divs */}
           <div className="bg-black/60 border border-white/5 rounded-xl p-4 flex flex-col flex-1 min-h-0">
             <div className="flex items-center gap-2 mb-3 flex-shrink-0">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse flex-shrink-0" />

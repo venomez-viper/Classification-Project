@@ -233,7 +233,7 @@ function OverviewTab() {
           </div>
         </div>
 
-        {/* ML Lifecycle Pipeline — DYNAMIC */}
+        {/* ML Lifecycle Pipeline - DYNAMIC */}
         <DynamicPipeline />
 
         {/* Deployed Models & Data Pipeline Health */}
@@ -345,7 +345,7 @@ function OverviewTab() {
             <RadialGauge label="DISK" value={41} color="#f59e0b" />
           </div>
           <div className="mt-4 text-center text-[10px] text-white/30">
-            GPU 0: Colab A100 (training) · HF Space CPU (inference) — VRAM 98% during training runs
+            GPU 0: Colab A100 (training) · HF Space CPU (inference) - VRAM 98% during training runs
           </div>
         </div>
 

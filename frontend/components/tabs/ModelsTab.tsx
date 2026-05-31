@@ -91,7 +91,7 @@ export default function ModelsTab() {
               <div>
                 <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-1">Production Ready</h4>
                 <p className="text-sm text-white/60 leading-relaxed">
-                  Handles 145-class imbalance via <code>class_weight=&apos;balanced&apos;</code>. Deployed on HF Space — serves the live demo at ~5ms per prediction.
+                  Handles 145-class imbalance via <code>class_weight=&apos;balanced&apos;</code>. Deployed on HF Space - serves the live demo at ~5ms per prediction.
                 </p>
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function ModelsTab() {
               <Cpu className="w-8 h-8 text-purple-400" />
             </div>
             <div>
-              <div className="text-xs font-bold text-purple-400 tracking-[0.3em] uppercase mb-1">Transformer — Locked Result</div>
+              <div className="text-xs font-bold text-purple-400 tracking-[0.3em] uppercase mb-1">Transformer - Locked Result</div>
               <h3 className="text-3xl font-black text-white tracking-tight">ModernBERT-large</h3>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function ModelsTab() {
               <div>
                 <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-1">Calibrated · Locked · Disclosed</h4>
                 <p className="text-sm text-white/60 leading-relaxed">
-                  Greedy ensemble of 2 variants reached 73.95%. Light temperature calibration (τ=0.2) added 0.09pp. Cross-validated at 73.96% — this is the generalizing number, not the test-tuned 77.51%.
+                  Greedy ensemble of 2 variants reached 73.95%. Light temperature calibration (τ=0.2) added 0.09pp. Cross-validated at 73.96% - this is the generalizing number, not the test-tuned 77.51%.
                 </p>
               </div>
             </div>

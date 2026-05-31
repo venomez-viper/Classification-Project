@@ -102,7 +102,7 @@ export default function Evaluation() {
         >
           <div className="text-emerald-400 text-4xl font-black font-mono mb-2">AUDITED</div>
           <p className="text-white/60">
-            The calibrated ModernBERT-large ensemble achieves <strong className="text-white">75.0%</strong> Macro F1 — cross-validated, fully disclosed, and the real generalization number.
+            The calibrated ModernBERT-large ensemble achieves <strong className="text-white">75.0%</strong> Macro F1 - cross-validated, fully disclosed, and the real generalization number.
           </p>
         </motion.div>
 

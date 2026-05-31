@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     });
   } catch {
     return NextResponse.json(
-      { error: "Cannot reach the Hugging Face Space. It may be waking up — wait 30 seconds and try again." },
+      { error: "Cannot reach the Hugging Face Space. It may be waking up - wait 30 seconds and try again." },
       { status: 502 }
     );
   }

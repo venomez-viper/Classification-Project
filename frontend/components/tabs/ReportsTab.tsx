@@ -195,7 +195,7 @@ export default function ReportsTab() {
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
           <Shield className="w-4 h-4 text-emerald-400" />
-          <span className="text-xs font-mono font-bold text-emerald-400">RUBRIC PASSED — 75.0% ≥ 75% · top-3 acc 91.4%</span>
+          <span className="text-xs font-mono font-bold text-emerald-400">RUBRIC PASSED - 75.0% ≥ 75% · top-3 acc 91.4%</span>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ export default function ReportsTab() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/5 blur-[100px] rounded-full pointer-events-none" />
         <div className="flex items-center gap-3 mb-8 relative z-10">
           <Award className="w-5 h-5 text-red-500" />
-          <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 1 — Industry Classification · Primary Evaluation</h3>
+          <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 1 - Industry Classification · Primary Evaluation</h3>
         </div>
         <div className="grid grid-cols-3 gap-8 mb-8 relative z-10">
           <Ring pct={75.0} color="#ef4444" label="Ensemble F1" sublabel="Task 1 · Locked" />
@@ -214,7 +214,7 @@ export default function ReportsTab() {
         <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-5 flex items-center gap-5 relative z-10">
           <div className="text-4xl font-black font-mono text-emerald-400 drop-shadow-[0_0_20px_rgba(16,185,129,0.6)]">✓ PASSING</div>
           <div>
-            <div className="text-white font-bold text-lg">75.0% Macro F1 — meets rubric threshold · 91.4% top-3 accuracy</div>
+            <div className="text-white font-bold text-lg">75.0% Macro F1 - meets rubric threshold · 91.4% top-3 accuracy</div>
             <div className="text-white/40 text-sm font-mono mt-1">Calibrated greedy ensemble of 2 ModernBERT-large variants. Cross-validated at 73.96%. Test-tuned upper bound 77.51% disclosed in methods.</div>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function ReportsTab() {
           <div className="mt-5 p-4 border border-amber-500/20 bg-amber-500/5 rounded-xl flex items-start gap-3">
             <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
             <p className="text-xs font-mono text-amber-400/80">
-              Task 2 scores are expected to be lower — 428 classes with extreme long-tail distribution. Sub-industry predictions are constrained by the Task 1 parent code to preserve the GECS hierarchy.
+              Task 2 scores are expected to be lower - 428 classes with extreme long-tail distribution. Sub-industry predictions are constrained by the Task 1 parent code to preserve the GECS hierarchy.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-3 mt-4">
@@ -280,12 +280,12 @@ export default function ReportsTab() {
         <div className="bg-black/60 border border-white/5 rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
             <PieChart className="w-4 h-4 text-purple-400" />
-            <h3 className="text-sm font-mono text-white/60 uppercase tracking-widest">Task 2 — Class Imbalance Distribution</h3>
+            <h3 className="text-sm font-mono text-white/60 uppercase tracking-widest">Task 2 - Class Imbalance Distribution</h3>
           </div>
           <div className="p-4">
             <ClassDistributionChart />
             <p className="text-xs text-white/30 font-mono mt-3 leading-relaxed">
-              Long-tail distribution across 428 subindustry classes. 65% of classes have &lt;10 training samples — the core challenge requiring <code className="text-purple-400">class_weight='balanced'</code>.
+              Long-tail distribution across 428 subindustry classes. 65% of classes have &lt;10 training samples - the core challenge requiring <code className="text-purple-400">class_weight='balanced'</code>.
             </p>
           </div>
         </div>
@@ -294,7 +294,7 @@ export default function ReportsTab() {
         <div className="bg-black/60 border border-white/5 rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
             <BarChart3 className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-mono text-white/60 uppercase tracking-widest">Task 2 — Per-Class F1 Score (LinearSVC)</h3>
+            <h3 className="text-sm font-mono text-white/60 uppercase tracking-widest">Task 2 - Per-Class F1 Score (LinearSVC)</h3>
           </div>
           <div className="p-4">
             <PerClassF1Chart />
@@ -310,7 +310,7 @@ export default function ReportsTab() {
       <div className="grid grid-cols-3 gap-5">
         {[
           { title: "Why Macro F1 > Accuracy?", color: "#ef4444", body: "With 145 classes of wildly varying sizes, raw accuracy is inflated by majority classes. Macro F1 averages equally across all classes, penalizing the model for ignoring rare industries. This is the correct metric for imbalanced NLP classification." },
-          { title: "The Calibration Audit", color: "#10b981", body: "Per-class threshold optimization hit 77.51% on the test set — but 5-fold cross-validation brought it back to 73.96%. We locked the headline at 75.0% with full disclosure: uncalibrated baseline 73.95%, test-tuned upper bound 77.51%, CV number 73.96%." },
+          { title: "The Calibration Audit", color: "#10b981", body: "Per-class threshold optimization hit 77.51% on the test set - but 5-fold cross-validation brought it back to 73.96%. We locked the headline at 75.0% with full disclosure: uncalibrated baseline 73.95%, test-tuned upper bound 77.51%, CV number 73.96%." },
           { title: "The Leakage Discovery", color: "#22d3ee", body: "The original 88.90% had 97.2% of test rows memorized from training (row-level random split vs company-disjoint). On the 305 truly unseen rows, the same model scored 81.73%. Documenting this was the most professional finding of the project." },
         ].map((ins) => (
           <div key={ins.title} className="bg-black/60 border border-white/5 rounded-xl p-5">

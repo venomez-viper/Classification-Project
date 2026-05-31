@@ -14,31 +14,31 @@ import {
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { TextScramble } from "@/components/ui/text-scramble";
 
-// These examples are written in plain English — no financial jargon.
+// These examples are written in plain English - no financial jargon.
 // The point: DeBERTa understands MEANING, not just keyword matching.
 const EXAMPLES = [
   {
-    label: "Plain English — Chips",
+    label: "Plain English - Chips",
     text: "The company designs tiny silicon chips that go inside smartphones, laptops, and data centers to make them run fast.",
   },
   {
-    label: "Plain English — Banking",
+    label: "Plain English - Banking",
     text: "The business takes deposits from regular people and lends that money out as home loans and small business credit in local communities.",
   },
   {
-    label: "Plain English — Medicine",
+    label: "Plain English - Medicine",
     text: "Scientists at this company spend years in laboratories trying to find new drugs that can stop cancer cells from growing.",
   },
   {
-    label: "Plain English — Energy",
+    label: "Plain English - Energy",
     text: "Workers drill deep holes into the earth and the ocean floor to find pockets of crude oil and natural gas that they pump out and sell.",
   },
   {
-    label: "Plain English — Software",
+    label: "Plain English - Software",
     text: "The company sells software that helps large businesses manage their employees, finances, and supply chains from a single dashboard.",
   },
   {
-    label: "Plain English — Defence",
+    label: "Plain English - Defence",
     text: "The firm builds fighter jets, missiles, and radar systems under government contracts for national defence programs.",
   },
 ];
@@ -57,10 +57,10 @@ const TERMINAL_LOGS = [
   "> Model weights loaded. Status: ONLINE",
   "> Tokenising input sequence...",
   "> Attention mask generated.",
-  "> Forward pass — layer  1 / 12...",
-  "> Forward pass — layer  4 / 12...",
-  "> Forward pass — layer  8 / 12...",
-  "> Forward pass — layer 12 / 12...",
+  "> Forward pass - layer  1 / 12...",
+  "> Forward pass - layer  4 / 12...",
+  "> Forward pass - layer  8 / 12...",
+  "> Forward pass - layer 12 / 12...",
   "> Extracting logits from classification head...",
   "> Computing softmax probabilities over 145 classes...",
   "> Inference complete.",
@@ -219,7 +219,7 @@ export default function LLMDemo() {
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
           <TextScramble as="p" speed={0.02} duration={0.8}
             className="text-cyan-400 text-base font-semibold uppercase tracking-widest mb-4 font-mono">
-            TRANSFORMER INFERENCE — NATURAL LANGUAGE UNDERSTANDING
+            TRANSFORMER INFERENCE - NATURAL LANGUAGE UNDERSTANDING
           </TextScramble>
           <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4 tracking-tight">
             Write it in plain English.{" "}
@@ -229,7 +229,7 @@ export default function LLMDemo() {
           </h1>
           <p className="text-lg text-white/50 max-w-2xl">
             TF-IDF needs exact financial keywords. A transformer reads the{" "}
-            <span className="text-white/80 font-semibold">meaning</span> of your sentence —
+            <span className="text-white/80 font-semibold">meaning</span> of your sentence -
             even if you never use a single piece of industry jargon.
           </p>
         </motion.div>
@@ -252,7 +252,7 @@ export default function LLMDemo() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 rows={10}
-                placeholder="Describe any company in plain English — no jargon needed..."
+                placeholder="Describe any company in plain English - no jargon needed..."
                 className="w-full bg-transparent text-purple-50 text-lg leading-relaxed resize-none outline-none placeholder:text-purple-300/20 font-mono"
               />
             </GlowCard>
@@ -355,11 +355,11 @@ export default function LLMDemo() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className="flex flex-col gap-5"
                 >
-                  {/* Task 1 — industry */}
+                  {/* Task 1 - industry */}
                   <GlowCard glowColor="purple" className="p-8 border-purple-500/40 bg-purple-950/20 backdrop-blur-md">
                     <div className="flex justify-between items-center mb-5">
                       <p className="text-xs text-purple-400 uppercase tracking-[0.3em] font-mono">
-                        Industry — Morningstar GECS
+                        Industry - Morningstar GECS
                       </p>
                       <span className="text-xs font-mono text-purple-300/60 bg-purple-400/10 px-2 py-1 rounded border border-purple-400/20">
                         {result.engine ?? "DeBERTa-v3-small"}
@@ -395,12 +395,12 @@ export default function LLMDemo() {
                     )}
                   </GlowCard>
 
-                  {/* Task 2 — subindustry */}
+                  {/* Task 2 - subindustry */}
                   {t2 ? (
                     <GlowCard glowColor="cyan" className="p-8 border-cyan-500/40 bg-cyan-950/10 backdrop-blur-md">
                       <div className="flex justify-between items-center mb-5">
                         <p className="text-xs text-cyan-400 uppercase tracking-[0.3em] font-mono">
-                          Sub-Industry — 428 classes
+                          Sub-Industry - 428 classes
                         </p>
                         <span className={`text-xs font-mono px-2 py-1 rounded border ${t2.source === "deberta" ? "text-purple-300/60 bg-purple-400/10 border-purple-400/20" : "text-cyan-300/60 bg-cyan-400/10 border-cyan-400/20"}`}>
                           {t2.source === "deberta" ? "DeBERTa T2" : "Cascade SVM"}
@@ -437,7 +437,7 @@ export default function LLMDemo() {
                     </GlowCard>
                   ) : result && (
                     <div className="rounded border border-cyan-500/20 bg-cyan-950/10 px-6 py-5 font-mono text-xs text-cyan-400/40 text-center">
-                      Sub-industry model offline — start server.py on port 5000 for cascade fallback.
+                      Sub-industry model offline - start server.py on port 5000 for cascade fallback.
                     </div>
                   )}
                 </motion.div>
@@ -452,7 +452,7 @@ export default function LLMDemo() {
                 >
                   <BrainCircuit className="mx-auto mb-4 h-12 w-12 text-purple-500/30" />
                   <p className="text-purple-300/30">
-                    Write anything — no jargon required. DeBERTa reads meaning.
+                    Write anything - no jargon required. DeBERTa reads meaning.
                   </p>
                 </motion.div>
               )}

@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, LogOut, LayoutDashboard } from "lucide-react";
 import { TextScramble } from "@/components/ui/text-scramble";
+import { useRouter } from "next/navigation";
 
 const NAV = [
   { label: "Home",      href: "/" },
@@ -41,7 +42,43 @@ function NavLink({ label, href, active }: { label: string; href: string; active:
 
 export default function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in via cookie or sessionStorage
+    const checkAuth = () => {
+      const hasCookie = document.cookie.split(';').some((item) => item.trim().startsWith('tavss_auth=granted'));
+      const hasSession = sessionStorage.getItem("tavss_auth") === "true";
+      setIsLoggedIn(hasCookie || hasSession);
+    };
+
+    checkAuth();
+
+    // Listen for storage changes in same tab
+    const handleStorage = () => {
+      checkAuth();
+    };
+
+    window.addEventListener("storage", handleStorage);
+    // Periodically check as well
+    const interval = setInterval(checkAuth, 1000);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    // Clear cookie
+    document.cookie = "tavss_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    // Clear sessionStorage
+    sessionStorage.removeItem("tavss_auth");
+    setIsLoggedIn(false);
+    router.push("/login");
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/10">
@@ -66,13 +103,32 @@ export default function Navigation() {
           ))}
         </div>
 
-        <div className="hidden md:block">
-          <Link
-            href="/login"
-            className="text-sm px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(220,38,38,0.4)]"
-          >
-            Login to App {"->"}
-          </Link>
+        <div className="hidden md:flex items-center gap-4">
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/ml"
+                className="text-sm px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium transition-all flex items-center gap-2"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Control Center
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-sm px-4 py-2 rounded-lg text-white/60 hover:text-red-400 transition-colors flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition-all hover:shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+            >
+              Login to App {"->"}
+            </Link>
+          )}
         </div>
 
         <button
@@ -104,13 +160,33 @@ export default function Navigation() {
               </Link>
             ))}
 
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 inline-flex items-center justify-center rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-500 transition-colors"
-            >
-              Login to App {"->"}
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link
+                  href="/ml"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex items-center justify-center rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors gap-2"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  Control Center
+                </Link>
+                <button
+                  onClick={() => { handleLogout(); setMobileOpen(false); }}
+                  className="mt-1 inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition-colors gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 inline-flex items-center justify-center rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-500 transition-colors"
+              >
+                Login to App {"->"}
+              </Link>
+            )}
           </div>
         </div>
       )}

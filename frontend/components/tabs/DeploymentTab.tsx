@@ -28,7 +28,7 @@ export default function DeploymentTab() {
 
       {/* 
         Dashboard already contains: ConfidenceGauge, ResultPanel, AlternativesList,
-        FeatureTags, PerfBar, AchievementStats, CodeChip — all fully wired to /api/predict.
+        FeatureTags, PerfBar, AchievementStats, CodeChip - all fully wired to /api/predict.
         We override its min-h-screen root div with a scoped wrapper.
       */}
       <div className="[&>div]:min-h-0 [&>div]:pt-0 [&>div]:bg-transparent">
@@ -39,7 +39,7 @@ export default function DeploymentTab() {
       <div className="mt-10 border border-white/10 rounded-2xl overflow-hidden" style={{ height: "80vh" }}>
         <div className="px-6 py-4 border-b border-white/10 flex items-center gap-3 bg-black/40">
           <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-          <span className="text-xs font-mono text-white/40 uppercase tracking-widest">Interactive GECS Knowledge Graph — 1,000 Sampled Nodes</span>
+          <span className="text-xs font-mono text-white/40 uppercase tracking-widest">Interactive GECS Knowledge Graph - 1,000 Sampled Nodes</span>
         </div>
         <iframe
           src="/graph/classification_graph.html"

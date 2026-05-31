@@ -89,7 +89,7 @@ export default function GraphTab() {
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-5 py-3 bg-black/80 backdrop-blur-sm border-b border-white/10">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444] animate-pulse" />
-            <span className="text-xs font-mono text-white/40 uppercase tracking-widest">GECS Taxonomy Classification Graph — LIVE</span>
+            <span className="text-xs font-mono text-white/40 uppercase tracking-widest">GECS Taxonomy Classification Graph - LIVE</span>
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-white/25">
             <Info className="w-3 h-3" />

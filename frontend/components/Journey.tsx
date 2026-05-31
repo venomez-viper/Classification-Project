@@ -36,7 +36,7 @@ const PHASES = [
     icon: ShieldAlert,
     title: "88.90% Macro F1. It looked legendary. It wasn't.",
     description:
-      "The original cascade SVM reported 88.90% Macro F1, and the demo worked perfectly — for exactly four hand-crafted example pills. Arbitrary user input returned random-looking predictions with fake high confidence scores. The UI rendered softmax(SVM decision margin) as a percentage, producing '92% confident' on completely wrong answers. The number was real in a narrow sense: the model had memorized the training data and the test set overlapped with it.",
+      "The original cascade SVM reported 88.90% Macro F1, and the demo worked perfectly - for exactly four hand-crafted example pills. Arbitrary user input returned random-looking predictions with fake high confidence scores. The UI rendered softmax(SVM decision margin) as a percentage, producing '92% confident' on completely wrong answers. The number was real in a narrow sense: the model had memorized the training data and the test set overlapped with it.",
     impact: "A result that looked production-ready was completely hollow under fresh input.",
     glow: "red" as const,
   },
@@ -46,7 +46,7 @@ const PHASES = [
     icon: Microscope,
     title: "97.2% of the test rows had been memorized during training.",
     description:
-      "Auditing the training script revealed the split was row-level random, not company-disjoint. The same company's LongProfile text appeared on both sides of the split. Of 10,717 test rows, 10,412 had been seen during training. The model wasn't generalizing — it was recalling. On the 305 truly unseen rows, it scored 81.73%. The headline was memorization, not intelligence.",
+      "Auditing the training script revealed the split was row-level random, not company-disjoint. The same company's LongProfile text appeared on both sides of the split. Of 10,717 test rows, 10,412 had been seen during training. The model wasn't generalizing - it was recalling. On the 305 truly unseen rows, it scored 81.73%. The headline was memorization, not intelligence.",
     impact: "Going from 88.90% to honest required documenting the failure, not hiding it.",
     glow: "amber" as const,
   },
@@ -56,7 +56,7 @@ const PHASES = [
     icon: Wrench,
     title: "The honest baseline was 59.65%. We published it anyway.",
     description:
-      "The pipeline was rebuilt from the ground up: company-disjoint splits, LongProfile-prefix join to recover CompanyId for 98.3% of test rows, and a clean train/test boundary that no row could cross. The true TF-IDF cascade baseline landed at 59.65% Macro F1 — 29 points lower than the reported number. Reporting a worse number on purpose was the hardest single decision of the project. It was also the only defensible one.",
+      "The pipeline was rebuilt from the ground up: company-disjoint splits, LongProfile-prefix join to recover CompanyId for 98.3% of test rows, and a clean train/test boundary that no row could cross. The true TF-IDF cascade baseline landed at 59.65% Macro F1 - 29 points lower than the reported number. Reporting a worse number on purpose was the hardest single decision of the project. It was also the only defensible one.",
     impact: "Every improvement from this point forward was a real improvement, not an illusion.",
     glow: "blue" as const,
   },
@@ -66,7 +66,7 @@ const PHASES = [
     icon: Layers,
     title: "Each version taught us something the previous one couldn't.",
     description:
-      "V2 proved the honest TF-IDF ceiling was 59.65%. V4 showed MiniLM sentence embeddings matched TF-IDF exactly — the bottleneck was semantic, not vocabulary. V5 revealed engineered features (num_segments, max_share, share_std) carried real weight: +7.46pp over pure TF-IDF. V6 added BGE-base embeddings for +0.59pp. V8 mega-ensembled all encoders and features for 68.42%. V9 tried manual contrastive fine-tuning with only 8 samples per class — it collapsed the embedding space and regressed to 61.21%. V10 added calibration for +0.67pp. V11 was killed after 30+ hours trying to encode 53k rows on CPU with gte-large.",
+      "V2 proved the honest TF-IDF ceiling was 59.65%. V4 showed MiniLM sentence embeddings matched TF-IDF exactly - the bottleneck was semantic, not vocabulary. V5 revealed engineered features (num_segments, max_share, share_std) carried real weight: +7.46pp over pure TF-IDF. V6 added BGE-base embeddings for +0.59pp. V8 mega-ensembled all encoders and features for 68.42%. V9 tried manual contrastive fine-tuning with only 8 samples per class - it collapsed the embedding space and regressed to 61.21%. V10 added calibration for +0.67pp. V11 was killed after 30+ hours trying to encode 53k rows on CPU with gte-large.",
     impact: "V8 at 68.42% became the classical ceiling. Getting past it required a structural change.",
     glow: "purple" as const,
   },
@@ -76,7 +76,7 @@ const PHASES = [
     icon: DatabaseZap,
     title: "We used Morningstar's own official taxonomy as a soft-label dictionary.",
     description:
-      "Inside the Task Doc folder sat the Morningstar Global Equity Classification Structure 2019 PDF — the regulator's authoritative definition of all 145 GECS industries. We parsed all 145 official definitions (127 via regex, 18 hand-curated), encoded them with MiniLM and BGE, and computed cosine similarity from every company description to every official anchor. The result: 580 taxonomy-grounded features per row. No other team will have done this. It grounds every prediction in the same document Morningstar uses to assign codes.",
+      "Inside the Task Doc folder sat the Morningstar Global Equity Classification Structure 2019 PDF - the regulator's authoritative definition of all 145 GECS industries. We parsed all 145 official definitions (127 via regex, 18 hand-curated), encoded them with MiniLM and BGE, and computed cosine similarity from every company description to every official anchor. The result: 580 taxonomy-grounded features per row. No other team will have done this. It grounds every prediction in the same document Morningstar uses to assign codes.",
     impact: "The GECS Official Taxonomy Anchoring gave the model a vocabulary it could trust.",
     glow: "emerald" as const,
   },
@@ -86,7 +86,7 @@ const PHASES = [
     icon: Cpu,
     title: "ModernBERT on Colab A100. Company-disjoint. 70.29%.",
     description:
-      "Local CPU fine-tuning of a 110M-parameter BERT model would take 8–15 hours per epoch. Colab's A100 did the same in under 40 minutes — a 20× speedup. Six parallel training variants were launched: baseline raw text, segment-aware text_joint, text_primary, revenue-share weighted, knowledge distillation, and an ensemble seed variant. The best single checkpoint — ModernBERT-large epoch 3 — reached 70.29% Macro F1 on the company-disjoint test set, with 71.4% industry accuracy.",
+      "Local CPU fine-tuning of a 110M-parameter BERT model would take 8–15 hours per epoch. Colab's A100 did the same in under 40 minutes - a 20× speedup. Six parallel training variants were launched: baseline raw text, segment-aware text_joint, text_primary, revenue-share weighted, knowledge distillation, and an ensemble seed variant. The best single checkpoint - ModernBERT-large epoch 3 - reached 70.29% Macro F1 on the company-disjoint test set, with 71.4% industry accuracy.",
     impact: "The transformer beat the classical ensemble by +1.87pp, but the real value was the CLS embeddings saved for downstream stacking.",
     glow: "cyan" as const,
   },
@@ -96,7 +96,7 @@ const PHASES = [
     icon: GitMerge,
     title: "Eight ensembling strategies. Greedy selection. 73.95% before calibration.",
     description:
-      "After the presentation, a systematic ensemble sweep ran eight strategies in parallel on saved prediction files: simple-mean, F1-weighted mean, greedy forward selection, three calibration sweeps, temperature scaling, and joint calibration + temperature. The greedy ensemble of two ModernBERT-large variants (segment-aware seed 42 + raw seed 7) landed at 73.95% Macro F1 and 90.88% top-3 accuracy. Light calibration (τ=0.2) added a further 0.09pp. A sector-conditioned hierarchical head on CLS embeddings reached 94.14% dev F1 — and 71.43% test F1, confirming embedding memorization at training time. Path C required a different feature source.",
+      "After the presentation, a systematic ensemble sweep ran eight strategies in parallel on saved prediction files: simple-mean, F1-weighted mean, greedy forward selection, three calibration sweeps, temperature scaling, and joint calibration + temperature. The greedy ensemble of two ModernBERT-large variants (segment-aware seed 42 + raw seed 7) landed at 73.95% Macro F1 and 90.88% top-3 accuracy. Light calibration (τ=0.2) added a further 0.09pp. A sector-conditioned hierarchical head on CLS embeddings reached 94.14% dev F1 - and 71.43% test F1, confirming embedding memorization at training time. Path C required a different feature source.",
     impact: "Ensembling crossed 74% but the hierarchical head exposed that CLS embeddings are training-set-specific.",
     glow: "violet" as const,
   },
@@ -106,7 +106,7 @@ const PHASES = [
     icon: Scale,
     title: "77.51% on test. 73.96% in cross-validation. We reported 75.0%.",
     description:
-      "Per-class threshold calibration via coordinate descent over 145 free parameters hit 77.51% on the test set. Five-fold cross-validation brought it back to 73.96% — essentially no lift over the simple ensemble. Optimizing 145 free parameters on a test set produces test-set-specific numbers, not generalizable results. The regularized version (minimum 200 samples per class, shift capped at ±0.5) cross-validated to 73.96% as well. The final headline was locked at 75.0% — the calibrated-ensemble result — with the uncalibrated baseline (73.95%), the test-tuned upper bound (77.51%), and the CV number (73.96%) all disclosed in the methods section.",
+      "Per-class threshold calibration via coordinate descent over 145 free parameters hit 77.51% on the test set. Five-fold cross-validation brought it back to 73.96% - essentially no lift over the simple ensemble. Optimizing 145 free parameters on a test set produces test-set-specific numbers, not generalizable results. The regularized version (minimum 200 samples per class, shift capped at ±0.5) cross-validated to 73.96% as well. The final headline was locked at 75.0% - the calibrated-ensemble result - with the uncalibrated baseline (73.95%), the test-tuned upper bound (77.51%), and the CV number (73.96%) all disclosed in the methods section.",
     impact: "The discipline of reporting what generalizes rather than what impresses is what separates a defensible ML result from a demo number.",
     glow: "orange" as const,
   },
@@ -119,7 +119,7 @@ const LEADERBOARD = [
   { version: "V8 mega-ensemble", f1: 68.42, label: "All encoders + TF-IDF ensembled",       fake: false },
   { version: "ModernBERT-large", f1: 70.29, label: "Single checkpoint, epoch 3",            fake: false },
   { version: "Greedy ensemble",  f1: 73.95, label: "2 ModernBERT variants, post-presentation", fake: false },
-  { version: "Final locked",     f1: 75.00, label: "Calibrated ensemble — headline",        hero: true  },
+  { version: "Final locked",     f1: 75.00, label: "Calibrated ensemble - headline",        hero: true  },
 ];
 
 const TAKEAWAYS = [
@@ -136,7 +136,7 @@ const TAKEAWAYS = [
   {
     icon: Rocket,
     title: "Methodology is the product",
-    text: "The project's value isn't the final F1. It's the leakage documentation, the GECS anchor contribution, the calibration audit, and the cross-validation discipline — work another team won't have done.",
+    text: "The project's value isn't the final F1. It's the leakage documentation, the GECS anchor contribution, the calibration audit, and the cross-validation discipline - work another team won't have done.",
   },
 ];
 
@@ -232,7 +232,7 @@ export default function Journey() {
               </div>
 
               <div className="px-6 py-6 text-sm leading-relaxed text-white/52">
-                The goal was not to report the highest number. It was to report the right number — one that would survive on data the model had never seen.
+                The goal was not to report the highest number. It was to report the right number - one that would survive on data the model had never seen.
               </div>
             </GlowCard>
           </motion.div>
@@ -272,7 +272,7 @@ export default function Journey() {
                 duration={0.8}
                 className="text-xs uppercase tracking-[0.32em] text-amber-400/80 mb-4"
               >
-                Model leaderboard — honest progression
+                Model leaderboard - honest progression
               </TextScramble>
               <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
                 Every number we actually hit.
@@ -441,7 +441,7 @@ export default function Journey() {
                 <div className="text-sm text-amber-400 font-semibold mb-5">Not the headline · explained in methods</div>
                 <p className="text-white/58 leading-7 text-sm">
                   145 free calibration parameters optimized on the test set produced 77.51%. Five-fold
-                  cross-validation brought it back to 73.96% — essentially no lift. Reported as the
+                  cross-validation brought it back to 73.96% - essentially no lift. Reported as the
                   upper bound with full disclosure, not as the headline.
                 </p>
               </GlowCard>
@@ -469,19 +469,19 @@ export default function Journey() {
                       A complete leakage audit documenting the 88.90% contamination with reproduction steps
                     </div>
                     <div className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
-                      An honest evaluation pipeline with company-disjoint splits — a methodology other teams won&apos;t have
+                      An honest evaluation pipeline with company-disjoint splits - a methodology other teams won&apos;t have
                     </div>
                     <div className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
                       14 documented model variants with reproducible training scripts across classical and transformer approaches
                     </div>
                     <div className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
-                      GECS Official Taxonomy Anchoring — 580 features derived from Morningstar&apos;s own definition document
+                      GECS Official Taxonomy Anchoring - 580 features derived from Morningstar&apos;s own definition document
                     </div>
                     <div className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
-                      A calibration audit with cross-validation discipline — the test-tuned 77.51% was audited and excluded from the headline
+                      A calibration audit with cross-validation discipline - the test-tuned 77.51% was audited and excluded from the headline
                     </div>
                     <div className="rounded-xl border border-white/8 bg-black/30 px-4 py-3">
-                      75.0% macro F1 / 91.4% top-3 accuracy — a result that generalizes, not one that impresses only on test data
+                      75.0% macro F1 / 91.4% top-3 accuracy - a result that generalizes, not one that impresses only on test data
                     </div>
                   </div>
                 </div>

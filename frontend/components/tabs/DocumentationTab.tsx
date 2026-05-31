@@ -20,14 +20,14 @@ const SECTIONS = [
             <p>This capstone (MGT 599) at <strong className="text-white">DePaul University Chicago</strong> aims to build an automated, production-grade text classification pipeline that maps raw corporate financial descriptions into the <strong className="text-red-400">Morningstar Global Equity Classification Structure (GECS)</strong>.</p>
             <p>The system performs <strong className="text-white">two cascading classification tasks:</strong></p>
             <ul className="list-none space-y-2 mt-2">
-              <li className="flex gap-3"><span className="text-red-500 font-bold font-mono">T1</span><span>Industry Classification — 145 classes mapped to 8-digit Morningstar codes</span></li>
-              <li className="flex gap-3"><span className="text-blue-400 font-bold font-mono">T2</span><span>Subindustry Classification — 428 classes mapped to 10-digit GECS codes</span></li>
+              <li className="flex gap-3"><span className="text-red-500 font-bold font-mono">T1</span><span>Industry Classification - 145 classes mapped to 8-digit Morningstar codes</span></li>
+              <li className="flex gap-3"><span className="text-blue-400 font-bold font-mono">T2</span><span>Subindustry Classification - 428 classes mapped to 10-digit GECS codes</span></li>
             </ul>
           </div>
         )
       },
       {
-        title: "1.2 Team — TAVSS",
+        title: "1.2 Team - TAVSS",
         content: (
           <div className="space-y-3 text-white/60 text-sm">
             <p>Team <strong className="text-red-400">TAVSS</strong> is a five-person cohort from DePaul University's Graduate Business program. The team is responsible for end-to-end delivery: data engineering, model training, library development, deployment infrastructure, and presentation.</p>
@@ -92,7 +92,7 @@ const SECTIONS = [
                 ["Step 1", "Drop all NaN descriptions", "text-emerald-400"],
                 ["Step 2", "Convert GECS codes to integer labels", "text-blue-400"],
                 ["Step 3", "Filter classes with < 5 samples (prevents stratification errors)", "text-amber-400"],
-                ["Step 4", "Company-disjoint split — no company appears on both sides (GroupShuffleSplit by CompanyId)", "text-red-400"],
+                ["Step 4", "Company-disjoint split - no company appears on both sides (GroupShuffleSplit by CompanyId)", "text-red-400"],
               ].map(([step, desc, color]) => (
                 <div key={step} className="flex gap-3 items-start bg-black/40 border border-white/5 rounded-lg px-3 py-2">
                   <span className={`font-bold flex-shrink-0 ${color}`}>{step}</span>
@@ -116,7 +116,7 @@ const SECTIONS = [
               <div className="text-green-400">)</div>
             </div>
             <div className="p-3 bg-red-500/5 border border-red-500/20 rounded-lg text-xs font-mono text-red-400">
-              OUTPUT: scipy.sparse CSR matrix — 53,585 × 60,000 — ~98% sparse
+              OUTPUT: scipy.sparse CSR matrix - 53,585 × 60,000 - ~98% sparse
             </div>
           </div>
         )
@@ -134,7 +134,7 @@ const SECTIONS = [
         title: "3.1 Why We Built It",
         content: (
           <div className="space-y-3 text-sm text-white/60">
-            <p>Standard scikit-learn pipelines compute <strong className="text-white">dense</strong> in-memory matrices. For 53,585 documents × 60,000 features, this produces a <strong className="text-red-400">~26GB float64 matrix</strong> — instantly crashing our deployment environment with Waitress <code>503</code> errors and memory exhaustion.</p>
+            <p>Standard scikit-learn pipelines compute <strong className="text-white">dense</strong> in-memory matrices. For 53,585 documents × 60,000 features, this produces a <strong className="text-red-400">~26GB float64 matrix</strong> - instantly crashing our deployment environment with Waitress <code>503</code> errors and memory exhaustion.</p>
             <p>We engineered and published <strong className="text-purple-400">breezeml</strong> to PyPI as the solution: a thin, production-hardened wrapper that keeps everything in <code>scipy.sparse</code> CSR format end-to-end, reducing memory usage by <strong className="text-emerald-400">98%</strong>.</p>
           </div>
         )
@@ -182,7 +182,7 @@ const SECTIONS = [
     badge: "ML",
     entries: [
       {
-        title: "4.1 Primary Engine — LinearSVC",
+        title: "4.1 Primary Engine - LinearSVC",
         content: (
           <div className="space-y-3 text-sm text-white/60">
             <div className="grid grid-cols-2 gap-3">
@@ -198,12 +198,12 @@ const SECTIONS = [
                 </div>
               ))}
             </div>
-            <p>The LinearSVC (classical ceiling: 68.42% V8 ensemble) was surpassed by a ModernBERT-large transformer ensemble. The breakthrough was company-disjoint splits — catching a 97.2% leakage in the original result — and running 14 model versions to reach the locked 75.0% Macro F1.</p>
+            <p>The LinearSVC (classical ceiling: 68.42% V8 ensemble) was surpassed by a ModernBERT-large transformer ensemble. The breakthrough was company-disjoint splits - catching a 97.2% leakage in the original result - and running 14 model versions to reach the locked 75.0% Macro F1.</p>
           </div>
         )
       },
       {
-        title: "4.2 Transformer Track — ModernBERT-large",
+        title: "4.2 Transformer Track - ModernBERT-large",
         content: (
           <div className="space-y-3 text-sm text-white/60">
             <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg text-xs font-mono text-purple-400">
@@ -241,7 +241,7 @@ const SECTIONS = [
           <div className="space-y-3 text-sm text-white/60">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-black/60 border border-emerald-500/20 rounded-lg p-4">
-                <div className="text-xs font-mono text-emerald-400 mb-2">VERCEL — Next.js Frontend</div>
+                <div className="text-xs font-mono text-emerald-400 mb-2">VERCEL - Next.js Frontend</div>
                 <ul className="text-xs space-y-1 font-mono text-white/50">
                   <li>• Next.js 15 App Router</li>
                   <li>• Server-side API proxy routes</li>
@@ -250,10 +250,10 @@ const SECTIONS = [
                 </ul>
               </div>
               <div className="bg-black/60 border border-red-500/20 rounded-lg p-4">
-                <div className="text-xs font-mono text-red-400 mb-2">HF SPACE — Cascade SVM</div>
+                <div className="text-xs font-mono text-red-400 mb-2">HF SPACE - Cascade SVM</div>
                 <ul className="text-xs space-y-1 font-mono text-white/50">
                   <li>• FastAPI + Gradio (Docker SDK)</li>
-                  <li>• LinearSVC cascade — 4-level</li>
+                  <li>• LinearSVC cascade - 4-level</li>
                   <li>• POST /api/predict endpoint</li>
                   <li>• akash-ag-gecs-classifier-space</li>
                 </ul>
@@ -266,8 +266,8 @@ const SECTIONS = [
         title: "5.2 The Leakage Fix That Changed Everything",
         content: (
           <div className="space-y-3 text-sm text-white/60">
-            <p>The original 88.90% result used a row-level random split. The same company's text appeared on both sides — 97.2% of the 10,717 test rows had been seen during training. The model was recalling, not generalizing.</p>
-            <p>The fix was a <strong className="text-white">company-disjoint split</strong> using <code className="text-red-400">GroupShuffleSplit(groups=CompanyId)</code>. CompanyId was recovered from LongProfile prefix joins (98.3% match rate). This dropped the headline from 88.90% to an honest 59.65% — the only defensible starting point.</p>
+            <p>The original 88.90% result used a row-level random split. The same company's text appeared on both sides - 97.2% of the 10,717 test rows had been seen during training. The model was recalling, not generalizing.</p>
+            <p>The fix was a <strong className="text-white">company-disjoint split</strong> using <code className="text-red-400">GroupShuffleSplit(groups=CompanyId)</code>. CompanyId was recovered from LongProfile prefix joins (98.3% match rate). This dropped the headline from 88.90% to an honest 59.65% - the only defensible starting point.</p>
             <div className="p-3 bg-cyan-500/5 border border-cyan-500/20 rounded-lg text-xs font-mono text-cyan-400">
               Verified: zero company overlap between train (42,868 rows, 5,341 companies) and test (10,717 rows, 1,336 companies).
             </div>

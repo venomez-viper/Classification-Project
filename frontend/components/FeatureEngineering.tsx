@@ -42,8 +42,8 @@ const FEATURES = [
     title: "Feature Ceiling",
     glowColor: "purple" as const,
     description:
-      "Task 1 uses 50,000 features because the full LongProfile vocabulary is huge. Task 2 only gets 10,000 since it only reads SegmentName and SegmentDescription which are much shorter texts.",
-    code: 'TfidfVectorizer(max_features=50000)  # Task 1\nTfidfVectorizer(max_features=10000)  # Task 2',
+      "Task 1 uses 60,000 features because the full LongProfile vocabulary is huge. Task 2 only gets 10,000 since it only reads SegmentName and SegmentDescription which are much shorter texts.",
+    code: 'TfidfVectorizer(max_features=60000)  # Task 1\nTfidfVectorizer(max_features=10000)  # Task 2',
   },
 ];
 
@@ -103,7 +103,7 @@ export default function FeatureEngineering() {
           <GlowCard glowColor="red" className="text-center">
             <p className="text-white/40 text-sm mb-2">Final Output</p>
             <p className="text-white font-mono text-base">
-              Task 1: <span className="text-red-400">53,587 x 50,000</span> sparse matrix
+              Task 1: <span className="text-red-400">53,587 x 60,000</span> sparse matrix
               <span className="text-white/30 mx-3">|</span>
               Task 2: <span className="text-blue-400">~47,000 x 10,000</span> sparse matrix
             </p>

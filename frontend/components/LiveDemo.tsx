@@ -42,15 +42,15 @@ const EXAMPLES = [
 const PIPELINE = [
   { id: "input", icon: Terminal,     label: "Raw Text",          detail: "Company description" },
   { id: "tfidf", icon: Database,     label: "TF-IDF",            detail: "60,000 sparse features" },
-  { id: "l1",    icon: Layers,       label: "L1 — Sector",       detail: "11 broad sectors" },
-  { id: "l2",    icon: GitBranch,    label: "L2 — Group",        detail: "Industry group within sector" },
-  { id: "l3",    icon: BrainCircuit, label: "L3 — Industry",     detail: "Audited 145-class GECS baseline" },
-  { id: "l4",    icon: Cpu,          label: "L4 — Sub-Industry", detail: "428-class constrained cascade · 55.44% F1" },
+  { id: "l1",    icon: Layers,       label: "L1 - Sector",       detail: "11 broad sectors" },
+  { id: "l2",    icon: GitBranch,    label: "L2 - Group",        detail: "Industry group within sector" },
+  { id: "l3",    icon: BrainCircuit, label: "L3 - Industry",     detail: "Audited 145-class GECS baseline" },
+  { id: "l4",    icon: Cpu,          label: "L4 - Sub-Industry", detail: "428-class constrained cascade · 55.44% F1" },
 ];
 
 const SYSTEM_NOTES = [
-  { label: "Task 1 — Industry",     value: "75.0% · calibrated ensemble" },
-  { label: "Task 2 — Sub-Industry", value: "55.44% Macro F1 · 428 classes" },
+  { label: "Task 1 - Industry",     value: "75.0% · calibrated ensemble" },
+  { label: "Task 2 - Sub-Industry", value: "55.44% Macro F1 · 428 classes" },
   { label: "Top-3 Accuracy",        value: "91.4% · company-disjoint test" },
   { label: "Model",                 value: "ModernBERT-large ensemble (HF Space)" },
 ];
@@ -330,14 +330,14 @@ export default function LiveDemo() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-violet-300">
               <Radar className="h-3.5 w-3.5" />
-              4-Level Cascade SVM — Live
+              4-Level Cascade SVM - Live
             </div>
             <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white">
               Turn raw company language
               <span className="block text-white/55">into a Morningstar verdict.</span>
             </h1>
             <p className="mt-6 max-w-3xl text-lg sm:text-xl leading-relaxed text-white/55">
-              A calibrated ModernBERT-large ensemble for Morningstar industry routing — 75.0% Macro F1, 91.4% top-3 accuracy, deployed on Hugging Face Space. The story is honest: we caught our own leakage and rebuilt from scratch.
+              A calibrated ModernBERT-large ensemble for Morningstar industry routing - 75.0% Macro F1, 91.4% top-3 accuracy, deployed on Hugging Face Space. The story is honest: we caught our own leakage and rebuilt from scratch.
             </p>
           </div>
 
@@ -466,7 +466,7 @@ export default function LiveDemo() {
                 <div className="flex items-center gap-2 mb-5">
                   <TrendingUp className="h-4 w-4 text-violet-300" />
                   <div className="text-xs uppercase tracking-[0.28em] text-white/35">
-                    Model Benchmark — audited Task 1 holdout Macro F1
+                    Model Benchmark - audited Task 1 holdout Macro F1
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -526,9 +526,9 @@ export default function LiveDemo() {
               ) : result ? (
                 <motion.div key={`result-${resultKey}`} initial={{ opacity: 0, y: 18, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} className="flex flex-col gap-5">
 
-                  {/* Task 1 — Industry */}
+                  {/* Task 1 - Industry */}
                   <GlowCard glowColor="red" className="border-white/8 bg-red-500/[0.05] p-8">
-                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">Task 1 — GECS Industry · audited baseline</div>
+                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">Task 1 - GECS Industry · audited baseline</div>
                     <TextScramble key={`mstar-${resultKey}`} as="h3" speed={0.02} duration={0.8} className="text-3xl sm:text-4xl font-bold text-white mb-4">
                       {result.mstar_label}
                     </TextScramble>
@@ -554,7 +554,7 @@ export default function LiveDemo() {
                     )}
                   </GlowCard>
 
-                  {/* Task 2 — Sub-Industry */}
+                  {/* Task 2 - Sub-Industry */}
                   {(result.official_definition || result.matched_phrase || result.reasoning || result.route_reason) && (
                     <GlowCard glowColor="emerald" className="border-white/8 bg-white/[0.03] p-6">
                       <div className="mb-4 flex items-center gap-2">
@@ -591,7 +591,7 @@ export default function LiveDemo() {
 
                   {result.sub_label && result.sub_code && (
                     <GlowCard glowColor="blue" className="border-white/8 bg-blue-500/[0.04] p-8">
-                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-blue-300/80">Task 2 — Sub-Industry · 55.44% F1 · 428 classes</div>
+                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-blue-300/80">Task 2 - Sub-Industry · 55.44% F1 · 428 classes</div>
                       <TextScramble key={`sub-${resultKey}`} as="h3" speed={0.02} duration={0.8} className="text-2xl sm:text-3xl font-bold text-white mb-4">
                         {result.sub_label}
                       </TextScramble>

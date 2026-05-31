@@ -32,13 +32,13 @@ const PIPELINE = [
 ];
 
 const LOGS = [
-  "> CUDA:0 initialized — RTX 3050 (8GB VRAM)",
+  "> CUDA:0 initialized - RTX 3050 (8GB VRAM)",
   "> Loading DeBERTa-v3-small checkpoint (141M params)...",
   "> Tokenizing input → 512-token sequence",
-  "> Executing forward pass — Layer  1/12 ████░░░░░░░░",
-  "> Executing forward pass — Layer  4/12 ████████░░░░",
-  "> Executing forward pass — Layer  8/12 ████████████░",
-  "> Executing forward pass — Layer 12/12 ████████████",
+  "> Executing forward pass - Layer  1/12 ████░░░░░░░░",
+  "> Executing forward pass - Layer  4/12 ████████░░░░",
+  "> Executing forward pass - Layer  8/12 ████████████░",
+  "> Executing forward pass - Layer 12/12 ████████████",
   "> Extracting [CLS] token embedding...",
   "> Computing softmax over 145 logits...",
   "> Inference complete ✓  Latency: 1,842ms",
@@ -221,7 +221,7 @@ export default function LLMTestingTab() {
               boxShadow: text.trim() ? "0 0 40px rgba(168,85,247,0.12)" : "none",
             }}>
             {loading
-              ? <><Loader2 className="w-4 h-4 animate-spin" /> PROCESSING — GPU BUSY</>
+              ? <><Loader2 className="w-4 h-4 animate-spin" /> PROCESSING - GPU BUSY</>
               : <><BrainCircuit className="w-4 h-4" /> EXECUTE NEURAL INFERENCE</>}
           </button>
 
@@ -229,7 +229,7 @@ export default function LLMTestingTab() {
           <div className="p-4 border border-amber-500/20 bg-amber-500/5 rounded-xl">
             <div className="text-[10px] font-mono text-amber-400/60 uppercase tracking-widest mb-2">⚠ Experimental Track</div>
             <p className="text-xs text-white/40 font-mono leading-relaxed">
-              DeBERTa reached <strong className="text-purple-300">64.0% Macro F1</strong> on the full 145-class test — valuable as an experiment, but the ModernBERT-large calibrated ensemble (75.0%) is the production result.
+              DeBERTa reached <strong className="text-purple-300">64.0% Macro F1</strong> on the full 145-class test - valuable as an experiment, but the ModernBERT-large calibrated ensemble (75.0%) is the production result.
             </p>
           </div>
         </div>

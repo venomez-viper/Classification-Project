@@ -7,23 +7,23 @@ import Navigation from "@/components/Navigation";
 
 const EXAMPLES = [
   {
-    label: "Tech — Chips",
+    label: "Tech - Chips",
     text: "The company designs graphics processing units for gaming, data center AI, and autonomous vehicles. Revenue is driven by data center GPU sales.",
   },
   {
-    label: "Finance — Banking",
+    label: "Finance - Banking",
     text: "JPMorgan Chase operates as a global financial services firm providing investment banking, commercial banking, and asset management.",
   },
   {
-    label: "Healthcare — Pharma",
+    label: "Healthcare - Pharma",
     text: "Pfizer discovers, develops, and commercializes biopharmaceutical products including vaccines, oncology therapies, and rare disease treatments.",
   },
   {
-    label: "Energy — Oil & Gas",
+    label: "Energy - Oil & Gas",
     text: "ExxonMobil explores, produces, and refines petroleum products. Operates in upstream, downstream, and chemical segments across global markets.",
   },
   {
-    label: "Tech — Software",
+    label: "Tech - Software",
     text: "The company sells cloud-based enterprise software that helps large businesses manage their employees, finances, and supply chains from a single dashboard.",
   },
   {
@@ -138,7 +138,7 @@ export default function HFPage() {
             </span>
           </h1>
           <p className="text-white/50 text-lg max-w-2xl">
-            Paste any company description — the model maps it to one of{" "}
+            Paste any company description - the model maps it to one of{" "}
             <span className="text-white/80">145 Morningstar GECS</span> industry codes,
             then narrows it to a{" "}
             <span className="text-white/80">428-class sub-industry</span>.
@@ -222,7 +222,7 @@ export default function HFPage() {
                   <div className="rounded-xl border border-red-500/30 bg-red-950/15 p-6">
                     <div className="flex justify-between items-center mb-4">
                       <p className="text-xs font-mono uppercase tracking-widest text-red-400">
-                        Task 1 — GECS Industry
+                        Task 1 - GECS Industry
                       </p>
                       <span className="text-xs font-mono text-white/30 bg-white/5 px-2 py-0.5 rounded border border-white/10">
                         {result.engine ?? "cascade-svm"}
@@ -269,7 +269,7 @@ export default function HFPage() {
                   {result.sub_code ? (
                     <div className="rounded-xl border border-orange-500/25 bg-orange-950/10 p-6">
                       <p className="text-xs font-mono uppercase tracking-widest text-orange-400 mb-4">
-                        Task 2 — Sub-Industry
+                        Task 2 - Sub-Industry
                       </p>
                       <p className="text-2xl font-bold text-white mb-1 tracking-tight">
                         {result.sub_label ?? result.sub_code}

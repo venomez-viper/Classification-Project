@@ -189,7 +189,7 @@ export default function DataPipelinesTab() {
 
           {/* Sparse matrix visualization */}
           <div className="bg-black/60 border border-red-500/10 rounded-xl p-4">
-            <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Sparse CSR Matrix Visualization — 4% density</div>
+            <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Sparse CSR Matrix Visualization - 4% density</div>
             <SparseMatrixViz />
             <div className="flex justify-between mt-3 text-[10px] font-mono text-white/20">
               <span>■ Non-zero TF-IDF features</span>
