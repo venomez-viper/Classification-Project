@@ -155,15 +155,15 @@ export default function LLMDemo() {
     }
 
     try {
-      // Fetch DeBERTa + cascade in parallel
+      // Fetch the compatibility endpoint and the canonical cascade endpoint in parallel.
       const [llmRes, cascadeRes] = await Promise.allSettled([
-        fetch("/api/predict_llm",  { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }),
-        fetch("/api/predict",      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) }),
+        fetch("/api/predict_llm",  { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ company_text: text, segment_text: text }) }),
+        fetch("/api/predict",      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ company_text: text, segment_text: text }) }),
       ]);
 
-      if (llmRes.status === "rejected") throw new Error("Could not reach server_llm.py on port 5001.");
+      if (llmRes.status === "rejected") throw new Error("Could not reach GECS-Sage on port 5003.");
       const llmData = await llmRes.value.json();
-      if (!llmRes.value.ok) throw new Error(llmData.error || "DeBERTa server error");
+      if (!llmRes.value.ok) throw new Error(llmData.error || "GECS-Sage server error");
 
       setResult(llmData);
       setResultKey((k) => k + 1);
@@ -179,7 +179,7 @@ export default function LLMDemo() {
         }
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Could not reach server_llm.py on port 5001.";
+      const msg = e instanceof Error ? e.message : "Could not reach GECS-Sage on port 5003.";
       setError(msg);
       setActiveStep(-1);
     } finally {
@@ -219,7 +219,7 @@ export default function LLMDemo() {
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
           <TextScramble as="p" speed={0.02} duration={0.8}
             className="text-cyan-400 text-base font-semibold uppercase tracking-widest mb-4 font-mono">
-            // TRANSFORMER INFERENCE — NATURAL LANGUAGE UNDERSTANDING
+            TRANSFORMER INFERENCE — NATURAL LANGUAGE UNDERSTANDING
           </TextScramble>
           <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4 tracking-tight">
             Write it in plain English.{" "}
@@ -342,7 +342,7 @@ export default function LLMDemo() {
                   <p className="font-bold mb-2">INFERENCE ERROR</p>
                   <p>{error}</p>
                   <p className="mt-3 text-red-300/60 text-xs">
-                    Make sure server_llm.py is running: <span className="text-red-200">python server_llm.py</span>
+                    Make sure GECS-Sage is running: <span className="text-red-200">python server_legendary.py</span>
                   </p>
                 </motion.div>
               )}

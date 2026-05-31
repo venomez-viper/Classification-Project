@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 const PAGES = [
   {
@@ -24,7 +25,7 @@ const PAGES = [
   {
     href: "/features",
     title: "Feature Engineering",
-    desc: "How raw company text became a 50,000-dimensional sparse representation using TF-IDF.",
+    desc: "How raw company text became a 60,000-dimensional sparse representation using TF-IDF.",
     color: "red",
     badge: "NLP",
   },
@@ -38,9 +39,9 @@ const PAGES = [
   {
     href: "/model",
     title: "Model and Results",
-    desc: "4-level cascade SVM: 88.90% Macro F1 on 145 industries, 55.41% on 428 sub-industries. Beats DeBERTa by +24.90 pp.",
+    desc: "The audited story: calibrated ModernBERT-large ensemble locked at 75.0% Macro F1 (91.4% top-3), built after catching a 97.2% leakage in the original result. Task 2 constrained to 428 sub-industries.",
     color: "cyan",
-    badge: "88.90%",
+    badge: "Audited",
   },
   {
     href: "/graph",
@@ -80,8 +81,8 @@ const JOURNEY_STOPS = [
   },
   {
     step: "03",
-    title: "Cascade SVM vs DeBERTa",
-    desc: "88.90% Macro F1 vs 64% — the cascade architecture outperformed the fine-tuned transformer on every metric.",
+    title: "Audit the model honestly",
+    desc: "We caught the leaked Week 3 result, rebuilt the baseline, and made the methodology audit part of the final product story.",
     href: "/model",
   },
   {
@@ -137,15 +138,6 @@ const PILLARS = [
     desc: "The app is now easier to keep useful even when Railway or Hugging Face are unavailable.",
   },
 ];
-
-const cardBorder: Record<string, string> = {
-  red: "border-red-500/25 hover:border-red-500/50 bg-red-500/5",
-  blue: "border-blue-500/25 hover:border-blue-500/50 bg-blue-500/5",
-  cyan: "border-cyan-500/25 hover:border-cyan-500/50 bg-cyan-500/5",
-  emerald: "border-emerald-500/25 hover:border-emerald-500/50 bg-emerald-500/5",
-  amber: "border-amber-500/25 hover:border-amber-500/50 bg-amber-500/5",
-  rose: "border-rose-500/25 hover:border-rose-500/50 bg-rose-500/5",
-};
 
 const badgeColor: Record<string, string> = {
   red: "bg-red-500/20 text-red-300",
@@ -226,26 +218,27 @@ export default function Home() {
               <Link
                 key={stop.step}
                 href={stop.href}
-                className={`group rounded-[28px] border p-6 transition-all duration-300 hover:-translate-y-1 ${
-                  index === 0
-                    ? "border-red-500/30 bg-red-500/8"
-                    : index === 1
-                      ? "border-blue-500/25 bg-blue-500/8"
-                      : index === 2
-                        ? "border-cyan-500/25 bg-cyan-500/8"
-                        : "border-emerald-500/25 bg-emerald-500/8"
-                }`}
+                className="group transition-all duration-300 hover:-translate-y-1 block h-full"
               >
-                <div className="flex items-center justify-between mb-8">
-                  <span className="text-xs tracking-[0.3em] uppercase text-white/35">Stop {stop.step}</span>
-                  <GitBranch className="w-4 h-4 text-white/25 group-hover:text-white/55 transition-colors" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3 leading-tight">{stop.title}</h3>
-                <p className="text-sm text-white/55 leading-relaxed mb-8">{stop.desc}</p>
-                <span className="inline-flex items-center gap-2 text-sm text-white/70 group-hover:text-white transition-colors">
-                  Open section
-                  <ArrowRight className="w-4 h-4" />
-                </span>
+                <GlowCard 
+                  glowColor={
+                    index === 0 ? "red" : 
+                    index === 1 ? "blue" : 
+                    index === 2 ? "cyan" : "emerald"
+                  } 
+                  className="h-full flex flex-col"
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-xs tracking-[0.3em] uppercase text-white/35">Stop {stop.step}</span>
+                    <GitBranch className="w-4 h-4 text-white/25 group-hover:text-white/55 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-3 leading-tight">{stop.title}</h3>
+                  <p className="text-sm text-white/55 leading-relaxed mb-8 flex-grow">{stop.desc}</p>
+                  <span className="inline-flex items-center gap-2 text-sm text-white/70 group-hover:text-white transition-colors">
+                    Open section
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </GlowCard>
               </Link>
             ))}
           </div>
@@ -337,18 +330,20 @@ export default function Home() {
               <Link
                 key={page.href}
                 href={page.href}
-                className={`group rounded-[28px] border p-6 transition-all duration-300 hover:-translate-y-1 ${cardBorder[page.color]}`}
+                className="group transition-all duration-300 hover:-translate-y-1 block h-full"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badgeColor[page.color]}`}>
-                    {page.badge}
-                  </span>
-                  <span className="text-white/20 group-hover:text-white/50 transition-colors text-lg">
-                    {"->"}
-                  </span>
-                </div>
-                <h3 className="text-base font-bold text-white mb-2">{page.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed">{page.desc}</p>
+                <GlowCard glowColor={page.color as "red"|"blue"|"cyan"|"emerald"|"amber"|"rose"|"violet"|"purple"|"green"|"orange"} className="h-full flex flex-col">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${badgeColor[page.color]}`}>
+                      {page.badge}
+                    </span>
+                    <span className="text-white/20 group-hover:text-white/50 transition-colors text-lg">
+                      {"->"}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2">{page.title}</h3>
+                  <p className="text-sm text-white/45 leading-relaxed flex-grow">{page.desc}</p>
+                </GlowCard>
               </Link>
             ))}
           </div>

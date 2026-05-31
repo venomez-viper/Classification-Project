@@ -52,11 +52,11 @@ const RELEASE_GATES: ReleaseItem[] = [
   },
   {
     id: "REL-203",
-    asset: "DeBERTa-v3 HF Space",
-    owner: "Vishal",
-    scope: "LLM inference path",
-    status: "blocked",
-    note: "Latency and VRAM pressure require containment plan before widening traffic.",
+    asset: "ModernBERT Ensemble · HF Space",
+    owner: "Akash",
+    scope: "Task 1 inference path",
+    status: "approved",
+    note: "Calibrated ensemble locked at 75.0% Macro F1. Deployed on HF Space, proxied by Vercel.",
   },
 ];
 

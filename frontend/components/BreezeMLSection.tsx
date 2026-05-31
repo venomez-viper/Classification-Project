@@ -67,7 +67,7 @@ const VERSIONS = [
     changes: [
       "Added class_weight='balanced' to all LinearSVC initializations",
       "Forces penalty multiplication for misclassified rare classes",
-      "Macro F1 score skyrocketed from 43% → 86.82%",
+      "Exposed why class weighting matters for rare GECS labels",
       "Eliminates need for SMOTE oversampling entirely",
     ],
   },
@@ -81,9 +81,9 @@ const VERSIONS = [
     changes: [
       "Extended breezeml with a 3-level cascade: Sector → Industry Group → Morningstar Code",
       "Each level uses a dedicated LinearSVC trained only on classes within that branch",
-      "Macro F1 jumped from 59.70% (flat) to 88.90% — a +29.2 percentage point gain",
-      "Rare-class F1 improved from 20.44% to 73.68% without any additional training data",
-      "Runs at 1,673 classifications per second on CPU — 40× faster than fine-tuned DeBERTa",
+      "Proved the hierarchy-first cascade approach used as the HF Space production backend",
+      "Established the Task 1 to Task 2 routing pattern used by GECS-Sage",
+      "Runs fast enough for a local analyst-in-the-loop demo",
     ],
   },
 ];
@@ -154,9 +154,8 @@ export default function BreezeMLSection() {
             <strong className="text-red-300">Akash Anipakalu Giridhar</strong>. It provides a clean,
             zero-boilerplate API for classification, regression, clustering, and model benchmarking.
             During this Capstone, we identified critical performance limitations, shipped 5 public
-            versions to PyPI, and then extended breezeml into Level 2 — a hierarchical cascade
-            architecture that reached 88.90% Macro F1 on 145 industry classes, beating a fine-tuned
-            DeBERTa transformer by +24.9 percentage points.
+            versions to PyPI, and then extended breezeml into Level 2: a hierarchy-first
+            cascade architecture that became the foundation for the audited GECS-Sage demo.
           </p>
           <div className="mt-4 font-mono text-sm bg-black/40 rounded-lg p-4 text-white/70">
             <span className="text-red-400">from</span> breezeml <span className="text-red-400">import</span> classifiers<br />

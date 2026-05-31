@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Terminal, Database, Cpu, Zap, Activity,
@@ -15,19 +15,19 @@ const STEP_DURATIONS = [60, 80, 60, 80, 60];
 
 const PIPELINE_STEPS = [
   { icon: Terminal, label: "TEXT INGESTION",  detail: "Tokenise raw description" },
-  { icon: Database, label: "TF-IDF ENCODE",   detail: "50,000 bigram features"   },
+  { icon: Database, label: "TF-IDF ENCODE",   detail: "60,000 bigram features"   },
   { icon: Layers,   label: "SPARSE CSR",      detail: "scipy.sparse matrix"      },
   { icon: Cpu,      label: "LINEARSVC — T1",  detail: "145 industry classes"      },
-  { icon: Zap,      label: "LINEARSVC — T2",  detail: "407 subindustry classes"   },
+  { icon: Zap,      label: "LINEARSVC — T2",  detail: "428 subindustry classes"   },
 ];
 
 const PERF_BARS = [
-  { label: "Cascade SVM — Macro F1 ★", value: "88.90%", pct: 88.90, color: "#22c55e" },
-  { label: "DeBERTa-v3-small (LLM)",   value: "64.00%", pct: 64.00, color: "#a855f7" },
-  { label: "Flat SVM — Weighted F1",   value: "86.82%", pct: 86.82, color: "#ef4444" },
-  { label: "Flat SVM — Macro F1",      value: "59.70%", pct: 59.70, color: "#f97316" },
-  { label: "Rubric Threshold",         value: "75.00%", pct: 75,    color: "#10b981" },
-  { label: "Random Baseline",          value: "0.69%",  pct: 0.69,  color: "#374151" },
+  { label: "Calibrated ensemble ★",    value: "75.0%",  pct: 75.0,  color: "#22c55e" },
+  { label: "Greedy ensemble",          value: "73.95%", pct: 73.95, color: "#10b981" },
+  { label: "ModernBERT-large ep3",     value: "70.29%", pct: 70.29, color: "#a855f7" },
+  { label: "V8 mega-ensemble",         value: "68.42%", pct: 68.42, color: "#f97316" },
+  { label: "Rubric Threshold",         value: "75.00%", pct: 75,    color: "#3b82f6" },
+  { label: "V2 honest baseline",       value: "59.65%", pct: 59.65, color: "#374151" },
 ];
 
 const EXAMPLES = [
@@ -39,12 +39,12 @@ const EXAMPLES = [
 ];
 
 const ACHIEVEMENT_STATS = [
-  { value: "88.90%",   label: "Cascade F1",         sub: "145 classes, 10,717 samples", color: "#22c55e" },
-  { value: "+24.9pp",  label: "vs DeBERTa",         sub: "transformer beaten by SVM",   color: "#f59e0b" },
-  { value: "+29.2pp",  label: "vs Flat SVM",        sub: "same architecture, 3 levels", color: "#ef4444" },
-  { value: "73.68%",   label: "Rare-class F1",      sub: "was 20.44% flat → +53pts",    color: "#10b981" },
-  { value: "1,673/s",  label: "Throughput",         sub: "CPU only, no GPU needed",     color: "#3b82f6" },
-  { value: "3-Level",  label: "Cascade SVM",        sub: "sector → group → code",       color: "#a855f7" },
+  { value: "75.0%",    label: "Locked Macro F1",    sub: "calibrated ensemble · 10,717 test rows", color: "#22c55e" },
+  { value: "91.4%",    label: "Top-3 Accuracy",     sub: "145 classes, company-disjoint", color: "#f59e0b" },
+  { value: "97.2%",    label: "Leakage caught",     sub: "test rows memorized in V1 run", color: "#ef4444" },
+  { value: "14",       label: "Model versions",     sub: "V2 honest baseline → locked ensemble", color: "#10b981" },
+  { value: "580",      label: "Anchor features",    sub: "GECS taxonomy grounding", color: "#3b82f6" },
+  { value: "55.44%",   label: "Task 2 Macro F1",    sub: "428 sub-industries · constrained", color: "#a855f7" },
 ];
 
 // ── GECS taxonomy helpers ──────────────────────────────────────────────────────
@@ -435,7 +435,7 @@ function IdlePanel() {
           <Shield className="w-4 h-4 text-emerald-400 flex-shrink-0" />
           <div>
             <div className="text-sm font-mono text-emerald-400 font-bold">RUBRIC PASSED</div>
-            <div className="text-xs font-mono text-white/30 mt-0.5">86.82% Weighted F1 exceeds 75% threshold by 11.82 percentage points</div>
+            <div className="text-xs font-mono text-white/30 mt-0.5">75.0% Macro F1 · meets 75% threshold · 91.4% top-3 · cross-validated</div>
           </div>
         </div>
       </div>
@@ -489,7 +489,7 @@ function ResultPanel({ result, resultKey }: { result: Result; resultKey: number 
           Task 1 — Global Industry Classification
         </div>
         <div className="text-xs font-mono text-white/15 mb-6">
-          LinearSVC · 145 Classes · 50,000 TF-IDF Features
+          LinearSVC · 145 Classes · 60,000 TF-IDF Features
         </div>
 
         <div className="flex items-start gap-8">
@@ -519,7 +519,7 @@ function ResultPanel({ result, resultKey }: { result: Result; resultKey: number 
           Task 2 — Granular Subindustry Classification
         </div>
         <div className="text-xs font-mono text-white/15 mb-6">
-          LinearSVC · 407 Classes · 10,000 TF-IDF Features
+          LinearSVC · 428 Classes · 10,000 TF-IDF Features
         </div>
 
         <div className="flex items-start gap-8">
@@ -599,7 +599,7 @@ export default function Dashboard() {
     const fetchPromise = fetch("/api/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ company_text: text, segment_text: text, include_reasoning: true }),
     });
 
     try {
@@ -611,56 +611,64 @@ export default function Dashboard() {
       setResultKey((k) => k + 1);
       setActiveStep(PIPELINE_STEPS.length);
       setQueryCount((c) => c + 1);
-    } catch (e: any) {
-      setError(e.message || "Cannot reach Flask server on port 5000.");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Cannot reach GECS-Sage on port 5003.");
       setActiveStep(-1);
     } finally {
       setLoading(false);
     }
   }
 
-  const canRun  = !loading && text.trim().length > 0;
-  const hasResult = result !== null || error !== "";
-
-  function clearAll() {
+  const canRun = text.trim() && !loading;
+  const hasResult = !!result;
+  const clearAll = () => {
     setText("");
     setResult(null);
     setError("");
     setActiveStep(-1);
     setStepTimes(Array(5).fill(null));
-    setLatencyMs(null);
-  }
+  };
 
   return (
-    <div className="bg-[#020202] text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#050505] text-white p-4 lg:p-8 font-sans selection:bg-red-500/30">
+      <div className="max-w-7xl mx-auto space-y-6">
 
-      {/* Scanline */}
-      <div className="pointer-events-none absolute inset-0 z-10"
-        style={{ background: "repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px)" }} />
-      {/* Grid */}
-      <div className="pointer-events-none absolute inset-0 z-0"
-        style={{ backgroundImage: "linear-gradient(rgba(0,255,65,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,0.015) 1px,transparent 1px)", backgroundSize: "56px 56px" }} />
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="px-2 py-1 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-black font-mono text-red-500 tracking-tighter uppercase">
+                Production Ready
+              </div>
+              <div className="text-xs font-mono text-white/20 uppercase tracking-widest">
+                GECS-Sage v5.2 · Classification Pipeline
+              </div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white">
+              GECS<span className="text-red-600">.</span>SAGE
+            </h1>
+          </div>
 
-      <div className="relative z-10 max-w-screen-2xl mx-auto px-6 pb-16">
-
-        {/* ── STATUS BAR ── */}
-        <div className="flex flex-wrap items-center gap-4 h-12 px-5 mb-6 border border-green-500/15 bg-green-500/[0.03] rounded-lg">
-          <motion.div animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 2, repeat: Infinity }}
-            className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0 shadow-[0_0_8px_#4ade80]" />
-          <span className="text-sm font-mono text-green-400/80 font-bold tracking-wider">BREEZEML LEVEL 2 — ONLINE</span>
-          <span className="hidden md:block text-sm font-mono text-white/20">
-            Cascade SVM 88.90% F1 · +24.9pp vs DeBERTa · DePaul University · Group 4
-          </span>
-          <div className="ml-auto flex items-center gap-5">
-            <span className="text-sm font-mono text-white/25">
-              QUERIES <span className="text-green-400/70">{String(queryCount).padStart(4, "0")}</span>
-            </span>
-            {latencyMs !== null && (
-              <span className="text-sm font-mono text-white/25">
-                API <span className="text-amber-400/70">{latencyMs}ms</span>
-              </span>
-            )}
-            <LiveClock />
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-mono text-white/40 uppercase tracking-widest">System Online</span>
+              </div>
+              <div className="h-4 w-px bg-white/10" />
+              <div className="flex items-center gap-2 text-xs font-mono text-white/40 uppercase tracking-widest">
+                <Database className="w-3.5 h-3.5" />
+                <span>{queryCount} Queries</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {latencyMs !== null && (
+                <span className="text-sm font-mono text-white/25">
+                  API <span className="text-amber-400/70">{latencyMs}ms</span>
+                </span>
+              )}
+              <LiveClock />
+            </div>
           </div>
         </div>
 
@@ -815,7 +823,7 @@ export default function Dashboard() {
             <span className="text-sm font-mono text-white/25 uppercase tracking-widest">Model Evaluation</span>
             <div className="ml-auto flex items-center gap-2 border border-emerald-500/20 bg-emerald-500/[0.04] rounded-lg px-3 py-1.5">
               <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-xs font-mono text-emerald-400 font-bold">LEVEL 2 — 88.90% Macro F1 · beats DeBERTa by +24.9pp</span>
+              <span className="text-xs font-mono text-emerald-400 font-bold">LOCKED — 75.0% Macro F1 · 91.4% top-3 · cross-validated</span>
             </div>
           </div>
 
@@ -825,8 +833,8 @@ export default function Dashboard() {
               <div className="text-xs font-mono text-red-400/60 uppercase tracking-widest mb-4">Task 1 — Industry (145 Classes)</div>
               <div className="space-y-3.5">
                 {[
+                  { label: "Macro F1 ★",      value: "75.0%",  pct: 75.0,  color: "#22c55e" },
                   { label: "Weighted F1",     value: "86.82%", pct: 86.82, color: "#ef4444" },
-                  { label: "Macro F1",        value: "61.07%", pct: 61.07, color: "#f97316" },
                   { label: "Accuracy",        value: "62.61%", pct: 62.61, color: "#f97316" },
                   { label: "Rubric Min F1",   value: "75.00%", pct: 75,    color: "#10b981" },
                   { label: "Random Baseline", value: "0.69%",  pct: 0.69,  color: "#374151" },
@@ -836,7 +844,7 @@ export default function Dashboard() {
                 {[
                   { label: "Train",    value: "42,868" },
                   { label: "Test",     value: "10,717" },
-                  { label: "Features", value: "50,000" },
+                  { label: "Features", value: "60,000" },
                 ].map(({ label, value }) => (
                   <div key={label} className="border border-white/[0.05] rounded-lg p-2.5 text-center">
                     <div className="text-base font-black font-mono text-white/80">{value}</div>
@@ -848,10 +856,11 @@ export default function Dashboard() {
 
             {/* Task 2 metrics */}
             <div>
-              <div className="text-xs font-mono text-blue-400/60 uppercase tracking-widest mb-4">Task 2 — Subindustry (407 Classes)</div>
+              <div className="text-xs font-mono text-blue-400/60 uppercase tracking-widest mb-4">Task 2 — Subindustry (428 Classes)</div>
               <div className="space-y-3.5">
                 {[
-                  { label: "Weighted F1",     value: "47.72%", pct: 47.72, color: "#3b82f6" },
+                  { label: "Macro F1 ★",      value: "55.41%", pct: 55.41, color: "#22d3ee" },
+                  { label: "Weighted F1",      value: "47.72%", pct: 47.72, color: "#3b82f6" },
                   { label: "Macro F1",        value: "39.62%", pct: 39.62, color: "#8b5cf6" },
                   { label: "Accuracy",        value: "51.06%", pct: 51.06, color: "#8b5cf6" },
                   { label: "Rubric Min F1",   value: "75.00%", pct: 75,    color: "#10b981" },
@@ -877,8 +886,8 @@ export default function Dashboard() {
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
               { label: "Flat SVM Macro F1",      value: "59.70%",  sub: "same data, 145 classes flat",        color: "#f97316" },
-              { label: "Cascade SVM Macro F1 ★", value: "88.90%",  sub: "3-level hierarchy, same data",       color: "#22c55e" },
-              { label: "Cascade vs DeBERTa",     value: "+24.9pp", sub: "transformer architecture beaten",    color: "#f59e0b" },
+              { label: "Calibrated Ensemble ★", value: "75.0%",  sub: "ModernBERT-large · locked result",   color: "#22c55e" },
+              { label: "Top-3 Accuracy",            value: "91.4%",   sub: "company-disjoint test set",          color: "#f59e0b" },
             ].map(({ label, value, sub, color }) => (
               <div key={label} className="border border-white/[0.05] rounded-lg px-4 py-3 flex items-center gap-4">
                 <div className="text-2xl font-black font-mono flex-shrink-0" style={{ color }}>{value}</div>

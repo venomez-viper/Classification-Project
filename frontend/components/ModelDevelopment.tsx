@@ -6,36 +6,36 @@ const STEPS = [
   {
     step: "01",
     title: "Raw Text Input",
-    desc: "LongProfile + SegmentName + SegmentDescription concatenated into a single rich text string per company segment.",
-    code: 'df["Combined"] = df["LongProfile"] + " " + df["SegmentName"] + " " + df["SegmentDescription"]',
+    desc: "Company and segment descriptions are combined into a single classification payload.",
+    code: 'payload = {"company_text": company_text, "segment_text": segment_text}',
     color: "violet",
   },
   {
     step: "02",
-    title: "TF-IDF Vectorization",
-    desc: "60,000 sublinear log-scaled features extracted via bigram TF-IDF. Sparse CSR matrix — no dense conversion, no memory explosion.",
-    code: 'TfidfVectorizer(max_features=60000, sublinear_tf=True, ngram_range=(1,2))',
+    title: "Feature Extraction",
+    desc: "The deployable baseline uses sparse text features and cached model artifacts rather than retraining at inference time.",
+    code: "vectorizer.transform([text])",
     color: "blue",
   },
   {
     step: "03",
-    title: "L1 — Sector Classifier",
-    desc: "LinearSVC trained on 11 broad sectors. Routes each input to its economic sector before any fine-grained prediction.",
-    code: 'LinearSVC(C=1.0, dual=False, class_weight="balanced")  # 11 classes',
+    title: "Task 1 Industry",
+    desc: "The locked result is the calibrated ModernBERT-large ensemble at 75.0% Macro F1 / 91.4% top-3 accuracy over 145 GECS industry classes.",
+    code: "task1 = predict_industry(company_text)",
     color: "cyan",
   },
   {
     step: "04",
-    title: "L2 & L3 — Group → MSTAR Cascade",
-    desc: "L2 narrows to an industry group within the predicted sector. L3 selects the final Morningstar GECS code from that group's candidates only.",
-    code: 'cascade_predict(text, assets)  # sector → group → mstar_code',
+    title: "Task 2 Constraint",
+    desc: "The Task 1 industry code restricts Task 2 to valid GECS child sub-industries before the L4 classifier ranks candidates.",
+    code: "valid_children = task1_to_task2_map[task1.code]",
     color: "emerald",
   },
   {
     step: "05",
-    title: "L4 — Sub-Industry (Task 2)",
-    desc: "Each MSTAR code has 1–13 sub-industry candidates. A final LinearSVC chooses among them, reaching 55.41% Macro F1 across 428 classes.",
-    code: 'cascade_predict_t2(text, assets)  # mstar → sub_code (428 classes)',
+    title: "Structured Response",
+    desc: "The API returns Task 1, Task 2, alternatives, prediction ID, model version, and latency trace for analyst review.",
+    code: "return { task1, task2, alternatives, trace }",
     color: "amber",
   },
 ];
@@ -70,8 +70,7 @@ export default function ModelDevelopment() {
             The Classification Pipeline
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            A 4-level cascade reads the Morningstar taxonomy hierarchy instead of flattening it —
-            88.90% Macro F1 on 145 industries, 55.41% on 428 sub-industries. No GPU required.
+            A 4-level GECS-Sage flow reads the Morningstar hierarchy instead of flattening it. The locked result is a calibrated ModernBERT-large ensemble at 75.0% Macro F1 (91.4% top-3) plus 55.44% constrained Task 2.
           </p>
         </motion.div>
 
@@ -100,7 +99,6 @@ export default function ModelDevelopment() {
           ))}
         </div>
 
-        {/* Two model note */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,12 +106,12 @@ export default function ModelDevelopment() {
           className="mt-10 grid md:grid-cols-2 gap-6"
         >
           <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6">
-            <p className="text-red-300 font-bold mb-2">Task 1 — Industry Cascade · 88.90% Macro F1</p>
-            <p className="text-white/50 text-sm">3-level cascade (Sector → Group → MSTAR). 60,000 TF-IDF features. Trained on 53,587 segments. Predicts 1 of 145 Morningstar GECS codes. Outperforms DeBERTa by +24.90 pp on CPU.</p>
+            <p className="text-red-300 font-bold mb-2">Task 1 Industry · 75.0% Macro F1 · 91.4% Top-3</p>
+            <p className="text-white/50 text-sm">Calibrated greedy ensemble of two ModernBERT-large variants. Trained on company-disjoint splits. Cross-validated — the test-tuned upper bound (77.51%) is disclosed but not reported as the headline.</p>
           </div>
           <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-6">
-            <p className="text-blue-300 font-bold mb-2">Task 2 — Sub-Industry Cascade · 55.41% Macro F1</p>
-            <p className="text-white/50 text-sm">4-level cascade adds an L4 step: routes through T1 MSTAR prediction, then picks among 1–13 sub-industry candidates per code. 428 classes. Oracle ceiling: 62.26%.</p>
+            <p className="text-blue-300 font-bold mb-2">Task 2 Sub-Industry Cascade · 55.44% Macro F1</p>
+            <p className="text-white/50 text-sm">The L4 classifier ranks valid sub-industry candidates under the Task 1 parent. It covers 428 classes and preserves the GECS hierarchy during inference.</p>
           </div>
         </motion.div>
       </div>

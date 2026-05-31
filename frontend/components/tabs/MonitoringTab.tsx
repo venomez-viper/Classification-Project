@@ -25,7 +25,7 @@ const INIT: SeriesState = {
   throughput: [120,135,128,142,130,138,125,140,132,128,135,140,138,130,142,128,135,138,142,140],
   cpu:        [18,20,22,19,21,20,23,21,19,22,20,21,23,20,19,22,21,20,23,22],
   gpu:        [96,97,98,97,96,98,97,98,96,97,98,96,97,98,97,96,98,97,96,98],
-  f1:         Array(20).fill(86.8),
+  f1:         Array(20).fill(75.0),
   mem:        [62,63,64,63,65,64,62,63,64,65,63,62,64,63,65,64,62,63,64,65],
 };
 
@@ -55,7 +55,7 @@ function Graph({ data, color, h = 55 }: { data: number[]; color: string; h?: num
 type Alert = { time: string; msg: string; level: "ok" | "warn" | "info" };
 const INIT_ALERTS: Alert[] = [
   { time: "14:58:02", msg: "GECS Engine v5.0 — All systems nominal", level: "ok" },
-  { time: "14:55:41", msg: "DeBERTa VRAM at 98% — Normal under load", level: "warn" },
+  { time: "14:55:41", msg: "HF Space cold-start — cascade SVM loaded in 42s", level: "warn" },
   { time: "14:52:19", msg: "Task 1 inference batch completed — 539 records", level: "ok" },
   { time: "14:49:03", msg: "TF-IDF vectorizer cache refreshed", level: "info" },
   { time: "14:45:55", msg: "breezeml v0.2.5 — scipy.sparse pipeline healthy", level: "ok" },
@@ -64,7 +64,7 @@ const MSGS: Alert[] = [
   { time: "", msg: "Task 1 prediction served — 12ms latency", level: "ok" },
   { time: "", msg: "scipy.sparse CSR pipeline — memory stable", level: "ok" },
   { time: "", msg: "Flask /api/predict — 200 OK", level: "ok" },
-  { time: "", msg: "DeBERTa VRAM pressure elevated", level: "warn" },
+  { time: "", msg: "HF Space inference latency elevated — model warming", level: "warn" },
   { time: "", msg: "TF-IDF extraction complete — 50K dims", level: "info" },
 ];
 
@@ -143,7 +143,7 @@ export default function MonitoringTab() {
           { label: "SVM Latency",  value: `${lat.toFixed(1)}ms`,      sub: "Port 5000 · P99",     ok: true  },
           { label: "Throughput",   value: `${Math.round(tpt)}/min`,   sub: "Requests served",     ok: true  },
           { label: "Task 1 F1",    value: `${f1v.toFixed(2)}%`,       sub: "Target ≥ 75%",        ok: true  },
-          { label: "GPU VRAM",     value: `${gpu.toFixed(0)}%`,       sub: "RTX 3050 · DeBERTa",  ok: false },
+          { label: "HF Space",     value: `${gpu.toFixed(0)}%`,       sub: "Cascade SVM · active", ok: true  },
         ].map(s => (
           <div key={s.label} className={`flex items-center gap-3 px-4 py-3 rounded-xl border bg-black/50 ${s.ok ? "border-white/5" : "border-red-500/20 bg-red-500/5"}`}>
             <span className={`w-2 h-2 rounded-full flex-shrink-0 ${s.ok ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-red-500 shadow-[0_0_8px_#ef4444]"}`} />
@@ -196,7 +196,7 @@ export default function MonitoringTab() {
           <div className="grid grid-cols-3 gap-3 min-h-0">
             {[
               { label: "CPU Usage",   data: series.cpu, color: "#3b82f6", sub: "Intel Core i7 · 8 cores",       val: series.cpu[series.cpu.length-1].toFixed(0)+"%" },
-              { label: "GPU VRAM",    data: series.gpu, color: "#ef4444", sub: "RTX 3050 · DeBERTa loaded",     val: gpu.toFixed(0)+"%",                            border: "border-red-500/15" },
+              { label: "HF Uptime",   data: series.gpu, color: "#ef4444", sub: "Cascade SVM · HF Space",        val: gpu.toFixed(0)+"%",                            border: "border-red-500/15" },
               { label: "System RAM",  data: series.mem, color: "#f59e0b", sub: "16GB DDR4 · scipy.sparse",      val: series.mem[series.mem.length-1].toFixed(0)+"%" },
             ].map(g => (
               <div key={g.label} className={`bg-black/60 border rounded-xl p-3 flex flex-col min-h-0 ${g.border ?? "border-white/5"}`}>
@@ -232,7 +232,7 @@ export default function MonitoringTab() {
                       </span>
                     </div>
                   ))
-                : ["Next.js / Vercel", "Flask SVM / Railway", "DeBERTa / HF Space"].map(name => (
+                : ["Next.js / Vercel", "Cascade SVM / HF Space", "ModernBERT ensemble / locked"].map(name => (
                     <div key={name} className="flex items-center justify-between px-3 py-1.5 rounded-lg border border-white/5 text-[10px] font-mono">
                       <span className="text-white/25">{name}</span>
                       <span className="text-white/15">checking…</span>

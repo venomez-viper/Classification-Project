@@ -40,7 +40,7 @@ export default function TrainingTab() {
           </div>
           
           <p className="text-sm text-white/60 leading-relaxed mb-8 relative z-10">
-            To handle the extreme computational constraints of tracking 145 financial sectors across 50,000 dimensions, we built and published our own Python library. By abstracting the heavy lifting to C-level <code>scipy.sparse</code> operations, we bypassed the Waitress 503 deployment bottlenecks entirely.
+            To handle the extreme computational constraints of tracking 145 financial sectors across 60,000 dimensions, we built and published our own Python library. By abstracting the heavy lifting to C-level <code>scipy.sparse</code> operations, we bypassed the Waitress 503 deployment bottlenecks entirely.
           </p>
           
           <div className="bg-black/80 border border-white/10 rounded-xl p-5 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] relative z-10 flex-1">
@@ -85,7 +85,7 @@ export default function TrainingTab() {
             <div className="bg-emerald-950/30 border border-emerald-500/40 p-6 rounded-xl flex-1 text-center shadow-[inset_0_0_30px_rgba(16,185,129,0.15)] relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent animate-[shimmer_2s_infinite]" />
               <div className="text-xs text-emerald-400/70 uppercase tracking-widest font-mono mb-2 relative z-10">After (Balanced)</div>
-              <div className="text-4xl font-mono font-bold text-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] relative z-10">86.8%</div>
+              <div className="text-4xl font-mono font-bold text-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] relative z-10">75.0%</div>
             </div>
           </div>
 

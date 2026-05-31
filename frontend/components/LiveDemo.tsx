@@ -6,16 +6,19 @@ import {
   Activity,
   BrainCircuit,
   ChevronRight,
+  CheckCircle2,
   Clock,
   Cpu,
   Database,
   FileText,
+  Flag,
   Gauge,
   GitBranch,
   History,
   Layers,
   Loader2,
   Map,
+  PencilLine,
   Radar,
   Terminal,
   Trash2,
@@ -41,22 +44,22 @@ const PIPELINE = [
   { id: "tfidf", icon: Database,     label: "TF-IDF",            detail: "60,000 sparse features" },
   { id: "l1",    icon: Layers,       label: "L1 — Sector",       detail: "11 broad sectors" },
   { id: "l2",    icon: GitBranch,    label: "L2 — Group",        detail: "Industry group within sector" },
-  { id: "l3",    icon: BrainCircuit, label: "L3 — Industry",     detail: "Morningstar code · 88.90% F1" },
-  { id: "l4",    icon: Cpu,          label: "L4 — Sub-Industry", detail: "428-class cascade · 55.41% F1" },
+  { id: "l3",    icon: BrainCircuit, label: "L3 — Industry",     detail: "Audited 145-class GECS baseline" },
+  { id: "l4",    icon: Cpu,          label: "L4 — Sub-Industry", detail: "428-class constrained cascade · 55.44% F1" },
 ];
 
 const SYSTEM_NOTES = [
-  { label: "Task 1 — Industry",      value: "88.90% Macro F1" },
-  { label: "Task 2 — Sub-Industry",  value: "55.41% Macro F1" },
-  { label: "Vector space",           value: "60K TF-IDF features" },
-  { label: "Speed",                  value: "CPU · No GPU · 40× DeBERTa" },
+  { label: "Task 1 — Industry",     value: "75.0% · calibrated ensemble" },
+  { label: "Task 2 — Sub-Industry", value: "55.44% Macro F1 · 428 classes" },
+  { label: "Top-3 Accuracy",        value: "91.4% · company-disjoint test" },
+  { label: "Model",                 value: "ModernBERT-large ensemble (HF Space)" },
 ];
 
-// ── Benchmark data ────────────────────────────────────────────────────────────
 const BENCHMARKS = [
-  { label: "Cascade SVM", pct: 88.9, delta: "+24.9 pp vs DeBERTa", hero: true  },
-  { label: "DeBERTa-v3",  pct: 64.0, delta: "GPU · 3+ hrs",        hero: false },
-  { label: "Flat SVM",    pct: 59.7, delta: "baseline",             hero: false },
+  { label: "Calibrated ensemble ★", pct: 75.0,  delta: "locked Task 1", hero: true  },
+  { label: "Greedy ensemble",        pct: 73.95, delta: "pre-calibration", hero: false },
+  { label: "ModernBERT-large ep3",   pct: 70.29, delta: "single model",  hero: false },
+  { label: "V8 mega-ensemble",       pct: 68.42, delta: "classical peak", hero: false },
 ];
 
 const TAXONOMY_META: Record<string, { abbr: string; color: string }> = {
@@ -75,6 +78,13 @@ type TaxonomyMap = { mstar?: TaxonomyEntry; gics?: TaxonomyEntry; naics?: Taxono
 
 type Result = {
   success: boolean;
+  prediction_id?: string;
+  model_version?: string;
+  official_definition?: string;
+  matched_phrase?: string;
+  reasoning?: string | null;
+  route_reason?: string;
+  trace?: Record<string, number>;
   mstar_code: string;
   mstar_label: string;
   confidence_t1: number;
@@ -95,6 +105,84 @@ const HIST_KEY = "gecs_pred_history";
 const MAX_HIST = 5;
 function loadHistory(): HistoryEntry[] { try { return JSON.parse(localStorage.getItem(HIST_KEY) ?? "[]") || []; } catch { return []; } }
 function saveHistory(h: HistoryEntry[]) { localStorage.setItem(HIST_KEY, JSON.stringify(h)); }
+
+type RawJson = Record<string, unknown>;
+
+function asObject(value: unknown): RawJson {
+  return typeof value === "object" && value !== null ? (value as RawJson) : {};
+}
+
+function asString(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value : fallback;
+}
+
+function asPercent(value: unknown, fallback = 0): number {
+  if (typeof value !== "number" || Number.isNaN(value)) return fallback;
+  return value <= 1 ? value * 100 : value;
+}
+
+function normalizeAlt(value: unknown, index: number): Alt {
+  const alt = asObject(value);
+  return {
+    rank: typeof alt.rank === "number" ? alt.rank : index + 1,
+    code: asString(alt.code),
+    label: asString(alt.industry_name, asString(alt.subindustry_name, asString(alt.label, asString(alt.code)))),
+    confidence: asPercent(alt.confidence_percent ?? alt.confidence),
+  };
+}
+
+function normalizePredictResponse(value: unknown): Result {
+  const data = asObject(value);
+  const task1 = asObject(data.task1);
+  const task2 = asObject(data.task2);
+  const t1Alts = Array.isArray(data.alternatives) ? data.alternatives : data.alternatives_t1;
+  const t2Alts = Array.isArray(task2.alternatives) ? task2.alternatives : data.alternatives_t2;
+
+  return {
+    success: Boolean(data.success ?? true),
+    prediction_id: asString(data.prediction_id),
+    model_version: asString(data.model_version),
+    official_definition: asString(task1.official_definition, asString(data.official_definition)),
+    matched_phrase: asString(task1.matched_phrase, asString(data.matched_phrase)),
+    reasoning: typeof data.reasoning === "string" ? data.reasoning : null,
+    route_reason: asString(data.route_reason),
+    trace: asObject(data.trace) as Record<string, number>,
+    mstar_code: asString(task1.code, asString(data.mstar_code)),
+    mstar_label: asString(task1.industry_name, asString(data.mstar_label, asString(task1.label, "Unknown GECS industry"))),
+    confidence_t1: asPercent(task1.confidence_percent ?? task1.confidence ?? data.confidence_t1),
+    alternatives_t1: Array.isArray(t1Alts) ? t1Alts.map(normalizeAlt) : undefined,
+    cascade_path_t1: data.cascade_path_t1 as CascadePath | undefined,
+    features_t1: Array.isArray(data.features_t1) ? (data.features_t1 as string[]) : undefined,
+    sub_code: asString(task2.code, asString(data.sub_code)),
+    sub_label: asString(task2.subindustry_name, asString(data.sub_label, asString(task2.label))),
+    confidence_t2: task2.confidence_percent != null || task2.confidence != null || data.confidence_t2 != null
+      ? asPercent(task2.confidence_percent ?? task2.confidence ?? data.confidence_t2)
+      : null,
+    alternatives_t2: Array.isArray(t2Alts) ? t2Alts.map(normalizeAlt) : undefined,
+    cascade_path_t2: data.cascade_path_t2 as CascadePath | undefined,
+    taxonomy_map: data.taxonomy_map as TaxonomyMap | undefined,
+  };
+}
+
+function overrideCandidates(result: Result): Alt[] {
+  const candidates: Alt[] = [
+    {
+      rank: 0,
+      code: result.mstar_code,
+      label: result.mstar_label,
+      confidence: result.confidence_t1,
+    },
+    ...(result.alternatives_t1 ?? []),
+  ];
+  const seen = new Set<string>();
+  return candidates
+    .filter((candidate) => {
+      if (!candidate.code || seen.has(candidate.code)) return false;
+      seen.add(candidate.code);
+      return true;
+    })
+    .slice(0, 5);
+}
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 function ConfidenceBar({ label, value, tone }: { label: string; value?: number | null; tone: "red" | "blue" | "emerald" | "purple" | "amber" | "violet" }) {
@@ -139,12 +227,13 @@ export default function LiveDemo() {
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
   const [resultKey, setResultKey] = useState(0);
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [history, setHistory] = useState<HistoryEntry[]>(() => loadHistory());
   const [histOpen, setHistOpen] = useState(true);
   const [benchVisible, setBenchVisible] = useState(false);
+  const [feedbackStatus, setFeedbackStatus] = useState("");
+  const [feedbackError, setFeedbackError] = useState("");
+  const [overrideOpen, setOverrideOpen] = useState(false);
   const benchRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => { setHistory(loadHistory()); }, []);
 
   // Trigger benchmark bar animation when scrolled into view
   useEffect(() => {
@@ -160,6 +249,9 @@ export default function LiveDemo() {
     setLoading(true);
     setResult(null);
     setError("");
+    setFeedbackStatus("");
+    setFeedbackError("");
+    setOverrideOpen(false);
 
     for (let i = 0; i < PIPELINE.length; i++) {
       setActiveStep(i);
@@ -170,17 +262,18 @@ export default function LiveDemo() {
       const res = await fetch("/api/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ company_text: text, segment_text: text, include_reasoning: true }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Server error");
 
-      setResult(data);
+      const normalized = normalizePredictResponse(data);
+      setResult(normalized);
       setResultKey((k) => k + 1);
       setActiveStep(PIPELINE.length);
 
       // Push to history
-      const entry: HistoryEntry = { mstar_label: data.mstar_label, mstar_code: data.mstar_code, conf: data.confidence_t1 ?? 0, text };
+      const entry: HistoryEntry = { mstar_label: normalized.mstar_label, mstar_code: normalized.mstar_code, conf: normalized.confidence_t1 ?? 0, text };
       const updated = [entry, ...loadHistory()].slice(0, MAX_HIST);
       saveHistory(updated);
       setHistory(updated);
@@ -189,6 +282,38 @@ export default function LiveDemo() {
       setActiveStep(-1);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function submitFeedback(status: "accepted" | "flagged" | "overridden", overrideCode?: string) {
+    if (!result?.prediction_id) {
+      setFeedbackError("Feedback unavailable: this prediction has no saved prediction ID.");
+      return;
+    }
+    setFeedbackError("");
+    setFeedbackStatus("Saving review decision...");
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prediction_id: result.prediction_id,
+          status: overrideCode ? `${status}:${overrideCode}` : status,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Feedback failed");
+      setFeedbackStatus(
+        status === "accepted"
+          ? "Accepted and logged for review history."
+          : status === "flagged"
+            ? "Flagged for analyst review."
+            : `Override logged with ${overrideCode}.`
+      );
+      setOverrideOpen(false);
+    } catch (err: unknown) {
+      setFeedbackStatus("");
+      setFeedbackError(err instanceof Error ? err.message : "Could not save feedback.");
     }
   }
 
@@ -212,8 +337,7 @@ export default function LiveDemo() {
               <span className="block text-white/55">into a Morningstar verdict.</span>
             </h1>
             <p className="mt-6 max-w-3xl text-lg sm:text-xl leading-relaxed text-white/55">
-              88.90% Macro F1 on 145 industry classes. 55.41% on 428 sub-industries. No GPU. No cloud. The cascade reads the Morningstar taxonomy hierarchy instead of flattening it — outperforming fine-tuned DeBERTa by{" "}
-              <span className="font-semibold text-white">+24.90 percentage points</span>.
+              A calibrated ModernBERT-large ensemble for Morningstar industry routing — 75.0% Macro F1, 91.4% top-3 accuracy, deployed on Hugging Face Space. The story is honest: we caught our own leakage and rebuilt from scratch.
             </p>
           </div>
 
@@ -312,7 +436,7 @@ export default function LiveDemo() {
               <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
                 <Activity className="h-5 w-5 text-red-300 mb-3" />
                 <div className="text-sm font-semibold text-white mb-1">1,673 samples/sec</div>
-                <div className="text-sm text-white/52">40× faster than DeBERTa, on CPU only.</div>
+                <div className="text-sm text-white/52">Fast local inference with SQLite prediction logging.</div>
               </div>
               <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
                 <Gauge className="h-5 w-5 text-cyan-300 mb-3" />
@@ -342,7 +466,7 @@ export default function LiveDemo() {
                 <div className="flex items-center gap-2 mb-5">
                   <TrendingUp className="h-4 w-4 text-violet-300" />
                   <div className="text-xs uppercase tracking-[0.28em] text-white/35">
-                    Model Benchmark — Task 1 · 10,717 holdout samples · Macro F1
+                    Model Benchmark — audited Task 1 holdout Macro F1
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -404,7 +528,7 @@ export default function LiveDemo() {
 
                   {/* Task 1 — Industry */}
                   <GlowCard glowColor="red" className="border-white/8 bg-red-500/[0.05] p-8">
-                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">Task 1 — GECS Industry · 88.90% F1</div>
+                    <div className="mb-4 text-xs uppercase tracking-[0.28em] text-red-300/80">Task 1 — GECS Industry · audited baseline</div>
                     <TextScramble key={`mstar-${resultKey}`} as="h3" speed={0.02} duration={0.8} className="text-3xl sm:text-4xl font-bold text-white mb-4">
                       {result.mstar_label}
                     </TextScramble>
@@ -431,9 +555,43 @@ export default function LiveDemo() {
                   </GlowCard>
 
                   {/* Task 2 — Sub-Industry */}
+                  {(result.official_definition || result.matched_phrase || result.reasoning || result.route_reason) && (
+                    <GlowCard glowColor="emerald" className="border-white/8 bg-white/[0.03] p-6">
+                      <div className="mb-4 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-emerald-300" />
+                        <div className="text-xs uppercase tracking-[0.28em] text-emerald-300/80">Model Evidence</div>
+                      </div>
+                      <div className="space-y-4">
+                        {result.official_definition && (
+                          <div>
+                            <div className="mb-1 text-xs uppercase tracking-[0.2em] text-white/28">Official definition</div>
+                            <p className="text-sm leading-relaxed text-white/65">{result.official_definition}</p>
+                          </div>
+                        )}
+                        {result.matched_phrase && (
+                          <div>
+                            <div className="mb-1 text-xs uppercase tracking-[0.2em] text-white/28">Closest taxonomy phrase</div>
+                            <p className="font-mono text-sm text-emerald-200">{result.matched_phrase}</p>
+                          </div>
+                        )}
+                        {result.reasoning && (
+                          <div>
+                            <div className="mb-1 text-xs uppercase tracking-[0.2em] text-white/28">Reasoning note</div>
+                            <p className="text-sm leading-relaxed text-white/60">{result.reasoning}</p>
+                          </div>
+                        )}
+                        {result.route_reason && (
+                          <div className="rounded-2xl border border-emerald-500/15 bg-emerald-500/8 px-4 py-3 text-sm text-emerald-100/80">
+                            {result.route_reason}
+                          </div>
+                        )}
+                      </div>
+                    </GlowCard>
+                  )}
+
                   {result.sub_label && result.sub_code && (
                     <GlowCard glowColor="blue" className="border-white/8 bg-blue-500/[0.04] p-8">
-                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-blue-300/80">Task 2 — Sub-Industry · 55.41% F1 · 428 classes</div>
+                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-blue-300/80">Task 2 — Sub-Industry · 55.44% F1 · 428 classes</div>
                       <TextScramble key={`sub-${resultKey}`} as="h3" speed={0.02} duration={0.8} className="text-2xl sm:text-3xl font-bold text-white mb-4">
                         {result.sub_label}
                       </TextScramble>
@@ -506,6 +664,92 @@ export default function LiveDemo() {
                       </div>
                     </GlowCard>
                   )}
+
+                  {result.trace && Object.keys(result.trace).length > 0 && (
+                    <GlowCard glowColor="purple" className="border-white/8 bg-white/[0.03] p-6">
+                      <div className="mb-4 text-xs uppercase tracking-[0.28em] text-violet-300/80">Processing Trace</div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {Object.entries(result.trace).map(([name, value]) => (
+                          <div key={name} className="rounded-2xl border border-white/8 bg-black/30 px-4 py-3">
+                            <div className="text-xs uppercase tracking-[0.18em] text-white/28">{name.replaceAll("_", " ")}</div>
+                            <div className="mt-1 font-mono text-sm text-violet-200">
+                              {typeof value === "number" ? `${value.toFixed(3)}s` : String(value)}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </GlowCard>
+                  )}
+
+                  <GlowCard glowColor="cyan" className="border-white/8 bg-cyan-500/[0.04] p-6">
+                    <div className="mb-4 flex items-start justify-between gap-4">
+                      <div>
+                        <div className="mb-2 text-xs uppercase tracking-[0.28em] text-cyan-300/80">Analyst Review</div>
+                        <p className="text-sm leading-relaxed text-white/55">
+                          Log whether this prediction is accepted, needs review, or should be overridden to another GECS industry.
+                        </p>
+                      </div>
+                      {result.prediction_id && (
+                        <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 font-mono text-xs text-white/35">
+                          #{result.prediction_id}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <button
+                        onClick={() => submitFeedback("accepted")}
+                        disabled={!result.prediction_id}
+                        className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <CheckCircle2 className="h-4 w-4" /> Accept
+                      </button>
+                      <button
+                        onClick={() => submitFeedback("flagged")}
+                        disabled={!result.prediction_id}
+                        className="inline-flex items-center gap-2 rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-200 transition hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <Flag className="h-4 w-4" /> Flag
+                      </button>
+                      <button
+                        onClick={() => setOverrideOpen((open) => !open)}
+                        disabled={!result.prediction_id}
+                        className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-500/20 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <PencilLine className="h-4 w-4" /> Override
+                      </button>
+                    </div>
+
+                    {overrideOpen && (
+                      <div className="mt-5 space-y-2 border-t border-white/8 pt-4">
+                        <div className="mb-3 text-xs uppercase tracking-[0.22em] text-white/28">Choose replacement industry</div>
+                        {overrideCandidates(result).map((candidate) => (
+                          <button
+                            key={candidate.code}
+                            onClick={() => submitFeedback("overridden", candidate.code)}
+                            className="flex w-full items-center justify-between rounded-2xl border border-white/8 bg-black/30 px-4 py-3 text-left transition hover:border-cyan-400/40 hover:bg-cyan-500/8"
+                          >
+                            <span>
+                              <span className="block font-semibold text-white">{candidate.label}</span>
+                              <span className="font-mono text-xs text-white/35">{candidate.code}</span>
+                            </span>
+                            <span className="font-mono text-xs text-cyan-300">{candidate.confidence.toFixed(1)}%</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {feedbackStatus && (
+                      <div className="mt-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                        {feedbackStatus}
+                      </div>
+                    )}
+                    {feedbackError && (
+                      <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+                        {feedbackError}
+                      </div>
+                    )}
+                  </GlowCard>
 
                 </motion.div>
 

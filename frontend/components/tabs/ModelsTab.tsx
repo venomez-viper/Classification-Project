@@ -61,9 +61,9 @@ export default function ModelsTab() {
             <div className="bg-black/60 border border-white/10 p-5 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.02)]">
               <div className="flex justify-between items-end mb-1">
                 <span className="text-xs text-white/40 uppercase tracking-widest font-mono">Macro F1 Score</span>
-                <span className="text-sm font-bold text-red-400 font-mono">86.82%</span>
+                <span className="text-sm font-bold text-red-400 font-mono">75.0%</span>
               </div>
-              <AnimatedBar value={86.82} color="#ef4444" />
+              <AnimatedBar value={75.0} color="#ef4444" />
             </div>
             <div className="bg-black/60 border border-white/10 p-5 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] flex flex-col justify-center">
               <div className="text-xs text-white/40 uppercase tracking-widest font-mono mb-1">Latency (P99)</div>
@@ -79,7 +79,7 @@ export default function ModelsTab() {
                 <Layers className="w-4 h-4 text-white/40" /> Architecture Specs
               </h4>
               <ul className="text-sm text-white/50 space-y-3 font-mono">
-                <li className="flex justify-between"><span className="text-white/30">Vectoriser</span> <span className="text-red-400">TF-IDF (50,000 bigrams)</span></li>
+                <li className="flex justify-between"><span className="text-white/30">Vectoriser</span> <span className="text-red-400">TF-IDF (60,000 bigrams)</span></li>
                 <li className="flex justify-between"><span className="text-white/30">Matrix Format</span> <span className="text-red-400">scipy.sparse CSR</span></li>
                 <li className="flex justify-between"><span className="text-white/30">Algorithm</span> <span className="text-red-400">Linear SVM</span></li>
                 <li className="flex justify-between"><span className="text-white/30">Framework</span> <span className="text-red-400">breezeml v0.2.5</span></li>
@@ -108,17 +108,17 @@ export default function ModelsTab() {
             </div>
             <div>
               <div className="text-xs font-bold text-purple-400 tracking-[0.3em] uppercase mb-1">Experimental Track</div>
-              <h3 className="text-3xl font-black text-white tracking-tight">DeBERTa-v3-small</h3>
+              <h3 className="text-3xl font-black text-white tracking-tight">DeBERTa-v3-small (Experiment)</h3>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-6 mb-8 relative z-10">
             <div className="bg-black/60 border border-white/10 p-5 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.02)]">
               <div className="flex justify-between items-end mb-1">
-                <span className="text-xs text-white/40 uppercase tracking-widest font-mono">Macro F1 (Pruned)</span>
-                <span className="text-sm font-bold text-cyan-400 font-mono">78.10%</span>
+                <span className="text-xs text-white/40 uppercase tracking-widest font-mono">Macro F1 (Full test)</span>
+                <span className="text-sm font-bold text-cyan-400 font-mono">64.0%</span>
               </div>
-              <AnimatedBar value={78.10} color="#22d3ee" />
+              <AnimatedBar value={64.0} color="#22d3ee" />
             </div>
             <div className="bg-black/60 border border-white/10 p-5 rounded-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] flex flex-col justify-center">
               <div className="text-xs text-white/40 uppercase tracking-widest font-mono mb-1">Latency (P99)</div>

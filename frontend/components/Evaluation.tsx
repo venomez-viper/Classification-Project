@@ -1,6 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 function Ring({ pct, color, label, sublabel }: { pct: number; color: string; label: string; sublabel: string }) {
@@ -16,7 +15,9 @@ function Ring({ pct, color, label, sublabel }: { pct: number; color: string; lab
         <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
           <circle cx="60" cy="60" r={r} fill="none" stroke="white" strokeOpacity={0.06} strokeWidth="8" />
           <motion.circle
-            cx="60" cy="60" r={r}
+            cx="60"
+            cy="60"
+            r={r}
             fill="none"
             stroke={color}
             strokeWidth="8"
@@ -47,23 +48,23 @@ function Ring({ pct, color, label, sublabel }: { pct: number; color: string; lab
 }
 
 const METRICS = [
-  { pct: 88.90, color: "#dc2626", label: "Task 1 Macro F1", sublabel: "145-class cascade SVM" },
-  { pct: 55.41, color: "#60a5fa", label: "Task 2 Macro F1", sublabel: "428-class sub-industry" },
-  { pct: 75,    color: "#34d399", label: "Rubric Threshold", sublabel: "Minimum Required F1" },
+  { pct: 75.0,  color: "#dc2626", label: "Task 1 F1", sublabel: "Calibrated ensemble · locked" },
+  { pct: 55.44, color: "#60a5fa", label: "Task 2 Macro F1", sublabel: "428-class constrained cascade" },
+  { pct: 91.4,  color: "#34d399", label: "Top-3 Accuracy", sublabel: "Company-disjoint test set" },
 ];
 
 const INSIGHTS = [
   {
     title: "Why Macro F1 > Accuracy?",
-    body: "With 145 classes of wildly varying sizes, raw accuracy gets inflated by majority classes. Macro F1 averages the F1 score equally across every class, so the model gets penalized for ignoring rare industries. This is the correct metric for imbalanced NLP classification.",
+    body: "With 145 classes of wildly varying sizes, raw accuracy gets inflated by majority classes. Macro F1 averages every class equally, so the model is penalized for ignoring rare industries.",
   },
   {
-    title: "The Cascade Architecture Breakthrough",
-    body: "Instead of one flat 145-class SVM, we built a 3-level cascade: L1 predicts the sector (11 classes), L2 narrows to the group, L3 picks the final MSTAR code. Each level trains only on its relevant slice, boosting Task 1 Macro F1 from 59.7% flat → 88.90% cascade.",
+    title: "The Audit Became the Breakthrough",
+    body: "The system was heavily evaluated and audited. The story centers on catching a 97.2% leakage, rebuilding with company-disjoint splits, and locking 75.0% Macro F1 through a cross-validated calibrated ensemble.",
   },
   {
-    title: "Task 2: 4-Level Sub-Industry Cascade",
-    body: "Task 2 extends the cascade with an L4 level that maps each MSTAR code to 1–13 sub-industry candidates. LinearSVC selects among those candidates, reaching 55.41% Macro F1 on 428 classes — nearly matching the oracle ceiling of 62.26%.",
+    title: "Task 2: Constrained Sub-Industry Cascade",
+    body: "Task 2 maps each Task 1 industry to its valid sub-industry candidates. The current constrained cascade reaches 55.44% Macro F1 across 428 classes while preserving the parent-child GECS structure.",
   },
 ];
 
@@ -82,31 +83,29 @@ export default function Evaluation() {
             Model Performance Metrics
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Task 1 cascade SVM exceeds the rubric threshold of 75% by{" "}
-            <span className="text-emerald-400 font-bold">+13.90 percentage points</span>.{" "}
-            Task 2 sub-industry cascade reaches <span className="text-blue-400 font-bold">55.41%</span> across 428 classes.
+            75.0% Macro F1 locked after catching a 97.2% leakage in our original result, rebuilding with company-disjoint splits, and running 14 model versions. Task 2 reaches{" "}
+            <span className="text-blue-400 font-bold">55.44%</span> across 428 constrained classes.
           </p>
         </motion.div>
 
-        {/* Progress Rings */}
         <div className="flex flex-wrap justify-center gap-12 mb-20">
           {METRICS.map((m) => (
             <Ring key={m.label} {...m} />
           ))}
         </div>
 
-        {/* Success Criteria Banner */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 text-center mb-12"
         >
-          <div className="text-emerald-400 text-4xl font-black font-mono mb-2">✓ PASSING</div>
-          <p className="text-white/60">Task 1 Macro F1 <strong className="text-white">88.90%</strong> exceeds the required threshold of <strong className="text-white">75%</strong> — beats fine-tuned DeBERTa by <strong className="text-emerald-400">+24.90 pp</strong></p>
+          <div className="text-emerald-400 text-4xl font-black font-mono mb-2">AUDITED</div>
+          <p className="text-white/60">
+            The calibrated ModernBERT-large ensemble achieves <strong className="text-white">75.0%</strong> Macro F1 — cross-validated, fully disclosed, and the real generalization number.
+          </p>
         </motion.div>
 
-        {/* Insights */}
         <div className="grid md:grid-cols-3 gap-5">
           {INSIGHTS.map((ins, i) => (
             <motion.div

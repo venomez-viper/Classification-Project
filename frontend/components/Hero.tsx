@@ -1,5 +1,6 @@
 "use client";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { FallingPattern } from "@/components/ui/falling-pattern";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -9,7 +10,7 @@ const STATS = [
   { label: "GECS Industries", value: 145, suffix: "" },
   { label: "Sub-Industries", value: 428, suffix: "" },
   { label: "Training Segments", value: 53587, suffix: "+" },
-  { label: "Task 1 Macro F1", value: 88.9, suffix: "%", decimal: true },
+  { label: "Locked Task 1 F1", value: 75.0, suffix: "%", decimal: true },
 ];
 
 function AnimatedCounter({ target, suffix, decimal = false }: { target: number; suffix: string; decimal?: boolean }) {
@@ -32,26 +33,30 @@ function AnimatedCounter({ target, suffix, decimal = false }: { target: number; 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Sparkles background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 z-0">
+        <FallingPattern 
+          color="rgba(220, 38, 38, 0.4)" 
+          backgroundColor="rgba(0, 0, 0, 0)" 
+          blurIntensity="0.5px" 
+          duration={80} 
+          className="absolute inset-0 opacity-50"
+        />
         <SparklesCore
           id="hero-sparkles"
           background="transparent"
           minSize={0.4}
           maxSize={1.4}
           particleDensity={120}
-          className="w-full h-full"
+          className="absolute inset-0 w-full h-full"
           particleColor="#dc2626"
           speed={0.6}
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)]" />
+        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,black,transparent)] bg-black/40" />
       </div>
 
-      {/* Gradient top glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-red-700/20 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,12 +64,11 @@ export default function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-600/30 bg-red-600/10 text-red-400 text-sm font-medium mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          <TextScramble as="span" speed={0.025} duration={1} characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ·">
-            MGT 599 Capstone · Morningstar RED Team · Group 4
+          <TextScramble as="span" speed={0.025} duration={1} characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .">
+            MGT 599 Capstone . Morningstar RED Team . Group 4
           </TextScramble>
         </motion.div>
 
-        {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,21 +87,19 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-12"
         >
-          A 4-level cascade SVM built on{" "}
+          An audited GECS-Sage cascade built on{" "}
           <span className="text-red-500 font-semibold">breezeml</span>{" "}
-          and 60K TF-IDF features. Classifies{" "}
-          <span className="text-white/80">145 GECS industries</span> at 88.90% Macro F1 and{" "}
-          <span className="text-white/80">428 sub-industries</span> at 55.41% — no GPU required.
+          and Morningstar taxonomy grounding. Ships a locked{" "}
+          <span className="text-white/80">ModernBERT ensemble (75.0% F1)</span>, a{" "}
+          <span className="text-white/80">constrained Task 2 cascade</span>, ensuring highly trustworthy results.
         </motion.p>
 
-        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,7 +121,6 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -141,7 +142,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

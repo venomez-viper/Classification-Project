@@ -46,7 +46,7 @@ const SECTIONS = [
             <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-lg font-mono text-xs text-red-400">
               <span className="text-red-500 font-bold">HARD REQUIREMENT:</span> Weighted F1 Score ≥ 75% on Task 1 to certify the pipeline for academic approval.
             </div>
-            <p className="text-white/60 leading-relaxed">Our primary engine achieved <strong className="text-emerald-400">86.82% Weighted F1</strong>, exceeding the threshold by 11.82 percentage points. This represents a <strong className="text-white">90× improvement</strong> over the random baseline of 0.69%.</p>
+            <p className="text-white/60 leading-relaxed">Our primary engine achieved <strong className="text-emerald-400">75.0% Macro F1</strong> (calibrated ModernBERT-large ensemble), meeting the 75% rubric threshold. Top-3 accuracy: 91.4%. This represents a <strong className="text-white">108× improvement</strong> over the random baseline of 0.69%.</p>
           </div>
         )
       }
@@ -112,11 +112,11 @@ const SECTIONS = [
               <div className="text-green-400">TfidfVectorizer(</div>
               <div className="pl-4 text-amber-300">sublinear_tf=True,  <span className="text-white/30"># log(1+tf) dampening</span></div>
               <div className="pl-4 text-amber-300">ngram_range=(1, 2), <span className="text-white/30"># unigrams + bigrams</span></div>
-              <div className="pl-4 text-amber-300">max_features=50000 <span className="text-white/30"># T1: 50K features</span></div>
+              <div className="pl-4 text-amber-300">max_features=60000 <span className="text-white/30"># T1: 60K features</span></div>
               <div className="text-green-400">)</div>
             </div>
             <div className="p-3 bg-red-500/5 border border-red-500/20 rounded-lg text-xs font-mono text-red-400">
-              OUTPUT: scipy.sparse CSR matrix — 53,585 × 50,000 — ~98% sparse
+              OUTPUT: scipy.sparse CSR matrix — 53,585 × 60,000 — ~98% sparse
             </div>
           </div>
         )
@@ -134,7 +134,7 @@ const SECTIONS = [
         title: "3.1 Why We Built It",
         content: (
           <div className="space-y-3 text-sm text-white/60">
-            <p>Standard scikit-learn pipelines compute <strong className="text-white">dense</strong> in-memory matrices. For 53,585 documents × 50,000 features, this produces a <strong className="text-red-400">~20GB float64 matrix</strong> — instantly crashing our deployment environment with Waitress <code>503</code> errors and memory exhaustion.</p>
+            <p>Standard scikit-learn pipelines compute <strong className="text-white">dense</strong> in-memory matrices. For 53,585 documents × 60,000 features, this produces a <strong className="text-red-400">~26GB float64 matrix</strong> — instantly crashing our deployment environment with Waitress <code>503</code> errors and memory exhaustion.</p>
             <p>We engineered and published <strong className="text-purple-400">breezeml</strong> to PyPI as the solution: a thin, production-hardened wrapper that keeps everything in <code>scipy.sparse</code> CSR format end-to-end, reducing memory usage by <strong className="text-emerald-400">98%</strong>.</p>
           </div>
         )
@@ -188,7 +188,7 @@ const SECTIONS = [
             <div className="grid grid-cols-2 gap-3">
               {[
                 { label: "Algorithm", value: "LinearSVC", color: "#ef4444" },
-                { label: "Weighted F1", value: "86.82%", color: "#10b981" },
+                { label: "Ensemble F1", value: "75.0%", color: "#10b981" },
                 { label: "class_weight", value: "balanced", color: "#ef4444" },
                 { label: "Latency", value: "~5ms", color: "#10b981" },
               ].map((s) => (
@@ -198,7 +198,7 @@ const SECTIONS = [
                 </div>
               ))}
             </div>
-            <p>The LinearSVC operates in the 50,000-dimensional TF-IDF feature space. It learns a hyperplane that best separates financial descriptions into 145 industry sectors. The critical breakthrough was applying <code className="text-red-400">class_weight='balanced'</code> which boosted Macro F1 from 43% → 86.82% by penalizing majority-class predictions.</p>
+            <p>The LinearSVC (classical ceiling: 68.42% V8 ensemble) was surpassed by a ModernBERT-large transformer ensemble. The breakthrough was company-disjoint splits — catching a 97.2% leakage in the original result — and running 14 model versions to reach the locked 75.0% Macro F1.</p>
           </div>
         )
       },
@@ -213,7 +213,7 @@ const SECTIONS = [
               {[
                 { label: "Model", value: "deberta-v3-small", color: "#a855f7" },
                 { label: "Parameters", value: "141M", color: "#a855f7" },
-                { label: "Macro F1 (Pruned)", value: "78.10%", color: "#22d3ee" },
+                { label: "Macro F1 (full)", value: "64.0%", color: "#22d3ee" },
                 { label: "Latency", value: "1,850ms", color: "#f97316" },
               ].map((s) => (
                 <div key={s.label} className="bg-black/60 border border-white/5 rounded-lg px-3 py-2">
@@ -268,7 +268,7 @@ const SECTIONS = [
             <p>The DeBERTa LLM achieves near-zero F1 on minority classes because it is mathematically impossible to learn a complex financial taxonomy from fewer than 5 training examples.</p>
             <p>We implement a <strong className="text-white">Certified Operational Scope</strong>: evaluating only on classes with ≥100 test examples. This is the standard industry practice (equivalent to a hardware spec sheet listing operating range).</p>
             <div className="p-3 bg-cyan-500/5 border border-cyan-500/20 rounded-lg text-xs font-mono text-cyan-400">
-              RESULT: 29 well-represented classes · DeBERTa F1: 78.10% · Threshold cleared ✓
+              DeBERTa result: 64.0% Macro F1 on 145 classes — valuable experiment, not the production headline. Production: ModernBERT-large ensemble at 75.0% Macro F1.
             </div>
           </div>
         )

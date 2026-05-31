@@ -50,26 +50,28 @@ const MISSION_STATS = [
 ];
 
 const PIPELINE_STEPS = [
-  { label: "Data Ingestion", value: "1.2 TB", metric: "+5.2%", active: false },
-  { label: "Data Validation", value: "99.8%", metric: "Quality Score", active: false },
-  { label: "Feature Engineering", value: "50,000", metric: "TF-IDF Features", active: false },
-  { label: "Model Training", value: "2", metric: "Active Jobs", active: true },
-  { label: "Evaluation", value: "86.8%", metric: "Avg. F1 Score", active: false },
-  { label: "Deployment", value: "2", metric: "Live Services", active: false },
-  { label: "Monitoring", value: "All Healthy", metric: "", active: false },
+  { label: "Data Ingestion", value: "53K rows", metric: "Company-disjoint split", active: false },
+  { label: "Data Validation", value: "98.3%", metric: "CompanyId recovered", active: false },
+  { label: "Feature Engineering", value: "123K+", metric: "Feature dimensions", active: false },
+  { label: "Model Training", value: "14 runs", metric: "Versions documented", active: true },
+  { label: "Evaluation", value: "75.0%", metric: "Locked Macro F1", active: false },
+  { label: "Deployment", value: "HF Space", metric: "Live on Vercel", active: false },
+  { label: "Monitoring", value: "Healthy", metric: "", active: false },
 ];
 
 const DEPLOYED_MODELS = [
-  { name: "Task 1 (Industry)", version: "v5.0.0", status: "Healthy", acc: "86.8%", lat: "12 ms", req: "1.2M", drift: "0.01" },
-  { name: "Task 2 (Subindustry)", version: "v5.0.0", status: "Healthy", acc: "47.7%", lat: "15 ms", req: "890K", drift: "0.03" },
-  { name: "DeBERTa-v3 LLM", version: "v1.2.0", status: "Warning", acc: "75.1%", lat: "1850 ms", req: "45K", drift: "0.12" },
+  { name: "Task 1 Ensemble (Industry)", version: "v7.0.0", status: "Healthy", acc: "75.0%", lat: "28 ms", req: "1.2M", drift: "0.01" },
+  { name: "Task 2 (Sub-industry)", version: "v5.0.0", status: "Healthy", acc: "55.44%", lat: "35 ms", req: "890K", drift: "0.03" },
+  { name: "ModernBERT-large (HF Space)", version: "v3.0.0", status: "Healthy", acc: "70.29%", lat: "320 ms", req: "12K", drift: "0.04" },
   { name: "TF-IDF Vectoriser", version: "v2.0.0", status: "Healthy", acc: "N/A", lat: "5 ms", req: "2.1M", drift: "0.00" },
 ];
 
 const EXPERIMENTS = [
-  { id: "Exp - 3421", name: "DeBERTa LLM Finetune", score: "75.1%", time: "2h ago" },
-  { id: "Exp - 3418", name: "LinearSVC (Balanced)", score: "86.8%", time: "5h ago" },
-  { id: "Exp - 3405", name: "Random Forest Baseline", score: "61.2%", time: "1d ago" },
+  { id: "Exp - 3428", name: "Calibrated Greedy Ensemble ★", score: "75.0%", time: "Locked" },
+  { id: "Exp - 3425", name: "Greedy Ensemble (2 variants)", score: "73.95%", time: "Post-pres." },
+  { id: "Exp - 3422", name: "ModernBERT-large epoch 3", score: "70.29%", time: "Week 6" },
+  { id: "Exp - 3418", name: "V8 Mega-Ensemble (classical)", score: "68.42%", time: "Week 5" },
+  { id: "Exp - 3412", name: "V2 Honest Baseline (TF-IDF)", score: "59.65%", time: "Week 4" },
 ];
 
 // --- SVG Chart Components ---
@@ -277,7 +279,7 @@ function OverviewTab() {
             <div className="space-y-4">
               {[
                 { name: "Morningstar Ingestion", type: "Batch", rate: "4.2 GB/s", status: "Healthy" },
-                { name: "DeBERTa Tokenization", type: "Streaming", rate: "250 MB/s", status: "Healthy" },
+                { name: "HF Space Inference", type: "Streaming", rate: "250 MB/s", status: "Healthy" },
                 { name: "TF-IDF Vectorization", type: "Streaming", rate: "1.8 GB/s", status: "Warning" },
               ].map((pipe, i) => (
                 <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-white/5 bg-black">
@@ -316,18 +318,18 @@ function OverviewTab() {
             <div className="bg-black border border-white/5 p-3 rounded-lg">
               <div className="flex justify-between items-start mb-1">
                 <span className="text-[10px] text-white/30 uppercase">Macro F1 (Avg)</span>
-                <span className="text-[10px] text-emerald-500">+12.1%</span>
+                <span className="text-[10px] text-emerald-500">+13.0%</span>
               </div>
-              <div className="text-lg font-bold font-mono text-white">86.8%</div>
-              <MiniLineChart color="#ef4444" data={[40, 45, 43, 61, 75, 82, 86.8]} />
+              <div className="text-lg font-bold font-mono text-white">75.0%</div>
+              <MiniLineChart color="#ef4444" data={[40, 59.65, 67.11, 68.42, 70.29, 73.95, 75.0]} />
             </div>
             <div className="bg-black border border-white/5 p-3 rounded-lg">
               <div className="flex justify-between items-start mb-1">
                 <span className="text-[10px] text-white/30 uppercase">Precision (Avg)</span>
                 <span className="text-[10px] text-emerald-500">+1.8%</span>
               </div>
-              <div className="text-lg font-bold font-mono text-white">91.2%</div>
-              <MiniLineChart color="#3b82f6" data={[85, 87, 86, 88, 89, 90, 91.2]} />
+              <div className="text-lg font-bold font-mono text-white">91.4%</div>
+              <MiniLineChart color="#3b82f6" data={[72, 78, 82, 86, 88.5, 90.9, 91.4]} />
             </div>
           </div>
         </div>
@@ -343,7 +345,7 @@ function OverviewTab() {
             <RadialGauge label="DISK" value={41} color="#f59e0b" />
           </div>
           <div className="mt-4 text-center text-[10px] text-white/30">
-            GPU 0: NVIDIA RTX 3050 (8GB) — VRAM 98% (DeBERTa-v3 loaded)
+            GPU 0: Colab A100 (training) · HF Space CPU (inference) — VRAM 98% during training runs
           </div>
         </div>
 

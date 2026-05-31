@@ -127,13 +127,13 @@ export default function LLMTestingTab() {
     try {
       const res = await fetch("/api/predict_llm", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ company_text: text, segment_text: text }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Server error");
       setResult(data); setResultKey(k => k + 1); setActiveStep(PIPELINE.length);
-    } catch (e: any) {
-      setError(e.message || "Cannot reach DeBERTa server on port 5001.");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Cannot reach GECS-Sage on port 5003.");
       setActiveStep(-1);
     } finally {
       setLoading(false); clearInterval(logId);
@@ -229,8 +229,7 @@ export default function LLMTestingTab() {
           <div className="p-4 border border-amber-500/20 bg-amber-500/5 rounded-xl">
             <div className="text-[10px] font-mono text-amber-400/60 uppercase tracking-widest mb-2">⚠ Experimental Track</div>
             <p className="text-xs text-white/40 font-mono leading-relaxed">
-              DeBERTa achieves <strong className="text-purple-300">78.10% Macro F1</strong> on 29 well-represented classes
-              (Certified Operational Scope). LinearSVC is still the production engine.
+              DeBERTa reached <strong className="text-purple-300">64.0% Macro F1</strong> on the full 145-class test — valuable as an experiment, but the ModernBERT-large calibrated ensemble (75.0%) is the production result.
             </p>
           </div>
         </div>
