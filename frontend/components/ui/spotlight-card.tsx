@@ -4,7 +4,7 @@ import React, { useEffect, useRef, ReactNode } from 'react';
 interface GlowCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: 'blue' | 'purple' | 'green' | 'red' | 'orange' | 'cyan' | 'amber' | 'emerald';
+  glowColor?: 'blue' | 'purple' | 'green' | 'red' | 'orange' | 'cyan' | 'amber' | 'emerald' | 'rose' | 'violet';
   customSize?: boolean;
   width?: string | number;
   height?: string | number;
@@ -19,6 +19,8 @@ const glowColorMap = {
   cyan:   { base: 180, spread: 200 },
   amber:  { base: 45,  spread: 200 },
   emerald:{ base: 150, spread: 200 },
+  rose:   { base: 340, spread: 200 },
+  violet: { base: 260, spread: 250 },
 };
 
 const beforeAfterStyles = `
@@ -95,7 +97,8 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     return () => document.removeEventListener('pointermove', syncPointer);
   }, []);
 
-  const { base, spread } = glowColorMap[glowColor];
+  const safeColor = glowColor || 'red';
+  const { base, spread } = glowColorMap[safeColor as keyof typeof glowColorMap] || glowColorMap['red'];
 
   const inlineStyles: React.CSSProperties & Record<string, string | number> = {
     '--base': base,
