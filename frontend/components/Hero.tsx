@@ -69,23 +69,46 @@ export default function Hero() {
           </TextScramble>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+        {/* TAVSS acronym breakdown */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
+          transition={{ delay: 0.28 }}
+          className="mb-6"
         >
-          <span className="bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-transparent">
-            GECS
-          </span>{" "}
-          <span className="bg-gradient-to-br from-red-500 via-red-400 to-blue-400 bg-clip-text text-transparent">
-            Classification
-          </span>
-          <br />
-          <span className="bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-transparent">
-            Engine
-          </span>
-        </motion.h1>
+          <div className="inline-flex items-end gap-0 font-black tracking-[-0.02em] text-6xl sm:text-8xl lg:text-9xl select-none">
+            {[
+              { letter: "T", word: "Taxonomy",     color: "from-red-400 to-red-500" },
+              { letter: "A", word: "Aware",         color: "from-orange-400 to-red-400" },
+              { letter: "V", word: "Venture",       color: "from-amber-300 to-orange-400" },
+              { letter: "S", word: "Segmentation",  color: "from-cyan-400 to-blue-400" },
+              { letter: "S", word: "System",        color: "from-blue-400 to-violet-500" },
+            ].map(({ letter, color }, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.32 + i * 0.07 }}
+                className={`bg-gradient-to-b ${color} bg-clip-text text-transparent`}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.75 }}
+            className="mt-3 flex items-center justify-center gap-2 flex-wrap"
+          >
+            {["Taxonomy", "Aware", "Venture", "Segmentation", "System"].map((word, i) => (
+              <span key={word} className="flex items-center gap-2">
+                <span className="text-xs sm:text-sm font-semibold tracking-[0.18em] uppercase text-white/50">{word}</span>
+                {i < 4 && <span className="text-white/20 text-xs">·</span>}
+              </span>
+            ))}
+          </motion.div>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

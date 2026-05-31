@@ -16,13 +16,13 @@ export default function DeploymentTab() {
         <div className="absolute bottom-0 left-0 w-1/3 h-[1px] bg-gradient-to-r from-red-500 to-transparent" />
         <div>
           <h2 className="text-3xl font-black text-white tracking-widest uppercase">
-            Live Inference · SVM Primary Engine
+            Live Inference · ModernBERT-large
           </h2>
-          <p className="text-sm text-red-500/50 mt-1 font-mono tracking-widest uppercase">Port 5000 · breezeml v0.2.5 · ConfidenceGauge + Alternatives + Feature Tags</p>
+          <p className="text-sm text-red-500/50 mt-1 font-mono tracking-widest uppercase">HF Space · 75.0% Macro F1 · ConfidenceGauge + Alternatives + Feature Tags</p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded font-mono text-xs text-emerald-400">
           <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse" />
-          PORT 5000 ACTIVE
+          HF SPACE ACTIVE
         </div>
       </div>
 

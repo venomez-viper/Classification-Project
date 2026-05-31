@@ -223,6 +223,7 @@ function BenchmarkBar({ label, pct, delta, hero, animate }: { label: string; pct
 export default function LiveDemo() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingSeconds, setLoadingSeconds] = useState(0);
   const [activeStep, setActiveStep] = useState(-1);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
@@ -234,6 +235,12 @@ export default function LiveDemo() {
   const [feedbackError, setFeedbackError] = useState("");
   const [overrideOpen, setOverrideOpen] = useState(false);
   const benchRef = useRef<HTMLDivElement>(null);
+  const loadingTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Wake up HF Space on page load
+  useEffect(() => {
+    fetch("https://akash-ag-gecs-modernbert.hf.space/health", { method: "GET" }).catch(() => {});
+  }, []);
 
   // Trigger benchmark bar animation when scrolled into view
   useEffect(() => {
@@ -247,11 +254,13 @@ export default function LiveDemo() {
   async function runInference() {
     if (!text.trim() || loading) return;
     setLoading(true);
+    setLoadingSeconds(0);
     setResult(null);
     setError("");
     setFeedbackStatus("");
     setFeedbackError("");
     setOverrideOpen(false);
+    loadingTimerRef.current = setInterval(() => setLoadingSeconds((s) => s + 1), 1000);
 
     for (let i = 0; i < PIPELINE.length; i++) {
       setActiveStep(i);
@@ -282,6 +291,8 @@ export default function LiveDemo() {
       setActiveStep(-1);
     } finally {
       setLoading(false);
+      setLoadingSeconds(0);
+      if (loadingTimerRef.current) { clearInterval(loadingTimerRef.current); loadingTimerRef.current = null; }
     }
   }
 
@@ -454,11 +465,38 @@ export default function LiveDemo() {
             <button onClick={runInference} disabled={loading || !text.trim()}
               className="w-full rounded-2xl bg-violet-700 px-6 py-5 text-lg font-bold text-white transition-all hover:bg-violet-600 hover:shadow-[0_0_45px_rgba(124,58,237,0.4)] disabled:cursor-not-allowed disabled:opacity-35 flex items-center justify-center gap-3">
               {loading ? (
-                <><Loader2 className="h-5 w-5 animate-spin" />Running cascade inference</>
+                <><Loader2 className="h-5 w-5 animate-spin" />Running inference&nbsp;<span className="font-mono text-violet-200 text-base">{loadingSeconds}s</span></>
               ) : (
                 <><Zap className="h-5 w-5" />Run Cascade Classification</>
               )}
             </button>
+
+            {/* Warming-up progress indicator */}
+            {loading && (
+              <div className="rounded-2xl border border-violet-500/20 bg-violet-500/8 px-5 py-4 space-y-3">
+                <div className="flex items-center justify-between text-xs text-violet-300/80">
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    {loadingSeconds < 5
+                      ? "Sending request to ModernBERT-large…"
+                      : loadingSeconds < 20
+                      ? "HF Space waking up on CPU…"
+                      : loadingSeconds < 60
+                      ? "Model loaded — running inference…"
+                      : "Almost there — large model on CPU, please wait…"}
+                  </span>
+                  <span className="font-mono">{loadingSeconds}s / ~60s</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-white/8 overflow-hidden">
+                  <motion.div
+                    animate={{ width: `${Math.min((loadingSeconds / 60) * 100, 95)}%` }}
+                    transition={{ duration: 1, ease: "linear" }}
+                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-400"
+                  />
+                </div>
+                <p className="text-[11px] text-white/30 font-mono">ModernBERT-large · CPU inference · 75.0% Macro F1</p>
+              </div>
+            )}
 
             {/* Model performance reference - NOT per-prediction confidence */}
             <div ref={benchRef}>
