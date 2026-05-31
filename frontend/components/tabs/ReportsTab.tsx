@@ -39,7 +39,7 @@ function ClassDistributionChart() {
       })}
       {/* X axis */}
       <line x1={PAD.l} y1={PAD.t + cH} x2={PAD.l + cW} y2={PAD.t + cH} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-      <text x={PAD.l + cW / 2} y={H - 4} fill="rgba(255,255,255,0.25)" fontSize="8" textAnchor="middle" fontFamily="monospace">Subindustry Class Index (407 Total Classes)</text>
+      <text x={PAD.l + cW / 2} y={H - 4} fill="rgba(255,255,255,0.25)" fontSize="8" textAnchor="middle" fontFamily="monospace">Subindustry Class Index (428 Total Classes)</text>
       {/* Y axis label */}
       <text x={10} y={PAD.t + cH / 2} fill="rgba(255,255,255,0.25)" fontSize="8" textAnchor="middle" fontFamily="monospace" transform={`rotate(-90,10,${PAD.t + cH / 2})`}>Samples</text>
       {/* Annotation */}
@@ -228,11 +228,11 @@ export default function ReportsTab() {
             <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 1 · Industry (145 Classes)</h3>
           </div>
           <div className="space-y-5">
-            <MetricBar label="Ensemble F1 Score" value="75.0%" pct={75.0} color="#ef4444" />
-            <MetricBar label="Macro F1 Score" value="61.07%" pct={61.07} color="#f97316" />
-            <MetricBar label="Accuracy" value="62.61%" pct={62.61} color="#3b82f6" />
+            <MetricBar label="Calibrated Ensemble F1" value="75.0%" pct={75.0} color="#ef4444" />
+            <MetricBar label="Uncalibrated Greedy Ensemble" value="73.95%" pct={73.95} color="#f97316" />
+            <MetricBar label="ModernBERT-large (epoch 3)" value="70.29%" pct={70.29} color="#a855f7" />
+            <MetricBar label="V8 Classical Ceiling" value="68.42%" pct={68.42} color="#3b82f6" />
             <MetricBar label="Rubric Minimum" value="75.00%" pct={75} color="#10b981" />
-            <MetricBar label="Random Baseline" value="0.69%" pct={0.69} color="#374151" />
           </div>
           <div className="grid grid-cols-3 gap-3 mt-6">
             {[{ l: "Train", v: "42,868" }, { l: "Test", v: "10,717" }, { l: "Features", v: "60,000" }].map(s => (
@@ -250,20 +250,20 @@ export default function ReportsTab() {
             <h3 className="text-sm font-mono text-white/50 uppercase tracking-widest">Task 2 · Subindustry (428 Classes)</h3>
           </div>
           <div className="space-y-5">
-            <MetricBar label="Weighted F1 Score" value="55.41%" pct={55.41} color="#3b82f6" />
-            <MetricBar label="Macro F1 Score" value="39.62%" pct={39.62} color="#8b5cf6" />
+            <MetricBar label="Constrained Macro F1" value="55.44%" pct={55.44} color="#3b82f6" />
+            <MetricBar label="Weighted F1" value="55.41%" pct={55.41} color="#8b5cf6" />
             <MetricBar label="Accuracy" value="51.06%" pct={51.06} color="#22d3ee" />
             <MetricBar label="Rubric Minimum" value="75.00%" pct={75} color="#10b981" />
-            <MetricBar label="Random Baseline" value="0.24%" pct={0.24} color="#374151" />
+            <MetricBar label="Random Baseline (1/428)" value="0.23%" pct={0.23} color="#374151" />
           </div>
           <div className="mt-5 p-4 border border-amber-500/20 bg-amber-500/5 rounded-xl flex items-start gap-3">
             <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
             <p className="text-xs font-mono text-amber-400/80">
-              Task 2 scores are expected to be lower — 407 classes with extreme long-tail distribution. This is the hardest classification problem in the taxonomy.
+              Task 2 scores are expected to be lower — 428 classes with extreme long-tail distribution. Sub-industry predictions are constrained by the Task 1 parent code to preserve the GECS hierarchy.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-3 mt-4">
-            {[{ l: "Train", v: "~17,609" }, { l: "Test", v: "~4,403" }, { l: "Features", v: "10,000" }].map(s => (
+            {[{ l: "Train rows", v: "42,868" }, { l: "Test rows", v: "10,717" }, { l: "Sub-classes", v: "428" }].map(s => (
               <div key={s.l} className="bg-black/60 border border-white/5 rounded-lg p-3 text-center">
                 <div className="text-base font-mono font-black text-white">{s.v}</div>
                 <div className="text-[10px] text-white/30 font-mono mt-1">{s.l}</div>
