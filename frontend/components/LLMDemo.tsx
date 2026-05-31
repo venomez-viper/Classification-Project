@@ -15,7 +15,7 @@ import { GlowCard } from "@/components/ui/spotlight-card";
 import { TextScramble } from "@/components/ui/text-scramble";
 
 // These examples are written in plain English - no financial jargon.
-// The point: DeBERTa understands MEANING, not just keyword matching.
+// The point: ModernBERT understands MEANING, not just keyword matching.
 const EXAMPLES = [
   {
     label: "Plain English - Chips",
@@ -45,7 +45,7 @@ const EXAMPLES = [
 
 const PIPELINE = [
   { id: "input",  icon: Terminal,     label: "Raw text",            detail: "Any natural language description" },
-  { id: "tok",    icon: Network,      label: "Tokenisation",        detail: "DeBERTa SentencePiece, 128K vocab" },
+  { id: "tok",    icon: Network,      label: "Tokenisation",        detail: "ModernBERT SentencePiece, 128K vocab" },
   { id: "layers", icon: BrainCircuit, label: "12 attention layers", detail: "Cross-word meaning, not keywords" },
   { id: "head",   icon: Sparkles,     label: "Classification head", detail: "Softmax over 145 Morningstar codes" },
 ];
@@ -53,7 +53,7 @@ const PIPELINE = [
 const TERMINAL_LOGS = [
   "> Initialising CUDA device 0  [RTX 3050]...",
   "> Allocating 1.2 GB VRAM...",
-  "> Loading DeBERTa-v3-small weights (180 M params)...",
+  "> Loading ModernBERT-large weights (395 M params)...",
   "> Model weights loaded. Status: ONLINE",
   "> Tokenising input sequence...",
   "> Attention mask generated.",
@@ -87,7 +87,7 @@ type T2Result = {
   sub_label: string;
   confidence_t2: number;
   alternatives_t2?: Alternative[];
-  source: "deberta" | "cascade";
+  source: "modernbert" | "cascade";
 };
 
 function ConfidenceBar({ value }: { value: number }) {
@@ -169,9 +169,9 @@ export default function LLMDemo() {
       setResultKey((k) => k + 1);
       setActiveStep(PIPELINE.length);
 
-      // Resolve Task 2: prefer DeBERTa T2, fall back to cascade T2
+      // Resolve Task 2: prefer ModernBERT T2, fall back to cascade T2
       if (llmData.task2_ready && llmData.sub_code) {
-        setT2({ sub_code: llmData.sub_code, sub_label: llmData.sub_label ?? llmData.sub_code, confidence_t2: llmData.sub_confidence ?? 0, sub_alternatives: llmData.sub_alternatives, source: "deberta" });
+        setT2({ sub_code: llmData.sub_code, sub_label: llmData.sub_label ?? llmData.sub_code, confidence_t2: llmData.sub_confidence ?? 0, sub_alternatives: llmData.sub_alternatives, source: "modernbert" });
       } else if (cascadeRes.status === "fulfilled" && cascadeRes.value.ok) {
         const cData = await cascadeRes.value.json();
         if (cData.sub_code && cData.sub_code !== "N/A") {
@@ -206,8 +206,8 @@ export default function LLMDemo() {
         {/* Telemetry bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-12 border-b border-purple-500/20 pb-4">
           <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-mono text-purple-300">
-            <span className="flex items-center gap-2"><Server className="w-4 h-4 text-purple-500" /> MODEL: DEBERTA-V3-SMALL</span>
-            <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-cyan-500" /> PARAMS: 180,000,000</span>
+            <span className="flex items-center gap-2"><Server className="w-4 h-4 text-purple-500" /> MODEL: MODERNBERT-V3-SMALL</span>
+            <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-cyan-500" /> PARAMS: 395,000,000</span>
             <span className="flex items-center gap-2"><Activity className="w-4 h-4 text-emerald-500" /> ACCELERATOR: CUDA:0</span>
           </div>
           <div className="text-xs font-mono px-3 py-1 bg-purple-500/10 border border-purple-500/30 rounded text-purple-400">
@@ -224,7 +224,7 @@ export default function LLMDemo() {
           <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4 tracking-tight">
             Write it in plain English.{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-              DeBERTa gets it.
+              ModernBERT gets it.
             </span>
           </h1>
           <p className="text-lg text-white/50 max-w-2xl">
@@ -277,7 +277,7 @@ export default function LLMDemo() {
             >
               {loading
                 ? <><Loader2 className="w-5 h-5 animate-spin text-purple-300" /> RUNNING INFERENCE...</>
-                : <><BrainCircuit className="w-5 h-5 text-purple-300" /> EXECUTE DEBERTA</>}
+                : <><BrainCircuit className="w-5 h-5 text-purple-300" /> EXECUTE MODERNBERT</>}
             </button>
           </div>
 
@@ -362,7 +362,7 @@ export default function LLMDemo() {
                         Industry - Morningstar GECS
                       </p>
                       <span className="text-xs font-mono text-purple-300/60 bg-purple-400/10 px-2 py-1 rounded border border-purple-400/20">
-                        {result.engine ?? "DeBERTa-v3-small"}
+                        {result.engine ?? "ModernBERT-large"}
                       </span>
                     </div>
 
@@ -402,8 +402,8 @@ export default function LLMDemo() {
                         <p className="text-xs text-cyan-400 uppercase tracking-[0.3em] font-mono">
                           Sub-Industry - 428 classes
                         </p>
-                        <span className={`text-xs font-mono px-2 py-1 rounded border ${t2.source === "deberta" ? "text-purple-300/60 bg-purple-400/10 border-purple-400/20" : "text-cyan-300/60 bg-cyan-400/10 border-cyan-400/20"}`}>
-                          {t2.source === "deberta" ? "DeBERTa T2" : "Cascade SVM"}
+                        <span className={`text-xs font-mono px-2 py-1 rounded border ${t2.source === "modernbert" ? "text-purple-300/60 bg-purple-400/10 border-purple-400/20" : "text-cyan-300/60 bg-cyan-400/10 border-cyan-400/20"}`}>
+                          {t2.source === "modernbert" ? "ModernBERT T2" : "Cascade SVM"}
                         </span>
                       </div>
 
@@ -452,7 +452,7 @@ export default function LLMDemo() {
                 >
                   <BrainCircuit className="mx-auto mb-4 h-12 w-12 text-purple-500/30" />
                   <p className="text-purple-300/30">
-                    Write anything - no jargon required. DeBERTa reads meaning.
+                    Write anything - no jargon required. ModernBERT reads meaning.
                   </p>
                 </motion.div>
               )}

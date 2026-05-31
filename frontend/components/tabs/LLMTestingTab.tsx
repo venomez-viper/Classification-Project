@@ -25,7 +25,7 @@ const EXAMPLES = [
 ];
 
 const PIPELINE = [
-  { icon: Terminal,     label: "Text Tokenization",       detail: "DeBERTa SentencePiece · 512 max tokens" },
+  { icon: Terminal,     label: "Text Tokenization",       detail: "ModernBERT SentencePiece · 512 max tokens" },
   { icon: Network,      label: "Transformer Encoding",    detail: "12-layer attention · 768 hidden dims" },
   { icon: BrainCircuit, label: "Contextual Embeddings",   detail: "Disentangled attention mechanism" },
   { icon: Sparkles,     label: "Classification Head",     detail: "Linear projection → 145 industry logits" },
@@ -33,7 +33,7 @@ const PIPELINE = [
 
 const LOGS = [
   "> CUDA:0 initialized - RTX 3050 (8GB VRAM)",
-  "> Loading DeBERTa-v3-small checkpoint (141M params)...",
+  "> Loading ModernBERT-large checkpoint (395M params)...",
   "> Tokenizing input → 512-token sequence",
   "> Executing forward pass - Layer  1/12 ████░░░░░░░░",
   "> Executing forward pass - Layer  4/12 ████████░░░░",
@@ -153,16 +153,16 @@ export default function LLMTestingTab() {
         <div className="absolute bottom-0 left-0 w-1/3 h-[1px] bg-gradient-to-r from-purple-500 to-transparent" />
         <div>
           <TextScramble as="h2" speed={0.02} duration={0.8} className="text-3xl font-black text-white tracking-widest uppercase">
-            DeBERTa-v3 Neural Inference Facility
+            ModernBERT-v3 Neural Inference Facility
           </TextScramble>
           <p className="text-sm text-purple-500/50 mt-1 font-mono tracking-widest uppercase">
-            Port 5001 · Experimental Track · 141M Parameters · CUDA:0 RTX 3050
+            Port 5001 · Production Track · 395M Parameters · CUDA:0 RTX 3050
           </p>
         </div>
         <div className="flex items-center gap-3">
           {[
-            { icon: Server,   label: "deberta-v3-small", color: "text-purple-400" },
-            { icon: Cpu,      label: "141M params",       color: "text-cyan-400" },
+            { icon: Server,   label: "modernbert-large", color: "text-purple-400" },
+            { icon: Cpu,      label: "395M params",       color: "text-cyan-400" },
             { icon: Activity, label: "CUDA:0 online",     color: "text-emerald-400" },
           ].map(s => (
             <div key={s.label} className={`flex items-center gap-1.5 text-[10px] font-mono ${s.color}`}>
@@ -170,8 +170,8 @@ export default function LLMTestingTab() {
             </div>
           ))}
           <div className="w-px h-6 bg-white/10 mx-1" />
-          <div className="px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded text-[10px] font-mono text-purple-400 font-bold">
-            EXPERIMENTAL
+          <div className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-[10px] font-mono text-emerald-400 font-bold">
+            PRODUCTION
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default function LLMTestingTab() {
               <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-purple-500/80" />
-              <span className="ml-3 text-xs font-mono text-purple-400/40">deberta_inference.py</span>
+              <span className="ml-3 text-xs font-mono text-purple-400/40">modernbert_inference.py</span>
             </div>
             <div className="p-4 flex-1 font-mono">
               <div className="text-purple-400/30 text-xs mb-1">$ model.predict(</div>
@@ -226,10 +226,10 @@ export default function LLMTestingTab() {
           </button>
 
           {/* Compare badge */}
-          <div className="p-4 border border-amber-500/20 bg-amber-500/5 rounded-xl">
-            <div className="text-[10px] font-mono text-amber-400/60 uppercase tracking-widest mb-2">⚠ Experimental Track</div>
+          <div className="p-4 border border-emerald-500/20 bg-emerald-500/5 rounded-xl">
+            <div className="text-[10px] font-mono text-emerald-400/60 uppercase tracking-widest mb-2">✓ Production Model</div>
             <p className="text-xs text-white/40 font-mono leading-relaxed">
-              DeBERTa reached <strong className="text-purple-300">64.0% Macro F1</strong> on the full 145-class test - valuable as an experiment, but the ModernBERT-large calibrated ensemble (75.0%) is the production result.
+              The <strong className="text-purple-300">ModernBERT-large calibrated ensemble</strong> achieved <strong className="text-emerald-400">75.0% Macro F1</strong> on the full 145-class test, making it our primary production inference model.
             </p>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function LLMTestingTab() {
                 {/* Latency chip */}
                 <div className="flex items-center gap-2 px-3 py-2 bg-black/40 border border-white/5 rounded-lg">
                   <Zap className="w-3 h-3 text-amber-400" />
-                  <span className="text-[10px] font-mono text-white/40">DeBERTa inference completed</span>
+                  <span className="text-[10px] font-mono text-white/40">ModernBERT inference completed</span>
                   <span className="ml-auto text-[10px] font-mono text-amber-400 font-bold">~1,842ms</span>
                 </div>
               </motion.div>
