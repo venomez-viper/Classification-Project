@@ -37,7 +37,7 @@ const INNOVATIONS = [
     icon: Cpu,
     color: "#22d3ee",
     title: "ModernBERT-Large on A100",
-    body: "Six parallel training variants (raw text, segment-aware, revenue-weighted, knowledge distillation, ensemble seeds) ran on Colab A100 - 40 min/epoch vs 8–15h on CPU. Best single checkpoint: ModernBERT-large epoch 3 at 70.29% Macro F1.",
+    body: "Six parallel training variants (raw text, segment-aware, revenue-weighted, knowledge distillation, ensemble seeds) ran on Colab A100 - 40 min/epoch vs 8-15h on CPU. Best single checkpoint: ModernBERT-large epoch 3 at 70.29% Macro F1.",
   },
   {
     icon: FlaskConical,

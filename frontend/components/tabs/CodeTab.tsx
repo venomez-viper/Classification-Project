@@ -172,7 +172,7 @@ const SNIPPETS = [
     file: "colab/train_modernbert_large.py",
     lang: "Python",
     color: "#a855f7",
-    description: "The ModernBERT-large fine-tuning loop that reached 70.29% Macro F1 on epoch 3 - trained on Colab A100 in ~40 min/epoch vs 8–15h on CPU. CLS embeddings from this checkpoint fed the greedy ensemble.",
+    description: "The ModernBERT-large fine-tuning loop that reached 70.29% Macro F1 on epoch 3 - trained on Colab A100 in ~40 min/epoch vs 8-15h on CPU. CLS embeddings from this checkpoint fed the greedy ensemble.",
     lines: [
       L(["from ", C.keyword], ["transformers ", C.class], ["import ", C.keyword], ["AutoModelForSequenceClassification, Trainer", C.class]),
       L(["from ", C.keyword], ["transformers ", C.class], ["import ", C.keyword], ["TrainingArguments", C.class]),

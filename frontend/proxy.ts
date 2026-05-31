@@ -9,20 +9,17 @@ const PUBLIC_PAGES = [
   "/team",
 ];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Marketing and showcase pages are public
   if (PUBLIC_PAGES.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // Allow public paths through
-  if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
   }
 
-  // Allow API routes except auth to pass (they do their own checks)
   if (pathname.startsWith("/api/")) {
     return NextResponse.next();
   }

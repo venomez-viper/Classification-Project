@@ -4,8 +4,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true, // We want it to deploy even with minor type issues
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  experimental: {
+    cpus: 1,
+    workerThreads: false,
   },
 };
 

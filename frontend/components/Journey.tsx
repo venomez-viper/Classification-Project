@@ -86,7 +86,7 @@ const PHASES = [
     icon: Cpu,
     title: "ModernBERT on Colab A100. Company-disjoint. 70.29%.",
     description:
-      "Local CPU fine-tuning of a 110M-parameter BERT model would take 8–15 hours per epoch. Colab's A100 did the same in under 40 minutes - a 20× speedup. Six parallel training variants were launched: baseline raw text, segment-aware text_joint, text_primary, revenue-share weighted, knowledge distillation, and an ensemble seed variant. The best single checkpoint - ModernBERT-large epoch 3 - reached 70.29% Macro F1 on the company-disjoint test set, with 71.4% industry accuracy.",
+      "Local CPU fine-tuning of a 110M-parameter BERT model would take 8-15 hours per epoch. Colab's A100 did the same in under 40 minutes - a 20× speedup. Six parallel training variants were launched: baseline raw text, segment-aware text_joint, text_primary, revenue-share weighted, knowledge distillation, and an ensemble seed variant. The best single checkpoint - ModernBERT-large epoch 3 - reached 70.29% Macro F1 on the company-disjoint test set, with 71.4% industry accuracy.",
     impact: "The transformer beat the classical ensemble by +1.87pp, but the real value was the CLS embeddings saved for downstream stacking.",
     glow: "cyan" as const,
   },

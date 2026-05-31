@@ -94,7 +94,7 @@ function PerClassF1Chart() {
         );
       })}
       {/* X label */}
-      <text x={PAD.l + cW / 2} y={H - 2} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle" fontFamily="monospace">F1 Score (0.0 – 1.0)</text>
+      <text x={PAD.l + cW / 2} y={H - 2} fill="rgba(255,255,255,0.2)" fontSize="8" textAnchor="middle" fontFamily="monospace">F1 Score (0.0 - 1.0)</text>
     </svg>
   );
 }

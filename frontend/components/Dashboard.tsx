@@ -64,10 +64,10 @@ const SECTOR_MAP: Record<string, { sector: string; group: string; color: string 
 };
 
 const CODE_DIGIT_GUIDE = [
-  { digits: "Digits 1–3",  meaning: "Sector identifier" },
-  { digits: "Digits 4–5",  meaning: "Industry group within sector" },
-  { digits: "Digits 6–8",  meaning: "Specific industry (MSTAR code ends here)" },
-  { digits: "Digits 9–10", meaning: "Sub-industry activity (GECS extension)" },
+  { digits: "Digits 1-3",  meaning: "Sector identifier" },
+  { digits: "Digits 4-5",  meaning: "Industry group within sector" },
+  { digits: "Digits 6-8",  meaning: "Specific industry (MSTAR code ends here)" },
+  { digits: "Digits 9-10", meaning: "Sub-industry activity (GECS extension)" },
 ];
 
 function getSector(code: string) {

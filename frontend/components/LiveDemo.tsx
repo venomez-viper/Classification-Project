@@ -460,7 +460,7 @@ export default function LiveDemo() {
               )}
             </button>
 
-            {/* Model performance reference — NOT per-prediction confidence */}
+            {/* Model performance reference - NOT per-prediction confidence */}
             <div ref={benchRef}>
               <GlowCard glowColor="purple" className="border-white/8 bg-black/40 p-6">
                 <div className="flex items-center justify-between mb-5">
@@ -480,7 +480,7 @@ export default function LiveDemo() {
                   ))}
                 </div>
                 <p className="text-[10px] text-white/25 mt-4 font-mono">
-                  These are overall model F1 scores on the held-out test set — not confidence scores for your specific input above.
+                  These are overall model F1 scores on the held-out test set - not confidence scores for your specific input above.
                 </p>
               </GlowCard>
             </div>
@@ -667,7 +667,7 @@ export default function LiveDemo() {
                             <div className="font-semibold text-white mb-1">{alts[0].label}</div>
                             <div className="font-mono text-xs text-white/35 mb-3">{alts[0].code}</div>
                             <div className="text-xs text-white/30 leading-relaxed">
-                              The cascade routed this description to a single-class group — no competing alternatives exist at this taxonomy level.
+                              The cascade routed this description to a single-class group - no competing alternatives exist at this taxonomy level.
                             </div>
                           </div>
                         ) : (

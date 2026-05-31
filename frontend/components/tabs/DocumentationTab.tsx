@@ -310,7 +310,7 @@ const SECTIONS = [
               <div className="text-amber-300 mt-2">{"{ \"text\": \"Company description here...\" }"}</div>
             </div>
             <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg text-xs text-purple-400">
-              ModernBERT-large HF Space. Cold-start: 30–60s. Vercel proxy adds maxDuration=60 to handle warm-up.
+              ModernBERT-large HF Space. Cold-start: 30-60s. Vercel proxy adds maxDuration=60 to handle warm-up.
             </div>
           </div>
         )
