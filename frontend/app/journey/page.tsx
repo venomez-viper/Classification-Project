@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import Navigation from "@/components/Navigation";
-import Journey from "@/components/Journey";
+
+const Journey = dynamic(() => import("@/components/Journey"), { ssr: false });
 
 export default function JourneyPage() {
   return (

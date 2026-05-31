@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import Navigation from "@/components/Navigation";
-import Team from "@/components/Team";
+
+const Team = dynamic(() => import("@/components/Team"), { ssr: false });
 
 export default function TeamPage() {
   return (
