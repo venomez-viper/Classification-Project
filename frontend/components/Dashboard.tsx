@@ -14,11 +14,11 @@ import {
 const STEP_DURATIONS = [60, 80, 60, 80, 60];
 
 const PIPELINE_STEPS = [
-  { icon: Terminal, label: "TEXT INGESTION",  detail: "Tokenise raw description" },
-  { icon: Database, label: "TF-IDF ENCODE",   detail: "60,000 bigram features"   },
-  { icon: Layers,   label: "SPARSE CSR",      detail: "scipy.sparse matrix"      },
-  { icon: Cpu,      label: "LINEARSVC - T1",  detail: "145 industry classes"      },
-  { icon: Zap,      label: "LINEARSVC - T2",  detail: "428 subindustry classes"   },
+  { icon: Terminal, label: "TEXT INGESTION",     detail: "Tokenise raw description"      },
+  { icon: Database, label: "MODERNBERT ENCODE",  detail: "ModernBERT-large embeddings"   },
+  { icon: Layers,   label: "MULTI-TASK HEAD",    detail: "Sector + Group + Industry"     },
+  { icon: Cpu,      label: "TASK 1 - INDUSTRY",  detail: "145 GECS industry classes"     },
+  { icon: Zap,      label: "TASK 2 - SVM",       detail: "428 sub-industry classes"      },
 ];
 
 const PERF_BARS = [
@@ -612,7 +612,7 @@ export default function Dashboard() {
       setActiveStep(PIPELINE_STEPS.length);
       setQueryCount((c) => c + 1);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Cannot reach GECS-Sage on port 5003.");
+      setError(e instanceof Error ? e.message : "Cannot reach HF Space — it may still be warming up. Wait 30 seconds and try again.");
       setActiveStep(-1);
     } finally {
       setLoading(false);
