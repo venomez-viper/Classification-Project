@@ -26,7 +26,10 @@ from scripts.cascade_predict import load_cascade_assets, _rank_artifact
 T2_L4_SEG_VEC = "t2_cascade_seg_vec.pkl"
 T2_L4_SEG     = "t2_cascade_L4_seg.joblib"
 T2_SUMMARY    = "t2_cascade_summary.json"
-DEFAULT_MODELS = _Path(__file__).resolve().parents[1] / "models"
+T2_MAPPING    = "task1_to_task2_map.json"
+ROOT = _Path(__file__).resolve().parents[1]
+DEFAULT_T1_MODELS = ROOT / "models"
+DEFAULT_T2_MODELS = ROOT / "models_task2"
 
 
 def _softmax(scores: np.ndarray) -> np.ndarray:
@@ -54,18 +57,28 @@ def _rank_l4(artifact: dict, X_row, top_n: int = 3) -> tuple[str, float, list[di
     return str(clf.classes_[best]), round(float(probs[best]) * 100.0, 1), alts
 
 
-def load_t2_hybrid_assets(models_dir: Path | str = DEFAULT_MODELS) -> dict[str, Any]:
+def load_t2_hybrid_assets(
+    t1_models_dir: Path | str = DEFAULT_T1_MODELS,
+    t2_models_dir: Path | str = DEFAULT_T2_MODELS,
+) -> dict[str, Any]:
     """Load both Task 1 cascade (L1-L3) and Task 2 L4 artifacts."""
-    models_dir = Path(models_dir)
+    t1_models_dir = Path(t1_models_dir)
+    t2_models_dir = Path(t2_models_dir)
+    if not (t2_models_dir / T2_L4_SEG).exists():
+        t2_models_dir = t1_models_dir
     assets = {
-        "t1_cascade": load_cascade_assets(models_dir),
-        "l4":         joblib.load(models_dir / T2_L4_SEG),
-        "seg_vec":    joblib.load(models_dir / T2_L4_SEG_VEC),
+        "t1_cascade": load_cascade_assets(t1_models_dir),
+        "l4":         joblib.load(t2_models_dir / T2_L4_SEG),
+        "seg_vec":    joblib.load(t2_models_dir / T2_L4_SEG_VEC),
         "summary":    {},
+        "task1_to_task2_map": {},
     }
-    summary_path = models_dir / T2_SUMMARY
+    summary_path = t2_models_dir / T2_SUMMARY
     if summary_path.exists():
         assets["summary"] = json.loads(summary_path.read_text(encoding="utf-8"))
+    mapping_path = t2_models_dir / T2_MAPPING
+    if mapping_path.exists():
+        assets["task1_to_task2_map"] = json.loads(mapping_path.read_text(encoding="utf-8"))
     return assets
 
 

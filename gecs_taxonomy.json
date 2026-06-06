@@ -1,0 +1,1307 @@
+[
+  {
+    "mstar_code": "10110010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10110",
+    "industry_name": "Basic Materials Agriculture Agricultural Inputs",
+    "description": "Companies that manufacture nitrogenous and phosphatic fertilizers, pesticides, seed, and other agricultural chemical products. 10120",
+    "label_text": "Basic Materials. Basic Materials Agriculture Agricultural Inputs. Companies that manufacture nitrogenous and phosphatic fertilizers, pesticides, seed, and other agricultural chemical products. 10120"
+  },
+  {
+    "mstar_code": "10120010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10120",
+    "industry_name": "Building Materials Building Materials",
+    "description": "Companies that manufacture construction materials, including stone, clay, and brick products, cement, lime, gypsum, and concrete and other construction products. Excludes companies that manufacture finished and semifinished building products. 10130",
+    "label_text": "Basic Materials. Building Materials Building Materials. Companies that manufacture construction materials, including stone, clay, and brick products, cement, lime, gypsum, and concrete and other construction products. Excludes companies that manufacture finished and semifinished building products. 10130"
+  },
+  {
+    "mstar_code": "10130010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10130",
+    "industry_name": "Chemicals Chemicals",
+    "description": "Chemical manufacturing companies engaged in diverse chemical and chemical-related operations, and basic chemicals manufacturing.",
+    "label_text": "Basic Materials. Chemicals Chemicals. Chemical manufacturing companies engaged in diverse chemical and chemical-related operations, and basic chemicals manufacturing."
+  },
+  {
+    "mstar_code": "10130020",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10130",
+    "industry_name": "Specialty Chemicals",
+    "description": "Companies that use base chemicals to produce value-added chemicals that are used in a variety of products. Includes companies that produce polishes, adhesives and sealants, explosives, printing ink, paint, carbon black, acids, repellants, and cleaning solutions. 10140",
+    "label_text": "Basic Materials. Specialty Chemicals. Companies that use base chemicals to produce value-added chemicals that are used in a variety of products. Includes companies that produce polishes, adhesives and sealants, explosives, printing ink, paint, carbon black, acids, repellants, and cleaning solutions. 10140"
+  },
+  {
+    "mstar_code": "10140010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10140",
+    "industry_name": "Forest Products Lumber & Wood Production",
+    "description": "Companies that grow timber, mill lumber, and manufacture wood and wood products for construction.",
+    "label_text": "Basic Materials. Forest Products Lumber & Wood Production. Companies that grow timber, mill lumber, and manufacture wood and wood products for construction."
+  },
+  {
+    "mstar_code": "10140020",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10140",
+    "industry_name": "Paper & Paper Products",
+    "description": "Companies that manufacture and market paper and paper-related products from wood pulp and other fibers. Excludes companies that produce paper packaging products and are classified in the packaging and containers industry. 10150",
+    "label_text": "Basic Materials. Paper & Paper Products. Companies that manufacture and market paper and paper-related products from wood pulp and other fibers. Excludes companies that produce paper packaging products and are classified in the packaging and containers industry. 10150"
+  },
+  {
+    "mstar_code": "10150010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Metals & Mining Aluminum",
+    "description": "Companies that produce, refine, market, and distribute aluminum and related aluminum-based products.",
+    "label_text": "Basic Materials. Metals & Mining Aluminum. Companies that produce, refine, market, and distribute aluminum and related aluminum-based products."
+  },
+  {
+    "mstar_code": "10150020",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Copper",
+    "description": "Companies engaged in the exploration, mining, smelting, and refining of copper ores and related copper products. Other Industrial Metals & Mining Companies that mine, refine, produce, smelt, and mill industrial ores, including copper, lead, zinc, radium, vanadium, nickel, tin, titanium, and other related materials.",
+    "label_text": "Basic Materials. Copper. Companies engaged in the exploration, mining, smelting, and refining of copper ores and related copper products. Other Industrial Metals & Mining Companies that mine, refine, produce, smelt, and mill industrial ores, including copper, lead, zinc, radium, vanadium, nickel, tin, titanium, and other related materials."
+  },
+  {
+    "mstar_code": "10150030",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Other Industrial Metals & Mining",
+    "description": "Companies that mine, refine, produce, smelt, and mill industrial ores, including copper, lead, zinc, radium, vanadium, nickel, tin, titanium, and other related materials.",
+    "label_text": "Basic Materials. Other Industrial Metals & Mining. Companies that mine, refine, produce, smelt, and mill industrial ores, including copper, lead, zinc, radium, vanadium, nickel, tin, titanium, and other related materials."
+  },
+  {
+    "mstar_code": "10150040",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Gold",
+    "description": "Companies principally engaged in gold exploration, mining, processing, extraction, and smelting.",
+    "label_text": "Basic Materials. Gold. Companies principally engaged in gold exploration, mining, processing, extraction, and smelting."
+  },
+  {
+    "mstar_code": "10150050",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Silver",
+    "description": "Companies principally engaged in silver exploration, mining, processing, extraction, and smelting.",
+    "label_text": "Basic Materials. Silver. Companies principally engaged in silver exploration, mining, processing, extraction, and smelting."
+  },
+  {
+    "mstar_code": "10150060",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10150",
+    "industry_name": "Other Precious Metals & Mining",
+    "description": "Companies that mine, refine, produce, smelt, and mill precious metals, including silver, platinum, palladium, diamond, and other related minerals. 10160 1016010 Steel Coking Coal Companies that produce coking coal. 1016020 Steel Companies that produce steel plates, steel sheets, bar and rod materials, structural steel, steel pipes and tubes, and stainless steel. 102 10200",
+    "label_text": "Basic Materials. Other Precious Metals & Mining. Companies that mine, refine, produce, smelt, and mill precious metals, including silver, platinum, palladium, diamond, and other related minerals. 10160 1016010 Steel Coking Coal Companies that produce coking coal. 1016020 Steel Companies that produce steel plates, steel sheets, bar and rod materials, structural steel, steel pipes and tubes, and stainless steel. 102 10200"
+  },
+  {
+    "mstar_code": "10160010",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10160",
+    "industry_name": "Coking Coal",
+    "description": "Companies that produce coking coal.",
+    "label_text": "Basic Materials. Coking Coal. Companies that produce coking coal."
+  },
+  {
+    "mstar_code": "10160020",
+    "sector_code": "101",
+    "sector_name": "Basic Materials",
+    "group_code": "10160",
+    "industry_name": "Steel",
+    "description": "Companies that produce steel plates, steel sheets, bar and rod materials, structural steel, steel pipes and tubes, and stainless steel.",
+    "label_text": "Basic Materials. Steel. Companies that produce steel plates, steel sheets, bar and rod materials, structural steel, steel pipes and tubes, and stainless steel."
+  },
+  {
+    "mstar_code": "10200010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10200",
+    "industry_name": "Consumer Cyclical Vehicles & Parts Auto & Truck Dealerships",
+    "description": "Companies engaged in the specialty retail of new and used automobiles, trucks, and other vehicles through the operation and/or franchising of dealerships.",
+    "label_text": "Consumer Cyclical. Consumer Cyclical Vehicles & Parts Auto & Truck Dealerships. Companies engaged in the specialty retail of new and used automobiles, trucks, and other vehicles through the operation and/or franchising of dealerships."
+  },
+  {
+    "mstar_code": "10200020",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10200",
+    "industry_name": "Auto Manufacturers",
+    "description": "Leading worldwide designers and manufacturers of passenger cars and trucks.",
+    "label_text": "Consumer Cyclical. Auto Manufacturers. Leading worldwide designers and manufacturers of passenger cars and trucks."
+  },
+  {
+    "mstar_code": "10200030",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10200",
+    "industry_name": "Auto Parts",
+    "description": "Companies that manufacture motor vehicle parts and accessories, including rubber and plastic products, such as tires and inner tubes, but do not manufacture complete car bodies.",
+    "label_text": "Consumer Cyclical. Auto Parts. Companies that manufacture motor vehicle parts and accessories, including rubber and plastic products, such as tires and inner tubes, but do not manufacture complete car bodies."
+  },
+  {
+    "mstar_code": "10200040",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10200",
+    "industry_name": "Recreational Vehicles",
+    "description": "Companies that manufacture recreational vehicles, including self- contained motor homes, campers, all-terrain vehicles, travel/camper trailers, and snowmobiles. Furnishings, Furnishings, Fixtures, & Appliances Fixtures, & Companies that manufacture and market wooden, metal, and Appliance upholstered furniture, mattresses, bedsprings, lighting fixtures, wooden flooring, wallpaper, and household products, such as utensils, cutlery, tableware, and appliances. 10230",
+    "label_text": "Consumer Cyclical. Recreational Vehicles. Companies that manufacture recreational vehicles, including self- contained motor homes, campers, all-terrain vehicles, travel/camper trailers, and snowmobiles. Furnishings, Furnishings, Fixtures, & Appliances Fixtures, & Companies that manufacture and market wooden, metal, and Appliance upholstered furniture, mattresses, bedsprings, lighting fixtures, wooden flooring, wallpaper, and household products, such as utensils, cutlery, tableware, and appliances. 10230"
+  },
+  {
+    "mstar_code": "10220010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10220",
+    "industry_name": "Furnishings, Fixtures & Appliances",
+    "description": "Companies that manufacture and market wooden, metal, and upholstered furniture, mattresses, bedsprings, lighting fixtures, wooden flooring, wallpaper, and household products such as utensils, cutlery, tableware, and appliances.",
+    "label_text": "Consumer Cyclical. Furnishings, Fixtures & Appliances. Companies that manufacture and market wooden, metal, and upholstered furniture, mattresses, bedsprings, lighting fixtures, wooden flooring, wallpaper, and household products such as utensils, cutlery, tableware, and appliances."
+  },
+  {
+    "mstar_code": "10230010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10230",
+    "industry_name": "Homebuilding & Residential Construction",
+    "description": "Construction Companies that build and renovate residential buildings, such as single-family houses, apartments, and hotels. 10240",
+    "label_text": "Consumer Cyclical. Homebuilding & Residential Construction. Construction Companies that build and renovate residential buildings, such as single-family houses, apartments, and hotels. 10240"
+  },
+  {
+    "mstar_code": "10240010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10240",
+    "industry_name": "Manufacturing- Textile Manufacturing",
+    "description": "Apparel & Companies that manufacture and mill textile products, including Accessories apparel fabrics, bedding and accessories, home furnishing fabrics, carpets and rugs, curtains and drapes, and other milled textile products.",
+    "label_text": "Consumer Cyclical. Manufacturing- Textile Manufacturing. Apparel & Companies that manufacture and mill textile products, including Accessories apparel fabrics, bedding and accessories, home furnishing fabrics, carpets and rugs, curtains and drapes, and other milled textile products."
+  },
+  {
+    "mstar_code": "10240020",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10240",
+    "industry_name": "Apparel Manufacturing",
+    "description": "Companies that manufacture, design, market, source, and sell all lines of clothing for men, women, and children. Also includes companies that manufacture or distribute buttons, buckles, and other apparel parts.",
+    "label_text": "Consumer Cyclical. Apparel Manufacturing. Companies that manufacture, design, market, source, and sell all lines of clothing for men, women, and children. Also includes companies that manufacture or distribute buttons, buckles, and other apparel parts."
+  },
+  {
+    "mstar_code": "10240030",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10240",
+    "industry_name": "Footwear & Accessories",
+    "description": "Companies that manufacture, design, market, and sell lines of footwear and luggage, handbags and purses, belts, and other leather goods. 10250",
+    "label_text": "Consumer Cyclical. Footwear & Accessories. Companies that manufacture, design, market, and sell lines of footwear and luggage, handbags and purses, belts, and other leather goods. 10250"
+  },
+  {
+    "mstar_code": "10250010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10250",
+    "industry_name": "Packaging & Packaging & Containers",
+    "description": "Containers Companies that manufacture and market paper, plastic, metal, and glass packaging products, including corrugated boxes, cardboard containers, bottles, cans, and plastic foam and containers. 10260",
+    "label_text": "Consumer Cyclical. Packaging & Packaging & Containers. Containers Companies that manufacture and market paper, plastic, metal, and glass packaging products, including corrugated boxes, cardboard containers, bottles, cans, and plastic foam and containers. 10260"
+  },
+  {
+    "mstar_code": "10260010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10260",
+    "industry_name": "Personal Services Personal Services",
+    "description": "Companies that provide services of a personal nature or that are particularly structured for the individual or group being served, including veterinary services, funeral and cemetery services, child care services, portrait and photo services, tax preparation and legal services, and other miscellaneous personal services. 10270",
+    "label_text": "Consumer Cyclical. Personal Services Personal Services. Companies that provide services of a personal nature or that are particularly structured for the individual or group being served, including veterinary services, funeral and cemetery services, child care services, portrait and photo services, tax preparation and legal services, and other miscellaneous personal services. 10270"
+  },
+  {
+    "mstar_code": "10270010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10270",
+    "industry_name": "Restaurants Restaurants",
+    "description": "Companies that own, operate, and franchise full-service restaurants that engage in the retail sale of prepared food and drink. 10280",
+    "label_text": "Consumer Cyclical. Restaurants Restaurants. Companies that own, operate, and franchise full-service restaurants that engage in the retail sale of prepared food and drink. 10280"
+  },
+  {
+    "mstar_code": "10280010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Retail\u2014Cyclical Apparel Retail",
+    "description": "Companies engaged in the retail sale of clothing, shoes, and accessories. Department Stores Companies engaged in the retail sale of a diverse mix of merchandise, emphasizing fashion apparel and accessories, home furnishings, electronics, and cosmetics.",
+    "label_text": "Consumer Cyclical. Retail\u2014Cyclical Apparel Retail. Companies engaged in the retail sale of clothing, shoes, and accessories. Department Stores Companies engaged in the retail sale of a diverse mix of merchandise, emphasizing fashion apparel and accessories, home furnishings, electronics, and cosmetics."
+  },
+  {
+    "mstar_code": "10280020",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Department Stores",
+    "description": "Companies engaged in the retail sale of a diverse mix of merchandise, emphasizing fashion apparel and accessories, home furnishings, electronics, and cosmetics.",
+    "label_text": "Consumer Cyclical. Department Stores. Companies engaged in the retail sale of a diverse mix of merchandise, emphasizing fashion apparel and accessories, home furnishings, electronics, and cosmetics."
+  },
+  {
+    "mstar_code": "10280030",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Home Improvement Retail",
+    "description": "Companies engaged in the retail sale of home improvement items, such as lumber, carpets, hardware and other building materials, plants and other garden supplies, and various other items for the home.",
+    "label_text": "Consumer Cyclical. Home Improvement Retail. Companies engaged in the retail sale of home improvement items, such as lumber, carpets, hardware and other building materials, plants and other garden supplies, and various other items for the home."
+  },
+  {
+    "mstar_code": "10280040",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Luxury Goods",
+    "description": "Companies engaged in the specialty retail of luxury items, including jewelry, watches, crystal, clothing, handbags, and accessories.",
+    "label_text": "Consumer Cyclical. Luxury Goods. Companies engaged in the specialty retail of luxury items, including jewelry, watches, crystal, clothing, handbags, and accessories."
+  },
+  {
+    "mstar_code": "10280050",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Internet Retail",
+    "description": "Companies engaged in the online retail sale of a diverse mix of merchandise. Excludes companies that target the travel industry and are classified in travel services.",
+    "label_text": "Consumer Cyclical. Internet Retail. Companies engaged in the online retail sale of a diverse mix of merchandise. Excludes companies that target the travel industry and are classified in travel services."
+  },
+  {
+    "mstar_code": "10280060",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10280",
+    "industry_name": "Specialty Retail",
+    "description": "Companies engaged in the specialty retail of various goods and products not covered in a specific industry group. This group includes retailers such as bookstores, office-supply stores, gas stations, pawn shops, novelty shops, auto-parts stores, electronics stores, home furnishing stores, sporting goods stores, toy and hobby stores, music and video stores, and many other miscellaneous retailers. 10290",
+    "label_text": "Consumer Cyclical. Specialty Retail. Companies engaged in the specialty retail of various goods and products not covered in a specific industry group. This group includes retailers such as bookstores, office-supply stores, gas stations, pawn shops, novelty shops, auto-parts stores, electronics stores, home furnishing stores, sporting goods stores, toy and hobby stores, music and video stores, and many other miscellaneous retailers. 10290"
+  },
+  {
+    "mstar_code": "10290010",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10290",
+    "industry_name": "Travel & Leisure Gambling",
+    "description": "Companies that own, operate, or manage lawful gaming activities and events, such as horse and dog racing, online gaming, bingo, and video lottery, as well as companies that supply products or services to gaming operators. It excludes companies operating casions.",
+    "label_text": "Consumer Cyclical. Travel & Leisure Gambling. Companies that own, operate, or manage lawful gaming activities and events, such as horse and dog racing, online gaming, bingo, and video lottery, as well as companies that supply products or services to gaming operators. It excludes companies operating casions."
+  },
+  {
+    "mstar_code": "10290020",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10290",
+    "industry_name": "Leisure",
+    "description": "Companies that manufacture, design, market, and sell bicycles, sporting goods, photographic equipment, recreational equipment, toys, and other leisure products or services.",
+    "label_text": "Consumer Cyclical. Leisure. Companies that manufacture, design, market, and sell bicycles, sporting goods, photographic equipment, recreational equipment, toys, and other leisure products or services."
+  },
+  {
+    "mstar_code": "10290030",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10290",
+    "industry_name": "Lodging",
+    "description": "Companies that develop, manage, own, and operate lodging facilities, including motels, extended-stay and full-service hotels, and economy hotels and inns. Resorts & Casinos Companies that own, operate, and manage resort properties, including beach clubs, time-share properties, and luxury resort hotels and that conduct casino gaming operations.",
+    "label_text": "Consumer Cyclical. Lodging. Companies that develop, manage, own, and operate lodging facilities, including motels, extended-stay and full-service hotels, and economy hotels and inns. Resorts & Casinos Companies that own, operate, and manage resort properties, including beach clubs, time-share properties, and luxury resort hotels and that conduct casino gaming operations."
+  },
+  {
+    "mstar_code": "10290040",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10290",
+    "industry_name": "Resorts & Casinos",
+    "description": "Companies that own, operate, and manage resort properties, including beach clubs, time-share properties, and luxury resort hotels and that conduct casino gaming operations.",
+    "label_text": "Consumer Cyclical. Resorts & Casinos. Companies that own, operate, and manage resort properties, including beach clubs, time-share properties, and luxury resort hotels and that conduct casino gaming operations."
+  },
+  {
+    "mstar_code": "10290050",
+    "sector_code": "102",
+    "sector_name": "Consumer Cyclical",
+    "group_code": "10290",
+    "industry_name": "Travel Services",
+    "description": "Companies that offer travel-related products or services, including online travel services. 103 10310",
+    "label_text": "Consumer Cyclical. Travel Services. Companies that offer travel-related products or services, including online travel services. 103 10310"
+  },
+  {
+    "mstar_code": "10310010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10310",
+    "industry_name": "Financial Services Asset Management Asset Management",
+    "description": "Investment management firms offering diversified services such as asset administration, investment advice, portfolio or mutual fund management, money management, and venture capital. 10320",
+    "label_text": "Financial Services. Financial Services Asset Management Asset Management. Investment management firms offering diversified services such as asset administration, investment advice, portfolio or mutual fund management, money management, and venture capital. 10320"
+  },
+  {
+    "mstar_code": "10320010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10320",
+    "industry_name": "Banks Banks\u2014Diversified",
+    "description": "Global, diverse financial institutions serving the corporate and consumer needs of retail banking, investment banking, trust management, credit cards and mortgage banking.",
+    "label_text": "Financial Services. Banks Banks\u2014Diversified. Global, diverse financial institutions serving the corporate and consumer needs of retail banking, investment banking, trust management, credit cards and mortgage banking."
+  },
+  {
+    "mstar_code": "10320020",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10320",
+    "industry_name": "Banks\u2014Regional",
+    "description": "Regional, diverse financial institutions serving the corporate, government, and consumer needs of retail banking, investment banking, trust management, credit cards, mortgage banking, savings and loan associations, building societies, cooperative banks, and homestead.",
+    "label_text": "Financial Services. Banks\u2014Regional. Regional, diverse financial institutions serving the corporate, government, and consumer needs of retail banking, investment banking, trust management, credit cards, mortgage banking, savings and loan associations, building societies, cooperative banks, and homestead."
+  },
+  {
+    "mstar_code": "10320030",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10320",
+    "industry_name": "Mortgage Finance",
+    "description": "Companies that originate, purchase, sell, and service home mortgage and equity loans. 10330",
+    "label_text": "Financial Services. Mortgage Finance. Companies that originate, purchase, sell, and service home mortgage and equity loans. 10330"
+  },
+  {
+    "mstar_code": "10330010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10330",
+    "industry_name": "Capital Markets Capital Markets",
+    "description": "Large, major investment houses offering investment banking, merchant banking, underwriting, brokerage, research, advisory, and trading services to broad-based national and international markets.",
+    "label_text": "Financial Services. Capital Markets Capital Markets. Large, major investment houses offering investment banking, merchant banking, underwriting, brokerage, research, advisory, and trading services to broad-based national and international markets."
+  },
+  {
+    "mstar_code": "10330020",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10330",
+    "industry_name": "Financial Data & Stock Exchanges",
+    "description": "Companies that operate security exchanges, including companies that offer financial data such as ratings, investment research, and other research solutions. 10340",
+    "label_text": "Financial Services. Financial Data & Stock Exchanges. Companies that operate security exchanges, including companies that offer financial data such as ratings, investment research, and other research solutions. 10340"
+  },
+  {
+    "mstar_code": "10340010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance Insurance\u2014Life",
+    "description": "Companies that underwrite, market, and distribute life insurance and related products to individuals and families. Insurance\u2014Property & Casualty Companies that underwrite, market, and distribute fire, marine, and casualty insurance for property and other tangible assets.",
+    "label_text": "Financial Services. Insurance Insurance\u2014Life. Companies that underwrite, market, and distribute life insurance and related products to individuals and families. Insurance\u2014Property & Casualty Companies that underwrite, market, and distribute fire, marine, and casualty insurance for property and other tangible assets."
+  },
+  {
+    "mstar_code": "10340020",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance \u2014 Property & Casualty",
+    "description": "Companies that underwrite, market, and distribute fire, marine, and casualty insurance for property and other tangible assets.",
+    "label_text": "Financial Services. Insurance \u2014 Property & Casualty. Companies that underwrite, market, and distribute fire, marine, and casualty insurance for property and other tangible assets."
+  },
+  {
+    "mstar_code": "10340030",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance\u2014Reinsurance",
+    "description": "Companies that underwrite and sell reinsurance.",
+    "label_text": "Financial Services. Insurance\u2014Reinsurance. Companies that underwrite and sell reinsurance."
+  },
+  {
+    "mstar_code": "10340040",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance\u2014Specialty",
+    "description": "Companies that underwrite, market, and distribute accident and health, sickness, mortgage, and other specialty or supplemental insurance to individuals and families.",
+    "label_text": "Financial Services. Insurance\u2014Specialty. Companies that underwrite, market, and distribute accident and health, sickness, mortgage, and other specialty or supplemental insurance to individuals and families."
+  },
+  {
+    "mstar_code": "10340050",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance\u2014Brokers",
+    "description": "Companies acting primarily as agents or intermediaries in creating insurance contracts between clients and insurance companies.",
+    "label_text": "Financial Services. Insurance\u2014Brokers. Companies acting primarily as agents or intermediaries in creating insurance contracts between clients and insurance companies."
+  },
+  {
+    "mstar_code": "10340060",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10340",
+    "industry_name": "Insurance\u2014Diversified",
+    "description": "Insurance companies with diversified interests in life, health, and property and casualty insurance. 10350",
+    "label_text": "Financial Services. Insurance\u2014Diversified. Insurance companies with diversified interests in life, health, and property and casualty insurance. 10350"
+  },
+  {
+    "mstar_code": "10350010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10350",
+    "industry_name": "Diversified Shell Companies",
+    "description": "Financial Services A development-stage company with no or minimal revenue. Includes capital pool, blank check, shell, and holding companies.",
+    "label_text": "Financial Services. Diversified Shell Companies. Financial Services A development-stage company with no or minimal revenue. Includes capital pool, blank check, shell, and holding companies."
+  },
+  {
+    "mstar_code": "10350020",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10350",
+    "industry_name": "Financial Conglomerates",
+    "description": "Companies that provide financial services, including banking, insurance, and capital markets, but with no dominant business line or source of revenue. 10360",
+    "label_text": "Financial Services. Financial Conglomerates. Companies that provide financial services, including banking, insurance, and capital markets, but with no dominant business line or source of revenue. 10360"
+  },
+  {
+    "mstar_code": "10360010",
+    "sector_code": "103",
+    "sector_name": "Financial Services",
+    "group_code": "10360",
+    "industry_name": "Credit Services Credit Services",
+    "description": "Companies that extend credit and make loans to individuals and businesses through credit cards, installment loans, student loans, and business loans that are associated with other consumer and business credit instruments. 104 10410",
+    "label_text": "Financial Services. Credit Services Credit Services. Companies that extend credit and make loans to individuals and businesses through credit cards, installment loans, student loans, and business loans that are associated with other consumer and business credit instruments. 104 10410"
+  },
+  {
+    "mstar_code": "10410010",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10410",
+    "industry_name": "Real Estate Real Estate Real Estate\u2014Development",
+    "description": "Companies that develop real estate and same properties held as inventory, or sold to others after development, with no specific portfolio composition.",
+    "label_text": "Real Estate. Real Estate Real Estate Real Estate\u2014Development. Companies that develop real estate and same properties held as inventory, or sold to others after development, with no specific portfolio composition."
+  },
+  {
+    "mstar_code": "10410020",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10410",
+    "industry_name": "Real Estate Services",
+    "description": "Companies that operate, manage, and lease real property with no specific portfolio composition. Includes real estate services like brokers and agents but excludes companies classified in the real estate \u2013 development industry. Real Estate\u2014Diversified Companies engaged in multiple real estate activities, including development, sales, management, and related services. Excludes companies classified in real estate development and real estate services. 10420",
+    "label_text": "Real Estate. Real Estate Services. Companies that operate, manage, and lease real property with no specific portfolio composition. Includes real estate services like brokers and agents but excludes companies classified in the real estate \u2013 development industry. Real Estate\u2014Diversified Companies engaged in multiple real estate activities, including development, sales, management, and related services. Excludes companies classified in real estate development and real estate services. 10420"
+  },
+  {
+    "mstar_code": "10410030",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10410",
+    "industry_name": "Real Estate \u2014 Diversified",
+    "description": "Companies engaged in multiple real estate activities, including development, sales, management, and related services. Excludes companies classified in real estate development and real estate services.",
+    "label_text": "Real Estate. Real Estate \u2014 Diversified. Companies engaged in multiple real estate activities, including development, sales, management, and related services. Excludes companies classified in real estate development and real estate services."
+  },
+  {
+    "mstar_code": "10420010",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REITs REIT\u2014Healthcare Facilities",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of healthcare properties, including long-term-care facilities, acute-care and rehab hospitals, psychiatric facilities, and substance-abuse centers.",
+    "label_text": "Real Estate. REITs REIT\u2014Healthcare Facilities. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of healthcare properties, including long-term-care facilities, acute-care and rehab hospitals, psychiatric facilities, and substance-abuse centers."
+  },
+  {
+    "mstar_code": "10420020",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Hotel & Motel",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of lodging properties, including full- and limited-service hotels and motels.",
+    "label_text": "Real Estate. REIT\u2014Hotel & Motel. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of lodging properties, including full- and limited-service hotels and motels."
+  },
+  {
+    "mstar_code": "10420030",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Industrial",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of industrial properties, including bulk warehouses, self-storage facilities, distribution facilities, and other light industrial facilities.",
+    "label_text": "Real Estate. REIT\u2014Industrial. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of industrial properties, including bulk warehouses, self-storage facilities, distribution facilities, and other light industrial facilities."
+  },
+  {
+    "mstar_code": "10420040",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Office",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of office properties, including office buildings, complexes, and centers.",
+    "label_text": "Real Estate. REIT\u2014Office. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of office properties, including office buildings, complexes, and centers."
+  },
+  {
+    "mstar_code": "10420050",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Residential",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of residential properties, including apartments, multifamily and single-family mortgage loans, manufactured housing, mobile-home parks, and other residential properties.",
+    "label_text": "Real Estate. REIT\u2014Residential. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of residential properties, including apartments, multifamily and single-family mortgage loans, manufactured housing, mobile-home parks, and other residential properties."
+  },
+  {
+    "mstar_code": "10420060",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Retail",
+    "description": "Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of retail properties, including community shopping centers, factory outlet shopping centers, enclosed shopping malls, strip centers, restaurants, and other retail properties. REIT\u2014Mortgage Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of mortgage-backed securities. Also includes companies that provide financing for income- producing real estate by purchasing or originating mortgages and mortgage-backed securities; and earns income from the interest on these investments.",
+    "label_text": "Real Estate. REIT\u2014Retail. Self-administered real estate investment trusts engaged in the development, acquisition, management, and disposition of retail properties, including community shopping centers, factory outlet shopping centers, enclosed shopping malls, strip centers, restaurants, and other retail properties. REIT\u2014Mortgage Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of mortgage-backed securities. Also includes companies that provide financing for income- producing real estate by purchasing or originating mortgages and mortgage-backed securities; and earns income from the interest on these investments."
+  },
+  {
+    "mstar_code": "10420070",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT \u2014 Mortgage",
+    "description": "Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of mortgage-backed securities. Also includes companies that provide financing for income-producing real estate by purchasing or originating mortgages and mortgage-backed securities; and earns income from the interest on these investments.",
+    "label_text": "Real Estate. REIT \u2014 Mortgage. Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of mortgage-backed securities. Also includes companies that provide financing for income-producing real estate by purchasing or originating mortgages and mortgage-backed securities; and earns income from the interest on these investments."
+  },
+  {
+    "mstar_code": "10420080",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Specialty",
+    "description": "Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of properties not classified elsewhere. Includes trusts that operate, lease, and invest in telecom towers, advertising spaces, timberland properties, and other properties not classified elsewhere.",
+    "label_text": "Real Estate. REIT\u2014Specialty. Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of properties not classified elsewhere. Includes trusts that operate, lease, and invest in telecom towers, advertising spaces, timberland properties, and other properties not classified elsewhere."
+  },
+  {
+    "mstar_code": "10420090",
+    "sector_code": "104",
+    "sector_name": "Real Estate",
+    "group_code": "10420",
+    "industry_name": "REIT\u2014Diversified",
+    "description": "Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of diversified property holdings, with no specific portfolio composition. 205 20510",
+    "label_text": "Real Estate. REIT\u2014Diversified. Self-administered real estate investment trusts engaged in the acquisition, management, and disposition of diversified property holdings, with no specific portfolio composition. 205 20510"
+  },
+  {
+    "mstar_code": "20510010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20510",
+    "industry_name": "Consumer Defensive Beverages\u2014 Beverages\u2014Brewers",
+    "description": "Alcoholic Companies that manufacture, sell, and distribute malt-based beverages, beers, and ales.",
+    "label_text": "Consumer Defensive. Consumer Defensive Beverages\u2014 Beverages\u2014Brewers. Alcoholic Companies that manufacture, sell, and distribute malt-based beverages, beers, and ales."
+  },
+  {
+    "mstar_code": "20510020",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20510",
+    "industry_name": "Beverages\u2014Wineries & Distilleries",
+    "description": "Companies that manufacture, sell, and distribute distilled liquors and wine. 20520",
+    "label_text": "Consumer Defensive. Beverages\u2014Wineries & Distilleries. Companies that manufacture, sell, and distribute distilled liquors and wine. 20520"
+  },
+  {
+    "mstar_code": "20520010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20520",
+    "industry_name": "Beverages\u2014Non- Beverages\u2014Non-Alcoholic",
+    "description": "Alcoholic Companies that manufacture, sell, and distribute soft drinks, carbonated and spring water, fruit juices, and other nonalcoholic beverages. 20525",
+    "label_text": "Consumer Defensive. Beverages\u2014Non- Beverages\u2014Non-Alcoholic. Alcoholic Companies that manufacture, sell, and distribute soft drinks, carbonated and spring water, fruit juices, and other nonalcoholic beverages. 20525"
+  },
+  {
+    "mstar_code": "20525010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20525",
+    "industry_name": "Consumer Confectioners",
+    "description": "Packaged Goods Companies that manufacture and refine raw sugar, syrup or finished cane and beet sugar, candy and chewing gum, chocolate, and cocoa products.",
+    "label_text": "Consumer Defensive. Consumer Confectioners. Packaged Goods Companies that manufacture and refine raw sugar, syrup or finished cane and beet sugar, candy and chewing gum, chocolate, and cocoa products."
+  },
+  {
+    "mstar_code": "20525020",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20525",
+    "industry_name": "Farm Products",
+    "description": "Companies that produce, raise, and grow agricultural and farm-based food products, including fruits, vegetables, other crop products, cattle, and eggs. Also includes seafood products.",
+    "label_text": "Consumer Defensive. Farm Products. Companies that produce, raise, and grow agricultural and farm-based food products, including fruits, vegetables, other crop products, cattle, and eggs. Also includes seafood products."
+  },
+  {
+    "mstar_code": "20525030",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20525",
+    "industry_name": "Household & Personal Products",
+    "description": "Companies that manufacture and market soaps and other detergents, polishing and sanitation goods and produce glycerin from vegetable and animal fats and oils. Also includes companies that manufacture and market personal-care products, including perfume, cosmetics, and other toilet preparations, infant and adult sanitary paper products, shaving razors and blades.",
+    "label_text": "Consumer Defensive. Household & Personal Products. Companies that manufacture and market soaps and other detergents, polishing and sanitation goods and produce glycerin from vegetable and animal fats and oils. Also includes companies that manufacture and market personal-care products, including perfume, cosmetics, and other toilet preparations, infant and adult sanitary paper products, shaving razors and blades."
+  },
+  {
+    "mstar_code": "20525040",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20525",
+    "industry_name": "Packaged Foods",
+    "description": "Companies that process and package food products, including frozen foods, grain products, canned foods, snack foods, health supplements, vitamins, and pet products. 20540",
+    "label_text": "Consumer Defensive. Packaged Foods. Companies that process and package food products, including frozen foods, grain products, canned foods, snack foods, health supplements, vitamins, and pet products. 20540"
+  },
+  {
+    "mstar_code": "20540010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20540",
+    "industry_name": "Education Education & Training Services",
+    "description": "Companies that provide educational and training services, including college and junior-college courses, higher-education programs, technical and vocational training, and other education services. Retail\u2014Defensive Discount Stores Companies engaged in the retail sale of a variety of merchandise at low and discounted prices.",
+    "label_text": "Consumer Defensive. Education Education & Training Services. Companies that provide educational and training services, including college and junior-college courses, higher-education programs, technical and vocational training, and other education services. Retail\u2014Defensive Discount Stores Companies engaged in the retail sale of a variety of merchandise at low and discounted prices."
+  },
+  {
+    "mstar_code": "20550010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20550",
+    "industry_name": "Tobacco",
+    "description": "Companies that manufacture and market cigarettes, e-cigarettes, smokeless tobacco, cigars, snuff, snus, smoking tobacco, chewing tobacco, and other tobacco products.",
+    "label_text": "Consumer Defensive. Tobacco. Companies that manufacture and market cigarettes, e-cigarettes, smokeless tobacco, cigars, snuff, snus, smoking tobacco, chewing tobacco, and other tobacco products."
+  },
+  {
+    "mstar_code": "20550020",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20550",
+    "industry_name": "Food Distribution",
+    "description": "Companies primarily engaged in the distribution and supply of food products, including packaged goods, meat, dairy products, frozen foods, and related groceries to grocery stores, restaurants, and other food-service centers.",
+    "label_text": "Consumer Defensive. Food Distribution. Companies primarily engaged in the distribution and supply of food products, including packaged goods, meat, dairy products, frozen foods, and related groceries to grocery stores, restaurants, and other food-service centers."
+  },
+  {
+    "mstar_code": "20550030",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20550",
+    "industry_name": "Grocery Stores",
+    "description": "Companies engaged in the retail sale of groceries, including dry goods, meat, produce, frozen foods, dairy products, seafood, deli/bakery, and nonfood items. 20560",
+    "label_text": "Consumer Defensive. Grocery Stores. Companies engaged in the retail sale of groceries, including dry goods, meat, produce, frozen foods, dairy products, seafood, deli/bakery, and nonfood items. 20560"
+  },
+  {
+    "mstar_code": "20560010",
+    "sector_code": "205",
+    "sector_name": "Consumer Defensive",
+    "group_code": "20560",
+    "industry_name": "Tobacco Products Tobacco",
+    "description": "Companies that manufacture and market cigarettes, e-cigarettes, snuff, cigars, chewing tobacco, and all other tobacco products. 206 20610",
+    "label_text": "Consumer Defensive. Tobacco Products Tobacco. Companies that manufacture and market cigarettes, e-cigarettes, snuff, cigars, chewing tobacco, and all other tobacco products. 206 20610"
+  },
+  {
+    "mstar_code": "20610010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20610",
+    "industry_name": "Healthcare Biotechnology Biotechnology",
+    "description": "Biotech and biopharmaceutical companies engaged in research, discovery, development, and production of innovative drug and drug- related technologies. 20620",
+    "label_text": "Healthcare. Healthcare Biotechnology Biotechnology. Biotech and biopharmaceutical companies engaged in research, discovery, development, and production of innovative drug and drug- related technologies. 20620"
+  },
+  {
+    "mstar_code": "20620010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20620",
+    "industry_name": "Drug Drug Manufacturers\u2014General",
+    "description": "Manufacturers Major, global pharmaceutical manufacturers offering a broad and diverse line of drug and healthcare products; industry leaders that have made a significant commitment to the research and development of a long pipeline of drugs.",
+    "label_text": "Healthcare. Drug Drug Manufacturers\u2014General. Manufacturers Major, global pharmaceutical manufacturers offering a broad and diverse line of drug and healthcare products; industry leaders that have made a significant commitment to the research and development of a long pipeline of drugs."
+  },
+  {
+    "mstar_code": "20620020",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20620",
+    "industry_name": "Drug Manufacturers\u2014Specialty & Generic",
+    "description": "Companies engaged in development and discovery of branded forms of drug, drug-related products, generic drug products, and animal-related drugs. Also includes companies that cultivate, process, and farm cannabis or marijuana. 20630",
+    "label_text": "Healthcare. Drug Manufacturers\u2014Specialty & Generic. Companies engaged in development and discovery of branded forms of drug, drug-related products, generic drug products, and animal-related drugs. Also includes companies that cultivate, process, and farm cannabis or marijuana. 20630"
+  },
+  {
+    "mstar_code": "20630010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20630",
+    "industry_name": "Healthcare Plans Healthcare Plans",
+    "description": "Companies that offer a wide variety of managed health products and services, including HMOs, PPOs, and other health insurance plans, and are largely U.S.-domiciled. Healthcare Medical Care Facilities Providers & Companies that provide medical services through the ownership and Services operation of hospitals, and other auxiliary healthcare-related services, including healthcare staffing and ambulatory services. Also, companies that operate long-term-care facilities, such as assisted-living centers, nursing and retirement homes, substance-abuse centers, and centers for rehabilitation services.",
+    "label_text": "Healthcare. Healthcare Plans Healthcare Plans. Companies that offer a wide variety of managed health products and services, including HMOs, PPOs, and other health insurance plans, and are largely U.S.-domiciled. Healthcare Medical Care Facilities Providers & Companies that provide medical services through the ownership and Services operation of hospitals, and other auxiliary healthcare-related services, including healthcare staffing and ambulatory services. Also, companies that operate long-term-care facilities, such as assisted-living centers, nursing and retirement homes, substance-abuse centers, and centers for rehabilitation services."
+  },
+  {
+    "mstar_code": "20645010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20645",
+    "industry_name": "Drug Manufacturers \u2014 Specialty & Generic",
+    "description": "Companies that develop, manufacture, market, and distribute specialty and generic drug products. Includes drug manufacturers not engaged in the discovery and development of new molecular entities, but rather focused on patient-affordable generic drugs and specialty drug products.",
+    "label_text": "Healthcare. Drug Manufacturers \u2014 Specialty & Generic. Companies that develop, manufacture, market, and distribute specialty and generic drug products. Includes drug manufacturers not engaged in the discovery and development of new molecular entities, but rather focused on patient-affordable generic drugs and specialty drug products."
+  },
+  {
+    "mstar_code": "20645020",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20645",
+    "industry_name": "Pharmaceutical Retailers",
+    "description": "Companies engaged in the retail sale of prescription drugs and patent medicines as well as a number of related lines, such as cosmetics, toiletries, and novelty merchandise.",
+    "label_text": "Healthcare. Pharmaceutical Retailers. Companies engaged in the retail sale of prescription drugs and patent medicines as well as a number of related lines, such as cosmetics, toiletries, and novelty merchandise."
+  },
+  {
+    "mstar_code": "20645030",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20645",
+    "industry_name": "Health Information Services",
+    "description": "Companies that develop and provide comprehensive physician practice management systems and software for hospitals, medical practices, and managed-care organizations. 20650",
+    "label_text": "Healthcare. Health Information Services. Companies that develop and provide comprehensive physician practice management systems and software for hospitals, medical practices, and managed-care organizations. 20650"
+  },
+  {
+    "mstar_code": "20650010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20650",
+    "industry_name": "Medical Devices & Medical Devices",
+    "description": "Instruments Companies that develop, manufacture, and market medical and surgical equipment and machinery, including orthopedic products, respiratory care equipment, x-ray equipment, laser systems, implants, pacemakers, and other major medical machines and apparatus.",
+    "label_text": "Healthcare. Medical Devices & Medical Devices. Instruments Companies that develop, manufacture, and market medical and surgical equipment and machinery, including orthopedic products, respiratory care equipment, x-ray equipment, laser systems, implants, pacemakers, and other major medical machines and apparatus."
+  },
+  {
+    "mstar_code": "20650020",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20650",
+    "industry_name": "Medical Instruments & Supplies",
+    "description": "Companies that develop, design, manufacture, and market medical and dental instruments and supplies, including wheelchairs, catheters, needles, syringes, eyewear and eyecare products, and other health- related supplies. 20660",
+    "label_text": "Healthcare. Medical Instruments & Supplies. Companies that develop, design, manufacture, and market medical and dental instruments and supplies, including wheelchairs, catheters, needles, syringes, eyewear and eyecare products, and other health- related supplies. 20660"
+  },
+  {
+    "mstar_code": "20660010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20660",
+    "industry_name": "Medical Diagnostics & Research",
+    "description": "Diagnostics & Companies that provide laboratory testing services through imaging Research and other diagnostic services to the medical industry. 20670",
+    "label_text": "Healthcare. Medical Diagnostics & Research. Diagnostics & Companies that provide laboratory testing services through imaging Research and other diagnostic services to the medical industry. 20670"
+  },
+  {
+    "mstar_code": "20670010",
+    "sector_code": "206",
+    "sector_name": "Healthcare",
+    "group_code": "20670",
+    "industry_name": "Medical Medical Distribution",
+    "description": "Distribution Companies primarily engaged in the distribution and supply of medical instruments and supplies, ophthalmic goods, and other health-related items to the medical and healthcare industry. 207 20710",
+    "label_text": "Healthcare. Medical Medical Distribution. Distribution Companies primarily engaged in the distribution and supply of medical instruments and supplies, ophthalmic goods, and other health-related items to the medical and healthcare industry. 207 20710"
+  },
+  {
+    "mstar_code": "20710010",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20710",
+    "industry_name": "Utilities Utilities\u2014 Utilities\u2014Independent Power Producers",
+    "description": "Independent Power Companies that own and operate merchant power generation facilities Producers and sell electricity into retail and wholesale markets. Utilities\u2014Renewable Companies that generate, produce, or transmit electric energy from renewable sources, including hydropower, wind, geothermal, biomass, solar, tidal, and wave. 20720",
+    "label_text": "Utilities. Utilities Utilities\u2014 Utilities\u2014Independent Power Producers. Independent Power Companies that own and operate merchant power generation facilities Producers and sell electricity into retail and wholesale markets. Utilities\u2014Renewable Companies that generate, produce, or transmit electric energy from renewable sources, including hydropower, wind, geothermal, biomass, solar, tidal, and wave. 20720"
+  },
+  {
+    "mstar_code": "20710020",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20710",
+    "industry_name": "Utilities \u2014 Renewable",
+    "description": "Companies that generate, transmit, or distribute electricity from renewable resources, including solar, wind, biomass, geothermal, and hydroelectric sources.",
+    "label_text": "Utilities. Utilities \u2014 Renewable. Companies that generate, transmit, or distribute electricity from renewable resources, including solar, wind, biomass, geothermal, and hydroelectric sources."
+  },
+  {
+    "mstar_code": "20720010",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20720",
+    "industry_name": "Utilities\u2014 Utilities\u2014Regulated Water",
+    "description": "Regulated Companies that distribute water for sale, including water-treatment companies.",
+    "label_text": "Utilities. Utilities\u2014 Utilities\u2014Regulated Water. Regulated Companies that distribute water for sale, including water-treatment companies."
+  },
+  {
+    "mstar_code": "20720020",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20720",
+    "industry_name": "Utilities\u2014Regulated Electric",
+    "description": "Companies that generate, transmit, or distribute electric energy for sale.",
+    "label_text": "Utilities. Utilities\u2014Regulated Electric. Companies that generate, transmit, or distribute electric energy for sale."
+  },
+  {
+    "mstar_code": "20720030",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20720",
+    "industry_name": "Utilities\u2014Regulated Gas",
+    "description": "Companies that transmit, store, or distribute natural gas.",
+    "label_text": "Utilities. Utilities\u2014Regulated Gas. Companies that transmit, store, or distribute natural gas."
+  },
+  {
+    "mstar_code": "20720040",
+    "sector_code": "207",
+    "sector_name": "Utilities",
+    "group_code": "20720",
+    "industry_name": "Utilities\u2014Diversified",
+    "description": "Companies engaged in the regulated generation, transmission, or distribution of electricity and natural gas, merchant power generation facilities, and energy marketing operations. 308 30810",
+    "label_text": "Utilities. Utilities\u2014Diversified. Companies engaged in the regulated generation, transmission, or distribution of electricity and natural gas, merchant power generation facilities, and energy marketing operations. 308 30810"
+  },
+  {
+    "mstar_code": "30810010",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30810",
+    "industry_name": "Communication Telecommunication Telecom Services",
+    "description": "Services Services Companies that provide local, national, international, and long-distance phone services, as well as companies offering wireless services. Also includes companies that provide services for faxing, prepaid phone cards, pay phones, and directory assistance, or that provide Internet access services. 30820",
+    "label_text": "Communication Services. Communication Telecommunication Telecom Services. Services Services Companies that provide local, national, international, and long-distance phone services, as well as companies offering wireless services. Also includes companies that provide services for faxing, prepaid phone cards, pay phones, and directory assistance, or that provide Internet access services. 30820"
+  },
+  {
+    "mstar_code": "30820010",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30820",
+    "industry_name": "Media\u2014Diversified Advertising Agencies",
+    "description": "Companies engaged in full-service advertising operations, including the planning, creating, producing, and placing of advertising in media such as TV, radio, and print. Also includes companies providing marketing services, including outdoor advertising, promotional materials, direct- mail services, digital marketing, event management services, and marketing research services.",
+    "label_text": "Communication Services. Media\u2014Diversified Advertising Agencies. Companies engaged in full-service advertising operations, including the planning, creating, producing, and placing of advertising in media such as TV, radio, and print. Also includes companies providing marketing services, including outdoor advertising, promotional materials, direct- mail services, digital marketing, event management services, and marketing research services."
+  },
+  {
+    "mstar_code": "30820020",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30820",
+    "industry_name": "Publishing",
+    "description": "Companies that publish periodicals, such as magazines, comic books, trade journals, books, pamphlets, e-publications, and newspapers.",
+    "label_text": "Communication Services. Publishing. Companies that publish periodicals, such as magazines, comic books, trade journals, books, pamphlets, e-publications, and newspapers."
+  },
+  {
+    "mstar_code": "30820030",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30820",
+    "industry_name": "Broadcasting",
+    "description": "Companies that own or operate radio broadcast stations and provide and produce radio programming services, television programming services, and television broadcast stations. Also includes companies providing Internet-based video on demand and pay-per-view programming services.",
+    "label_text": "Communication Services. Broadcasting. Companies that own or operate radio broadcast stations and provide and produce radio programming services, television programming services, and television broadcast stations. Also includes companies providing Internet-based video on demand and pay-per-view programming services."
+  },
+  {
+    "mstar_code": "30820040",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30820",
+    "industry_name": "Entertainment",
+    "description": "Companies primarily operating with diversified holdings in movies, television, and other media-based entertainment. Also includes companies that produce and distribute motion pictures, television programmers, video, and the operation of movie theaters; and provide cable television services. 30830",
+    "label_text": "Communication Services. Entertainment. Companies primarily operating with diversified holdings in movies, television, and other media-based entertainment. Also includes companies that produce and distribute motion pictures, television programmers, video, and the operation of movie theaters; and provide cable television services. 30830"
+  },
+  {
+    "mstar_code": "30830010",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30830",
+    "industry_name": "Interactive Media Internet Content & Information",
+    "description": "Companies that provide content, Internet navigation services, and reference guide information for the World Wide Web through its platforms, including social media, search engines, and networking platform companies. Electronic Gaming & Multimedia Companies that primarily develop or publish video games and other multimedia software applications for devices that include personal computers, video game systems, cellphones, tablets, and other portable media players. 309 30910",
+    "label_text": "Communication Services. Interactive Media Internet Content & Information. Companies that provide content, Internet navigation services, and reference guide information for the World Wide Web through its platforms, including social media, search engines, and networking platform companies. Electronic Gaming & Multimedia Companies that primarily develop or publish video games and other multimedia software applications for devices that include personal computers, video game systems, cellphones, tablets, and other portable media players. 309 30910"
+  },
+  {
+    "mstar_code": "30830020",
+    "sector_code": "308",
+    "sector_name": "Communication Services",
+    "group_code": "30830",
+    "industry_name": "Entertainment",
+    "description": "Companies that produce and distribute filmed entertainment, including motion pictures, television programs, music, and other entertainment content. Also includes companies that operate motion picture theaters.",
+    "label_text": "Communication Services. Entertainment. Companies that produce and distribute filmed entertainment, including motion pictures, television programs, music, and other entertainment content. Also includes companies that operate motion picture theaters."
+  },
+  {
+    "mstar_code": "30910010",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Energy Oil & Gas Oil & Gas Drilling",
+    "description": "Companies primarily engaged in the drilling for petroleum and natural gas.",
+    "label_text": "Energy. Energy Oil & Gas Oil & Gas Drilling. Companies primarily engaged in the drilling for petroleum and natural gas."
+  },
+  {
+    "mstar_code": "30910020",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Oil & Gas E&P",
+    "description": "Energy companies which are primarily engaged in oil and gas exploration and production.",
+    "label_text": "Energy. Oil & Gas E&P. Energy companies which are primarily engaged in oil and gas exploration and production."
+  },
+  {
+    "mstar_code": "30910030",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Oil & Gas Integrated",
+    "description": "Major energy companies engaged in the diverse aspects of oil and gas operations, including crude oil and gas exploration, production, manufacturing, refining, marketing, and transportation.",
+    "label_text": "Energy. Oil & Gas Integrated. Major energy companies engaged in the diverse aspects of oil and gas operations, including crude oil and gas exploration, production, manufacturing, refining, marketing, and transportation."
+  },
+  {
+    "mstar_code": "30910040",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Oil & Gas Midstream",
+    "description": "Companies that own and operate oilfield pipelines and are involved in the gathering, processing, and transportation of natural crude petroleum.",
+    "label_text": "Energy. Oil & Gas Midstream. Companies that own and operate oilfield pipelines and are involved in the gathering, processing, and transportation of natural crude petroleum."
+  },
+  {
+    "mstar_code": "30910050",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Oil & Gas Refining & Marketing",
+    "description": "Companies that refine, gather, market, and sell petroleum and petroleum products.",
+    "label_text": "Energy. Oil & Gas Refining & Marketing. Companies that refine, gather, market, and sell petroleum and petroleum products."
+  },
+  {
+    "mstar_code": "30910060",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30910",
+    "industry_name": "Oil & Gas Equipment & Services",
+    "description": "Companies that provide oilfield services and equipment for activities such as contract drilling and seismic surveys. Also includes equipment and tool rental, pumping and processing services, and inspection and contracting services. 30920",
+    "label_text": "Energy. Oil & Gas Equipment & Services. Companies that provide oilfield services and equipment for activities such as contract drilling and seismic surveys. Also includes equipment and tool rental, pumping and processing services, and inspection and contracting services. 30920"
+  },
+  {
+    "mstar_code": "30920010",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30920",
+    "industry_name": "Other Energy Thermal Coal",
+    "description": "Sources Companies that mine thermal coal, which is used for generating energy. Excludes companies that mine coking coal to make steel.",
+    "label_text": "Energy. Other Energy Thermal Coal. Sources Companies that mine thermal coal, which is used for generating energy. Excludes companies that mine coking coal to make steel."
+  },
+  {
+    "mstar_code": "30920020",
+    "sector_code": "309",
+    "sector_name": "Energy",
+    "group_code": "30920",
+    "industry_name": "Uranium",
+    "description": "Companies that mine, refine, produce, and mill uranium and uranium-related materials. Industrials Aerospace & Aerospace & Defense Defense Companies that manufacture aerospace and defense products, including aircraft and aircraft parts, tanks, guided missiles, space vehicles, ships and marine equipment, and other aerospace and defense components and systems, as well as companies supporting these products through repair and maintenance services. 31020",
+    "label_text": "Energy. Uranium. Companies that mine, refine, produce, and mill uranium and uranium-related materials. Industrials Aerospace & Aerospace & Defense Defense Companies that manufacture aerospace and defense products, including aircraft and aircraft parts, tanks, guided missiles, space vehicles, ships and marine equipment, and other aerospace and defense components and systems, as well as companies supporting these products through repair and maintenance services. 31020"
+  },
+  {
+    "mstar_code": "31010010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31010",
+    "industry_name": "Aerospace & Defense",
+    "description": "Companies that manufacture aerospace and defense products, including aircraft and aircraft parts, tanks, guided missiles, space vehicles, ships and marine equipment, and other defense-related equipment.",
+    "label_text": "Industrials. Aerospace & Defense. Companies that manufacture aerospace and defense products, including aircraft and aircraft parts, tanks, guided missiles, space vehicles, ships and marine equipment, and other defense-related equipment."
+  },
+  {
+    "mstar_code": "31020010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31020",
+    "industry_name": "Business Services Specialty Business Services",
+    "description": "Companies that provide services to the commercial or business market, including information distribution, warehousing, graphic design, accounting, printing, and miscellaneous services.",
+    "label_text": "Industrials. Business Services Specialty Business Services. Companies that provide services to the commercial or business market, including information distribution, warehousing, graphic design, accounting, printing, and miscellaneous services."
+  },
+  {
+    "mstar_code": "31020020",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31020",
+    "industry_name": "Consulting Services",
+    "description": "Companies that provide management, research, and consulting services to businesses and other agencies. Includes companies engaged in strategic and management consulting services, interior design, and information and analytics.",
+    "label_text": "Industrials. Consulting Services. Companies that provide management, research, and consulting services to businesses and other agencies. Includes companies engaged in strategic and management consulting services, interior design, and information and analytics."
+  },
+  {
+    "mstar_code": "31020030",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31020",
+    "industry_name": "Rental & Leasing Services",
+    "description": "Companies that rent or lease durable goods to the commercial and consumer market, including cars and trucks, medical and industrial equipment, appliances and tools, and miscellaneous goods.",
+    "label_text": "Industrials. Rental & Leasing Services. Companies that rent or lease durable goods to the commercial and consumer market, including cars and trucks, medical and industrial equipment, appliances and tools, and miscellaneous goods."
+  },
+  {
+    "mstar_code": "31020040",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31020",
+    "industry_name": "Security & Protection Services",
+    "description": "Companies that provide security and protective services, including protective or preventive devices, security guards and inspection services, security alarm and monitoring systems, detention and correction facilities, and other security-based services.",
+    "label_text": "Industrials. Security & Protection Services. Companies that provide security and protective services, including protective or preventive devices, security guards and inspection services, security alarm and monitoring systems, detention and correction facilities, and other security-based services."
+  },
+  {
+    "mstar_code": "31020050",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31020",
+    "industry_name": "Staffing & Employment Services",
+    "description": "Companies that provide staffing and employment services, including temporary staffing and permanent placement, outsources workforce and other employment-related services to businesses and government. Also includes companies providing online staffing services. 31030",
+    "label_text": "Industrials. Staffing & Employment Services. Companies that provide staffing and employment services, including temporary staffing and permanent placement, outsources workforce and other employment-related services to businesses and government. Also includes companies providing online staffing services. 31030"
+  },
+  {
+    "mstar_code": "31030010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31030",
+    "industry_name": "Conglomerates Conglomerates",
+    "description": "Companies that are in several separate lines of business with no single line providing the dominant source of revenue or income. 31040",
+    "label_text": "Industrials. Conglomerates Conglomerates. Companies that are in several separate lines of business with no single line providing the dominant source of revenue or income. 31040"
+  },
+  {
+    "mstar_code": "31040010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31040",
+    "industry_name": "Construction Engineering & Construction",
+    "description": "Companies engaged in the design, construction, or contracting of industrial and nonresidential structures, streets and highways, bridges and tunnels, docks and piers, dams and water projects, utility lines, and other large building projects. Also includes companies that provide engineering consulting and architectural services to consumer and commercial clients. Infrastructure Operations Companies that develop, finance, maintain, or manage infrastructure operations such as ports, airports, and roadways.",
+    "label_text": "Industrials. Construction Engineering & Construction. Companies engaged in the design, construction, or contracting of industrial and nonresidential structures, streets and highways, bridges and tunnels, docks and piers, dams and water projects, utility lines, and other large building projects. Also includes companies that provide engineering consulting and architectural services to consumer and commercial clients. Infrastructure Operations Companies that develop, finance, maintain, or manage infrastructure operations such as ports, airports, and roadways."
+  },
+  {
+    "mstar_code": "31040020",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31040",
+    "industry_name": "Infrastructure Operations",
+    "description": "Companies that own and operate infrastructure assets, including airports, toll roads, marine ports, and other transportation infrastructure.",
+    "label_text": "Industrials. Infrastructure Operations. Companies that own and operate infrastructure assets, including airports, toll roads, marine ports, and other transportation infrastructure."
+  },
+  {
+    "mstar_code": "31040030",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31040",
+    "industry_name": "Building Products & Equipment",
+    "description": "Companies that manufacture building and construction products and materials, including ceramic floor and wall tiles, plumbing, HVAC, framing structures, and doors. Excludes companies that are classified in the building materials industry. 31050",
+    "label_text": "Industrials. Building Products & Equipment. Companies that manufacture building and construction products and materials, including ceramic floor and wall tiles, plumbing, HVAC, framing structures, and doors. Excludes companies that are classified in the building materials industry. 31050"
+  },
+  {
+    "mstar_code": "31050010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31050",
+    "industry_name": "Farm & Heavy Farm & Heavy Construction Machinery",
+    "description": "Construction Companies that manufacture agricultural and construction Machinery machinery, including tractors, planting and harvesting machines, cranes, earthmovers, excavators, and related equipment and machinery. Includes truck manufacturers that provide local and long- haul trucking and transfer services for freight and cargo. 31060",
+    "label_text": "Industrials. Farm & Heavy Farm & Heavy Construction Machinery. Construction Companies that manufacture agricultural and construction Machinery machinery, including tractors, planting and harvesting machines, cranes, earthmovers, excavators, and related equipment and machinery. Includes truck manufacturers that provide local and long- haul trucking and transfer services for freight and cargo. 31060"
+  },
+  {
+    "mstar_code": "31060010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31060",
+    "industry_name": "Industrial Industrial Distribution",
+    "description": "Distribution Companies primarily engaged in the distribution and supply of industrial equipment, including construction and farming machinery, garden equipment and supplies, and other industrial items to a diversified market of redistributors and end users. 31070",
+    "label_text": "Industrials. Industrial Industrial Distribution. Distribution Companies primarily engaged in the distribution and supply of industrial equipment, including construction and farming machinery, garden equipment and supplies, and other industrial items to a diversified market of redistributors and end users. 31070"
+  },
+  {
+    "mstar_code": "31070010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Industrial Products Business Equipment & Supplies",
+    "description": "Companies that manufacture and market office and business machines, such as copiers, fax machines, postage meters, point-of- sale terminals, and ATMs.",
+    "label_text": "Industrials. Industrial Products Business Equipment & Supplies. Companies that manufacture and market office and business machines, such as copiers, fax machines, postage meters, point-of- sale terminals, and ATMs."
+  },
+  {
+    "mstar_code": "31070020",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Specialty Industrial Machinery",
+    "description": "Companies engaged in diversified machinery manufacturing operations, including paper and food production machines, printing machinery, engines and turbines, air and gas processors, blowers and fans, furnaces and ovens, and other general and special industry machines.",
+    "label_text": "Industrials. Specialty Industrial Machinery. Companies engaged in diversified machinery manufacturing operations, including paper and food production machines, printing machinery, engines and turbines, air and gas processors, blowers and fans, furnaces and ovens, and other general and special industry machines."
+  },
+  {
+    "mstar_code": "31070030",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Metal Fabrication",
+    "description": "Companies that fabricate, stamp, or form iron, steel, or other metals into products such as structured components by cutting, bending, and assembling processes of basic metals to create a final product.",
+    "label_text": "Industrials. Metal Fabrication. Companies that fabricate, stamp, or form iron, steel, or other metals into products such as structured components by cutting, bending, and assembling processes of basic metals to create a final product."
+  },
+  {
+    "mstar_code": "31070040",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Pollution & Treatment Controls",
+    "description": "Companies that manufacture equipment designed to control pollution, including control systems, hazardous waste disposal systems, recovery systems, treatment processes, filtration systems, cleaning and separation applications, and recycling machinery. Tools & Accessories Companies that manufacture small, hand-held tools, including power-driven drills, welding apparatus, lawn and garden equipment, and other power or manually operated tools and accessories, such as hardware, nuts, bolts, rivets, and other fasteners.",
+    "label_text": "Industrials. Pollution & Treatment Controls. Companies that manufacture equipment designed to control pollution, including control systems, hazardous waste disposal systems, recovery systems, treatment processes, filtration systems, cleaning and separation applications, and recycling machinery. Tools & Accessories Companies that manufacture small, hand-held tools, including power-driven drills, welding apparatus, lawn and garden equipment, and other power or manually operated tools and accessories, such as hardware, nuts, bolts, rivets, and other fasteners."
+  },
+  {
+    "mstar_code": "31070050",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Trucking",
+    "description": "Companies that provide local and long-distance trucking and freight services, including general freight, refrigerated freight, household goods movers, and waste collection.",
+    "label_text": "Industrials. Trucking. Companies that provide local and long-distance trucking and freight services, including general freight, refrigerated freight, household goods movers, and waste collection."
+  },
+  {
+    "mstar_code": "31070060",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31070",
+    "industry_name": "Electrical Equipment & Parts",
+    "description": "Companies that manufacture electrical equipment (such as smart- grid electrical equipment, utility metering, high- and low-voltage electrical equipment, transmission control devices, switches, and lighting distribution boxes), batteries, electrical wires and cables, and automation control. 31080",
+    "label_text": "Industrials. Electrical Equipment & Parts. Companies that manufacture electrical equipment (such as smart- grid electrical equipment, utility metering, high- and low-voltage electrical equipment, transmission control devices, switches, and lighting distribution boxes), batteries, electrical wires and cables, and automation control. 31080"
+  },
+  {
+    "mstar_code": "31080010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Transportation Airports & Air Services",
+    "description": "Air transportation companies that provide related air services, including helicopter transportation, air-charter services, in-flight catering services, and air emergency and business-related services.",
+    "label_text": "Industrials. Transportation Airports & Air Services. Air transportation companies that provide related air services, including helicopter transportation, air-charter services, in-flight catering services, and air emergency and business-related services."
+  },
+  {
+    "mstar_code": "31080020",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Airlines",
+    "description": "Major international passenger airline companies that fly a wide range of domestic and international routes.",
+    "label_text": "Industrials. Airlines. Major international passenger airline companies that fly a wide range of domestic and international routes."
+  },
+  {
+    "mstar_code": "31080030",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Railroads",
+    "description": "Companies that provide transportation of freight by line-haul railroad as well as related railroad equipment and repair services. Includes companies offering passenger services via railway and roadways.",
+    "label_text": "Industrials. Railroads. Companies that provide transportation of freight by line-haul railroad as well as related railroad equipment and repair services. Includes companies offering passenger services via railway and roadways."
+  },
+  {
+    "mstar_code": "31080040",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Marine Shipping",
+    "description": "Companies that transport freight and cargo via water and operate marine ports. Includes companies that provide passenger services via water.",
+    "label_text": "Industrials. Marine Shipping. Companies that transport freight and cargo via water and operate marine ports. Includes companies that provide passenger services via water."
+  },
+  {
+    "mstar_code": "31080050",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Trucking",
+    "description": "Companies that provide local and long-haul trucking and transfer services for freight and cargo.",
+    "label_text": "Industrials. Trucking. Companies that provide local and long-haul trucking and transfer services for freight and cargo."
+  },
+  {
+    "mstar_code": "31080060",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31080",
+    "industry_name": "Integrated Freight & Logistics",
+    "description": "Companies that transport freight and cargo via diversified methods such as railroads, airlines, and waterways. 31090",
+    "label_text": "Industrials. Integrated Freight & Logistics. Companies that transport freight and cargo via diversified methods such as railroads, airlines, and waterways. 31090"
+  },
+  {
+    "mstar_code": "31090010",
+    "sector_code": "310",
+    "sector_name": "Industrials",
+    "group_code": "31090",
+    "industry_name": "Waste Waste Management",
+    "description": "Management Companies that collect, treat, store, transfer, recycle, and dispose of waste materials, as well as companies that provide supporting environmental, engineering, and consulting services. Technology Software Information Technology Services Companies that provide computer-system design, network and systems operations, repair services, technical support, computer technology consulting, development, and implementation services.",
+    "label_text": "Industrials. Waste Waste Management. Management Companies that collect, treat, store, transfer, recycle, and dispose of waste materials, as well as companies that provide supporting environmental, engineering, and consulting services. Technology Software Information Technology Services Companies that provide computer-system design, network and systems operations, repair services, technical support, computer technology consulting, development, and implementation services."
+  },
+  {
+    "mstar_code": "31110010",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31110",
+    "industry_name": "Information Technology Services",
+    "description": "Companies that provide information technology consulting, custom systems design, integration, and other technology services to clients.",
+    "label_text": "Technology. Information Technology Services. Companies that provide information technology consulting, custom systems design, integration, and other technology services to clients."
+  },
+  {
+    "mstar_code": "31110020",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31110",
+    "industry_name": "Software\u2014Application",
+    "description": "Companies that primarily design, develop, market, and support application software programs, including those that are cloud-based, for specific consumer and business functions.",
+    "label_text": "Technology. Software\u2014Application. Companies that primarily design, develop, market, and support application software programs, including those that are cloud-based, for specific consumer and business functions."
+  },
+  {
+    "mstar_code": "31110030",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31110",
+    "industry_name": "Software\u2014Infrastructure",
+    "description": "Companies that develop, design, support, and provide system software and services, including operating systems, networking software and devices, web portal services, cloud storage, and related services. 31120",
+    "label_text": "Technology. Software\u2014Infrastructure. Companies that develop, design, support, and provide system software and services, including operating systems, networking software and devices, web portal services, cloud storage, and related services. 31120"
+  },
+  {
+    "mstar_code": "31120010",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Hardware Communication Equipment",
+    "description": "Companies that design, develop, manufacture, and market equipment for the communication industry, including fiber-optic cable; telecom peripherals; voice and data transmission and processing equipment; satellite products and equipment; video- conferencing systems and equipment; and interactive communication systems. Also includes companies that offer networking products that provide connectivity solutions for multi-use computing environments.",
+    "label_text": "Technology. Hardware Communication Equipment. Companies that design, develop, manufacture, and market equipment for the communication industry, including fiber-optic cable; telecom peripherals; voice and data transmission and processing equipment; satellite products and equipment; video- conferencing systems and equipment; and interactive communication systems. Also includes companies that offer networking products that provide connectivity solutions for multi-use computing environments."
+  },
+  {
+    "mstar_code": "31120020",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Computer Hardware",
+    "description": "Companies that design, manufacture, and market computer systems, high mainframe servers, supercomputer, and 3D printers and scanners. Also includes companies that manufacture and market data storage products and other storage and backup devices for computers.",
+    "label_text": "Technology. Computer Hardware. Companies that design, manufacture, and market computer systems, high mainframe servers, supercomputer, and 3D printers and scanners. Also includes companies that manufacture and market data storage products and other storage and backup devices for computers."
+  },
+  {
+    "mstar_code": "31120030",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Consumer Electronics",
+    "description": "Companies that manufacture and market mobile communication products and household audio and video equipment, including radios, stereos, televisions, DVD player and personal use Drones. Excludes electric household appliances. Electronic Components Companies that design, develop, manufacture, and market electronic devices, including electron tubes; electronic capacitors; electronic resistors; electronic coil and transformers; sensors; LED, TFT, and LCD displays; electronic connectors; printed circuit boards; circuit assemblies; and other general-purpose electronics components and products.",
+    "label_text": "Technology. Consumer Electronics. Companies that manufacture and market mobile communication products and household audio and video equipment, including radios, stereos, televisions, DVD player and personal use Drones. Excludes electric household appliances. Electronic Components Companies that design, develop, manufacture, and market electronic devices, including electron tubes; electronic capacitors; electronic resistors; electronic coil and transformers; sensors; LED, TFT, and LCD displays; electronic connectors; printed circuit boards; circuit assemblies; and other general-purpose electronics components and products."
+  },
+  {
+    "mstar_code": "31120040",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Engineering & Construction",
+    "description": "Companies engaged in the design, construction, or contracting of industrial and nonresidential structures, streets and highways, bridges and tunnels, docks and piers, dams and water supply lines, and sewer systems. Includes companies that provide engineering services.",
+    "label_text": "Technology. Engineering & Construction. Companies engaged in the design, construction, or contracting of industrial and nonresidential structures, streets and highways, bridges and tunnels, docks and piers, dams and water supply lines, and sewer systems. Includes companies that provide engineering services."
+  },
+  {
+    "mstar_code": "31120050",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Electronics & Computer Distribution",
+    "description": "Companies primarily engaged in the distribution, supply, and support of computers and computer systems, peripheral equipment, and software and other technological goods, including electronic equipment and appliances, electrical cable, wires, and other components to various consumer, commercial, and manufacturing customers.",
+    "label_text": "Technology. Electronics & Computer Distribution. Companies primarily engaged in the distribution, supply, and support of computers and computer systems, peripheral equipment, and software and other technological goods, including electronic equipment and appliances, electrical cable, wires, and other components to various consumer, commercial, and manufacturing customers."
+  },
+  {
+    "mstar_code": "31120060",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31120",
+    "industry_name": "Scientific & Technical Instruments",
+    "description": "Companies that design, develop, manufacture, and market sophisticated electronics of a technical nature, including lab apparatus, process and flow control devices, precise measurement and signal processing tools, search and navigation equipment, and other scientific or technical analytical or measuring devices. 31130",
+    "label_text": "Technology. Scientific & Technical Instruments. Companies that design, develop, manufacture, and market sophisticated electronics of a technical nature, including lab apparatus, process and flow control devices, precise measurement and signal processing tools, search and navigation equipment, and other scientific or technical analytical or measuring devices. 31130"
+  },
+  {
+    "mstar_code": "31130010",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31130",
+    "industry_name": "Semiconductors Semiconductor Equipment & Materials",
+    "description": "Companies that design, develop, manufacture, and market equipment, spare parts, tools, cleaning devices, and related materials for the semiconductor industry.",
+    "label_text": "Technology. Semiconductors Semiconductor Equipment & Materials. Companies that design, develop, manufacture, and market equipment, spare parts, tools, cleaning devices, and related materials for the semiconductor industry."
+  },
+  {
+    "mstar_code": "31130020",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31130",
+    "industry_name": "Semiconductors",
+    "description": "Semiconductor companies that design, manufacture, and market integrated circuits, microprocessors, logic devices, chipsets, and memory chips for a wide variety of users. Includes companies that design, manufacture, and market general-application integrated circuits and memory and memory-intensive products.",
+    "label_text": "Technology. Semiconductors. Semiconductor companies that design, manufacture, and market integrated circuits, microprocessors, logic devices, chipsets, and memory chips for a wide variety of users. Includes companies that design, manufacture, and market general-application integrated circuits and memory and memory-intensive products."
+  },
+  {
+    "mstar_code": "31130030",
+    "sector_code": "311",
+    "sector_name": "Technology",
+    "group_code": "31130",
+    "industry_name": "Solar",
+    "description": "Companies that design, manufacture, market, or install solar power systems and components.",
+    "label_text": "Technology. Solar. Companies that design, manufacture, market, or install solar power systems and components."
+  }
+]

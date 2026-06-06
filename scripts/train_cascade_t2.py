@@ -47,10 +47,12 @@ from scripts.cascade_predict import load_cascade_assets, _rank_artifact
 T2_L4_SEG_VEC = "t2_cascade_seg_vec.pkl"
 T2_L4_SEG     = "t2_cascade_L4_seg.joblib"
 T2_SUMMARY    = "t2_cascade_summary.json"
+T2_MAPPING    = "task1_to_task2_map.json"
 
 DEFAULT_T2_CSV = ROOT / "data/cleaned/task2_clean.csv"
 DEFAULT_T1_CSV = ROOT / "data/cleaned/task1_clean.csv"
 DEFAULT_MODELS = ROOT / "models"
+DEFAULT_OUTPUT = ROOT / "models_task2"
 
 
 # ── Data helpers ───────────────────────────────────────────────────────────────
@@ -63,6 +65,16 @@ def _normalize_subcode(value: Any) -> str:
         s = s[:-2]
     digits = "".join(c for c in s if c.isdigit())
     return digits.zfill(10) if digits else ""
+
+
+def _normalize_mstar(value: Any) -> str:
+    if pd.isna(value):
+        return ""
+    s = str(value).strip()
+    if s.endswith(".0"):
+        s = s[:-2]
+    digits = "".join(c for c in s if c.isdigit())
+    return digits.zfill(8) if digits else ""
 
 
 def load_t2_frame(t2_csv: Path, t1_csv: Path | None = None) -> pd.DataFrame:
@@ -95,6 +107,58 @@ def load_t2_frame(t2_csv: Path, t1_csv: Path | None = None) -> pd.DataFrame:
         df["full_text"] = df["seg_text"]
 
     return df.reset_index(drop=True)
+
+
+def build_mapping_report(df: pd.DataFrame, t1_csv: Path | None = None) -> tuple[dict[str, list[str]], dict[str, Any]]:
+    """Build and audit the deterministic Task 1 -> Task 2 child mapping."""
+    task1_to_task2 = (
+        df.groupby("mstar_code")["sub_code"]
+        .apply(lambda values: sorted(set(str(v) for v in values if str(v))))
+        .sort_index()
+        .to_dict()
+    )
+
+    embedded_parent_violations = int((df["sub_code"].str[:8] != df["mstar_code"]).sum())
+    joined_pair_count = 0
+    parent_not_in_company_date_count = 0
+    multi_parent_company_date_count = 0
+
+    if t1_csv is not None and Path(t1_csv).exists():
+        t1 = pd.read_csv(t1_csv, usecols=["CompanyId", "AsOfDate", "MstarGlobal"])
+        t1["joined_mstar_code"] = t1["MstarGlobal"].map(_normalize_mstar)
+        t1_parent_sets = (
+            t1[t1["joined_mstar_code"] != ""]
+            .groupby(["CompanyId", "AsOfDate"])["joined_mstar_code"]
+            .apply(lambda values: sorted({str(v) for v in values if str(v)}))
+            .reset_index(name="task1_parent_codes")
+        )
+        joined = df.merge(
+            t1_parent_sets,
+            on=["CompanyId", "AsOfDate"],
+            how="left",
+        )
+        joined = joined[joined["task1_parent_codes"].notna()].copy()
+        joined_pair_count = int(len(joined))
+        parent_not_in_company_date_count = int(
+            sum(
+                row["mstar_code"] not in row["task1_parent_codes"]
+                for _, row in joined.iterrows()
+            )
+        )
+        multi_parent_company_date_count = int(
+            sum(len(parents) > 1 for parents in joined["task1_parent_codes"])
+        )
+
+    report = {
+        "task1_parent_count": int(len(task1_to_task2)),
+        "task2_child_count": int(df["sub_code"].nunique()),
+        "embedded_parent_violations": embedded_parent_violations,
+        "company_date_join_rows": joined_pair_count,
+        "parent_not_in_company_date_count": parent_not_in_company_date_count,
+        "multi_parent_company_date_count": multi_parent_company_date_count,
+        "constraint_policy": "hard_constraint_by_predicted_task1_mstar",
+    }
+    return task1_to_task2, report
 
 
 # ── Model helpers ──────────────────────────────────────────────────────────────
@@ -172,14 +236,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Train Task 2 hybrid cascade (T1 cascade + L4)")
     parser.add_argument("--t2-csv",       default=str(DEFAULT_T2_CSV))
     parser.add_argument("--t1-csv",       default=str(DEFAULT_T1_CSV))
-    parser.add_argument("--models-dir",   default=str(DEFAULT_MODELS))
+    parser.add_argument("--models-dir",   default=str(DEFAULT_MODELS), help="Directory containing Task 1 cascade assets.")
+    parser.add_argument("--output-dir",   default=str(DEFAULT_OUTPUT), help="Directory for Task 2 artifacts.")
     parser.add_argument("--max-features", type=int,   default=60000)
     parser.add_argument("--max-iter",     type=int,   default=5000)
     parser.add_argument("--test-size",    type=float, default=0.2)
     args = parser.parse_args()
 
     models_dir = Path(args.models_dir)
-    models_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # ── Load Task 1 cascade ───────────────────────────────────────────────────
     print("Loading Task 1 cascade assets (L1->L2->L3)...")
@@ -195,6 +261,17 @@ def main() -> None:
     per_mstar = df.groupby("mstar_code")["sub_code"].nunique()
     print(f"  L4 candidates per MSTAR: avg={per_mstar.mean():.1f}  max={per_mstar.max()}"
           f"  trivial={( per_mstar==1).sum()}")
+
+    task1_to_task2_map, mapping_report = build_mapping_report(df, Path(args.t1_csv))
+    print("\nTask 1 -> Task 2 mapping audit:")
+    print(f"  Parent MSTAR codes: {mapping_report['task1_parent_count']}")
+    print(f"  Child subindustry codes: {mapping_report['task2_child_count']}")
+    print(f"  Embedded parent violations: {mapping_report['embedded_parent_violations']}")
+    print(
+        "  Parent not present in company-date Task 1 set: "
+        f"{mapping_report['parent_not_in_company_date_count']} / {mapping_report['company_date_join_rows']}"
+    )
+    print(f"  Multi-parent company-date rows: {mapping_report['multi_parent_company_date_count']}")
 
     # ── Train / test split ────────────────────────────────────────────────────
     train_df, test_df = train_test_split(
@@ -241,9 +318,10 @@ def main() -> None:
     print(f"{'='*62}")
 
     # ── Save L4 artifacts ─────────────────────────────────────────────────────
-    print(f"\nSaving L4 artifacts to {models_dir} ...")
-    joblib.dump(seg_vec, models_dir / T2_L4_SEG_VEC)
-    joblib.dump(l4,      models_dir / T2_L4_SEG)
+    print(f"\nSaving L4 artifacts to {output_dir} ...")
+    joblib.dump(seg_vec, output_dir / T2_L4_SEG_VEC)
+    joblib.dump(l4,      output_dir / T2_L4_SEG)
+    (output_dir / T2_MAPPING).write_text(json.dumps(task1_to_task2_map, indent=2), encoding="utf-8")
 
     summary = {
         "rows":            int(len(df)),
@@ -266,9 +344,10 @@ def main() -> None:
             "total":   int(len(l4)),
             "trivial": int(n_trivial),
         },
+        "mapping_audit": mapping_report,
         "t1_cascade_used_for": "L1->L2->L3 (MSTAR prediction)",
     }
-    (models_dir / T2_SUMMARY).write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    (output_dir / T2_SUMMARY).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print("Done.")
     print(json.dumps(summary, indent=2))
 

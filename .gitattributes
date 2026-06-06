@@ -1,3 +1,5 @@
 models/*.joblib filter=lfs diff=lfs merge=lfs -text
 models/*.pkl filter=lfs diff=lfs merge=lfs -text
+models_task2/*.joblib filter=lfs diff=lfs merge=lfs -text
+models_task2/*.pkl filter=lfs diff=lfs merge=lfs -text
 llm_finetuning/results/**/* filter=lfs diff=lfs merge=lfs -text

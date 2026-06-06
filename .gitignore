@@ -1,14 +1,10 @@
-# data files - too large for git
-data/
-*.duckdb
-*.docx
-*.pdf
-~$*
+# ============================================================
+#  GECS / TAVSS Capstone — .gitignore
+#  Keep SOURCE in git. Heavy model weights, embeddings, caches,
+#  and raw data stay out (regenerable or hosted on HF / LFS).
+# ============================================================
 
-# outputs - regenerated
-outputs/
-
-# python
+# --- Python ---
 __pycache__/
 *.pyc
 *.pyo
@@ -19,37 +15,78 @@ dist/
 build/
 .eggs/
 .venv/
+venv/
+env/
 
-# jupyter
+# --- Jupyter ---
 .ipynb_checkpoints/
-notebooks/.ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
-# editor
+# --- Editor / OS ---
 .vscode/
 .idea/
-
-# os
 .DS_Store
 Thumbs.db
 
-# Next.js
+# --- Raw / cleaned data (too large; regenerable) ---
+data/
+*.duckdb
+serve/*.sqlite
+serve/*.sqlite-*
+
+# --- Regenerated outputs / logs ---
+outputs/
+*.log
+
+# --- Binary model & embedding formats ---
+#  (models/ + models_task2/ joblib/pkl stay via Git LFS — see .gitattributes)
+*.npy
+*.npz
+*.safetensors
+*.pt
+*.pth
+*.h5
+*.onnx
+
+# --- Archives ---
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# --- Heavy experiment / checkpoint directories (regenerable) ---
+models_v*/
+models_company*/
+models_segment_aware/
+models_task2/*.joblib
+models_task2/*.pkl
+checkpoints/
+embeddings_*/
+hf_space/models/
+hf_space_modernbert/models/
+llm_finetuning/results/
+llm_finetuning/models/
+
+# --- Large scratch / export folders ---
+Task 2 updated+/
+V3 RESULTS -NEW/
+New/
+_render_final/
+_render_fixed/
+_template_compare/
+_template_slide5/
+_template_slide7/
+
+# --- Office binaries & private files ---
+*.pptx
+*.xlsx
+*.docx
+*.pdf
+~$*
+*teammate_evaluation*
+# (final report PDF is force-added explicitly: git add -f)
+
+# --- Next.js ---
 frontend/.next/
 frontend/node_modules/
 frontend/.env.local
-
-# Model binaries tracked via Git LFS
-# (models/*.joblib and models/*.pkl go through LFS automatically)
-
-# Heavy LLM weights — upload directly to HuggingFace, not GitHub
-llm_finetuning/results/
-
-# Not needed for hosting
-notebooks/
-docs/
-data_augmentation/
-graph_visualizer/
-reports/
-generate_team_tasks.py
-export_notebooks.py
-/app.py
-/main.py

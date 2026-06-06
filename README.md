@@ -1,4 +1,4 @@
-# TAVSS — Industry Classification System
+# TAVSS: Industry Classification System
 
 **MGT 599 Capstone · Group 4 · DePaul University**
 
@@ -10,9 +10,9 @@ TAVSS classifies company and segment descriptions into Morningstar Global Equity
 
 | Metric | Score |
 |---|---|
-| Task 1 — Macro F1 (145 classes) | 75.0% |
-| Task 1 — Top-3 Accuracy | 91.4% |
-| Task 2 — Macro F1 (428 classes) | 55.44% |
+| Task 1: Macro F1 (145 classes) | 75.0% |
+| Task 1: Top-3 Accuracy | 91.4% |
+| Task 2: Macro F1 (428 classes) | 55.44% |
 | Evaluation | Company-disjoint test set (10,717 rows) |
 
 The system was built on a company-disjoint train/test split. An earlier result of 88.90% was traced to train/test leakage (97.2% of test rows were memorized during training) and is documented as an audit finding in `CASCADE_AUDIT.md`. The 75.0% figure is the honest, reproducible baseline.
@@ -62,7 +62,7 @@ The Vercel frontend proxies all classification requests to the Hugging Face Spac
 
 ```
 .
-├── hf_space_modernbert/       # HuggingFace Space — FastAPI + Gradio + ModernBERT inference
+├── hf_space_modernbert/       # HuggingFace Space: FastAPI + Gradio + ModernBERT inference
 │   ├── app.py                 # FastAPI app: /api/predict, /health, Gradio UI
 │   ├── models/                # best_model_state.pt, industry_classes.npy, label maps
 │   └── requirements.txt
@@ -182,7 +182,7 @@ Key training details:
 - Three output heads: sector (11 classes), group (55 classes), industry (145 classes)
 - Loss: joint cross-entropy across all three heads
 - Inference scoring: `log_softmax(industry) + 0.30 * log_softmax(group)[sector_idx] + 0.03 * log_softmax(sector)[sector_idx]`
-- Evaluation: company-disjoint split — no company appears in both train and test
+- Evaluation: company-disjoint split, no company appears in both train and test
 
 Task 2 cascade:
 
@@ -219,4 +219,4 @@ Full audit record: [`CASCADE_AUDIT.md`](CASCADE_AUDIT.md)
 
 ## Team
 
-Group 4 — MGT 599 Capstone — DePaul University
+Group 4 · MGT 599 Capstone · DePaul University
