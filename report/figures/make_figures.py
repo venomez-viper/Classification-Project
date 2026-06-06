@@ -227,6 +227,55 @@ def exhibit_6():
                  loc="left", pad=10)
     fig.savefig("exhibit_6_calibration.png"); plt.close(fig)
 
+# ---- Exhibit 7: cascade level accuracy, leaked vs honest --------------------
+def exhibit_7():
+    levels = ["L1 sector\n(11 classes)", "L2 group\n(55 classes)", "L3 industry\n(145 classes)"]
+    leaked = [93.48, 91.00, 88.90]
+    honest = [80.59, 70.75, 59.65]
+    x = np.arange(3); w = 0.38
+    fig, ax = plt.subplots(figsize=(9.2, 3.9))
+    ax.bar(x - w/2, leaked, w, label="With leakage (memorized)", color=RED, zorder=3)
+    ax.bar(x + w/2, honest, w, label="Honest (company-disjoint)", color=NAVY, zorder=3)
+    for xi, v in zip(x - w/2, leaked):
+        ax.text(xi, v + 1.2, f"{v:.1f}", ha="center", fontsize=9, fontweight="bold", color=RED)
+    for xi, v in zip(x + w/2, honest):
+        ax.text(xi, v + 1.2, f"{v:.1f}", ha="center", fontsize=9, fontweight="bold", color=NAVY)
+    for xi, a, b in zip(x, leaked, honest):
+        ax.annotate(f"-{a-b:.1f}", xy=(xi, (a+b)/2), ha="center", fontsize=8,
+                    color=GRAY, style="italic")
+    ax.set_xticks(x); ax.set_xticklabels(levels)
+    ax.set_ylim(0, 105); ax.set_ylabel("Accuracy / Macro F1 (%)"); ax.set_yticks(range(0, 101, 25))
+    ax.legend(frameon=False, fontsize=9, loc="lower left")
+    style_axes(ax)
+    ax.set_title("Exhibit 7   Error propagation: the leak grows at every level of the cascade",
+                 loc="left", pad=10)
+    fig.savefig("exhibit_7_levels.png"); plt.close(fig)
+
+# ---- Exhibit 8: TF-IDF representation ceiling -------------------------------
+def exhibit_8():
+    names = ["Segment text only (100k)", "LongProfile only (50k)",
+             "Word + char n-grams", "Combined word (150k)", "Both vectorizers stacked"]
+    vals  = [39.06, 46.92, 55.56, 54.97, 57.49]
+    order = np.argsort(vals)
+    names = [names[i] for i in order]; vals = [vals[i] for i in order]
+    cols  = [STEEL]*4 + [NAVY]
+    fig, ax = plt.subplots(figsize=(9.2, 3.6))
+    y = np.arange(len(vals))
+    ax.barh(y, vals, color=cols, zorder=3, height=0.62)
+    for yi, v in zip(y, vals):
+        ax.text(v + 0.5, yi, f"{v:.2f}", va="center", fontsize=9.5, fontweight="bold")
+    ax.axvline(59.65, color=GOLD, ls=(0, (5, 3)), lw=1.3)
+    ax.text(59.9, 0.1, "honest cascade 59.65", color=GOLD, fontsize=8.6, fontweight="bold")
+    ax.set_yticks(y); ax.set_yticklabels(names, fontsize=9)
+    ax.set_xlim(0, 70); ax.set_xlabel("Macro F1 (%)")
+    for s in ["top", "right", "left"]:
+        ax.spines[s].set_visible(False)
+    ax.tick_params(length=0)
+    ax.set_title("Exhibit 8   The bag-of-words ceiling: every TF-IDF variant plateaus near 57%",
+                 loc="left", pad=10)
+    fig.savefig("exhibit_8_tfidf.png"); plt.close(fig)
+
 if __name__ == "__main__":
     exhibit_1(); exhibit_2(); exhibit_3(); exhibit_4(); exhibit_5(); exhibit_6()
+    exhibit_7(); exhibit_8()
     print("All exhibits written.")

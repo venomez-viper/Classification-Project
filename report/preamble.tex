@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{framed}
 \usepackage{microtype}
+\usepackage{float}
 
 % ---- Palette ----
 \definecolor{navy}{HTML}{0B2A4A}
@@ -31,7 +32,7 @@
 \setmonofont{Consolas}[Scale=0.84]
 
 % ---- Geometry ----
-\geometry{a4paper, top=1.05in, bottom=1.0in, left=1.05in, right=1.05in, headsep=16pt}
+\geometry{a4paper, top=0.85in, bottom=0.8in, left=0.8in, right=0.8in, headsep=14pt}
 
 % ---- Body text feel ----
 \setlength{\parindent}{0pt}
@@ -78,6 +79,14 @@
     \fboxsep=10pt\colorbox{warnbg}}%
   \MakeFramed{\advance\hsize-\width\FrameRestore}%
   \sffamily\small\noindent}{\endMakeFramed\par\smallskip}
+
+% ---- Figures: pin in place, suppress "Figure N:", style caption as source note ----
+\floatplacement{figure}{H}
+\makeatletter
+\long\def\@makecaption#1#2{%
+  \vskip 3pt
+  {\sffamily\footnotesize\color{inkgray}#2}\par}
+\makeatother
 
 % ---- Tables ----
 \renewcommand{\arraystretch}{1.18}
