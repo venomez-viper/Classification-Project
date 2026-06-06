@@ -1,0 +1,83 @@
+% ============================================================
+%  McKinsey-style preamble (network-free: base + present pkgs)
+%  Engine: XeLaTeX (via pandoc -H preamble.tex)
+% ============================================================
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{framed}
+\usepackage{microtype}
+
+% ---- Palette ----
+\definecolor{navy}{HTML}{0B2A4A}
+\definecolor{accent}{HTML}{1F6FEB}
+\definecolor{steel}{HTML}{3D6B99}
+\definecolor{teal}{HTML}{1AA89C}
+\definecolor{inkgray}{HTML}{3A4754}
+\definecolor{rulegray}{HTML}{C9D2DC}
+\definecolor{keybg}{HTML}{EEF3FA}
+\definecolor{warnbg}{HTML}{FBEEEC}
+\definecolor{warnframe}{HTML}{C0392B}
+\definecolor{shadecolor}{HTML}{F4F6F8}
+
+% ---- Fonts (Windows system fonts) ----
+\setmainfont{Georgia}
+\setsansfont{Calibri}
+\newfontfamily\headingfont{Calibri}
+\setmonofont{Consolas}[Scale=0.84]
+
+% ---- Geometry ----
+\geometry{a4paper, top=1.05in, bottom=1.0in, left=1.05in, right=1.05in, headsep=16pt}
+
+% ---- Body text feel ----
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\baselinestretch}{1.06}
+\color{inkgray}
+
+% ---- Section titles (sans, navy) via kernel \@startsection ----
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {20\p@}{8\p@}{\headingfont\LARGE\bfseries\color{navy}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {14\p@}{5\p@}{\headingfont\large\bfseries\color{navy}}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {10\p@}{3\p@}{\headingfont\normalsize\bfseries\color{steel}}}
+\makeatother
+
+% ---- Headers / footers ----
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\headingfont\footnotesize\color{inkgray}GECS Industry Classification System}
+\fancyhead[R]{\headingfont\footnotesize\color{inkgray}TAVSS}
+\fancyfoot[L]{\headingfont\footnotesize\color{inkgray}MGT 599 Capstone \textbar{} Group 4}
+\fancyfoot[R]{\headingfont\footnotesize\color{inkgray}\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rulegray}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{rulegray}\leaders\hrule height \footrulewidth\hfill}}
+
+% ---- Links ----
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=navy, urlcolor=accent, citecolor=accent}
+
+% ---- Callout boxes (built on framed: left accent bar + tint) ----
+\newenvironment{keyfinding}{%
+  \par\smallskip
+  \def\FrameCommand{{\color{accent}\vrule width 3.5pt}\hspace{0pt}%
+    \fboxsep=10pt\colorbox{keybg}}%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \sffamily\small\noindent}{\endMakeFramed\par\smallskip}
+\newenvironment{caution}{%
+  \par\smallskip
+  \def\FrameCommand{{\color{warnframe}\vrule width 3.5pt}\hspace{0pt}%
+    \fboxsep=10pt\colorbox{warnbg}}%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \sffamily\small\noindent}{\endMakeFramed\par\smallskip}
+
+% ---- Tables ----
+\renewcommand{\arraystretch}{1.18}
