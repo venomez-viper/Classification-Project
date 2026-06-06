@@ -44,7 +44,7 @@ Repository: \texttt{github.com/venomez-viper/Classification-Project}
 
 # Executive summary
 
-This report documents the design, evaluation, and deployment of an automated system that reads a plain-English company description and assigns it a Morningstar Global Equity Classification Structure (GECS) industry code. The system, named TAVSS, solves two linked problems: a 145-class industry classification (Task 1) and a 428-class sub-industry classification (Task 2). It is live in production behind a public web application.
+We set out to teach a machine to do something analysts do by hand every day: read a company's description and decide which industry it belongs to. The result is TAVSS, a system that takes plain-English text and returns a Morningstar Global Equity Classification Structure (GECS) code, first the broad industry (145 of them, Task 1) and then the finer sub-industry (428 of them, Task 2). It is not slide-ware. It runs in production, behind a public web app, and anyone can try it.
 
 The headline results are honest and reproducible. On a company-disjoint test set of 10,717 rows, the final model reaches **75.0% Macro F1** on Task 1, with 91.4% top-3 and 95.3% top-5 accuracy, and **55.44% Macro F1** on the harder 428-class Task 2. Against a random baseline of 0.69%, the Task 1 model is roughly 109 times better than chance on the metric that punishes long-tail failure most.
 
@@ -53,6 +53,8 @@ The single most important decision in the project was not a model choice. It was
 ::: keyfinding
 **The thesis of this project.** A classifier is only as credible as the split it was tested on. We caught a 29-point leak in our own baseline, reset to an honest 59.65%, and rebuilt to 75.0% on a company-disjoint test set. Every number in this report is measured on data the model never saw in training, and every claim is traceable to a script in the repository.
 :::
+
+![](figures/exhibit_kpi.png){width=100%}
 
 What follows is the full account: the business problem, the data, the methodology, the leakage discovery, the complete model development ledger from the first cascade to the final calibrated ensemble, the novel taxonomy-anchoring idea, the Task 2 extension, an in-depth error analysis, the production deployment on Hugging Face and Vercel, and how the team divided the work. Curated and full code for the key components appears in the appendices; the complete codebase is on GitHub.
 
@@ -63,6 +65,10 @@ What follows is the full account: the business problem, the data, the methodolog
 Every analytical task in capital markets begins with a question of comparability: which companies belong in the same peer group. Index construction, sector exposure limits, relative-value screening, factor research, and risk aggregation all depend on a consistent map from a company to an industry. Morningstar maintains one such map, the GECS taxonomy, a hierarchical scheme in which an eight-digit code encodes a sector, an industry group, and a specific industry.
 
 Maintaining that map is labor. New companies file, existing companies pivot, and conglomerates span several industries at once. Analysts read business descriptions and assign codes by hand. The work is slow, it is expensive, and two analysts can disagree on the same filing. An automated classifier that proposes a code, ranks the alternatives, and quantifies its own confidence turns a manual reclassification queue into a review queue, where an analyst confirms or overrides instead of deciding from a blank slate.
+
+## What a wrong code costs
+
+It is tempting to treat industry classification as bookkeeping. It is not. A company filed under the wrong code quietly distorts everything built on top of it. Drop an oil-and-gas midstream operator into utilities and a sector-exposure report understates energy risk. Misfile a fintech lender as a software company and a bank screen never sees it. The mistakes are small, individually invisible, and they pile up in exactly the places nobody is looking. That is why the institutions who maintain these taxonomies pay people to read filings one at a time, and why a tool that can take the routine cases off their desk, and flag the genuinely hard ones, is worth building well rather than quickly.
 
 ## The two tasks
 
@@ -114,6 +120,10 @@ The 145 classes follow a long-tailed distribution. A handful of common industrie
 
 The company-disjoint split that anchors this report depends on knowing which company each row belongs to. The provided split files had been reduced to three columns, `text`, `label_idx`, and `mstar_code`, with `CompanyId` stripped out, which made an honest split impossible on its face. We recovered the identifier by joining each row back to the master table on a 200-character prefix of its `LongProfile`, falling back to a 100-character prefix where the longer key was ambiguous. The join matched 98.3% of the 53,585 rows. That recovered key is what made every company-level result, and the per-company error analysis, possible.
 
+## Three companies, three kinds of hard
+
+A few real examples make the difficulty concrete. A regional bank is the easy case: its description is full of words like deposits, net interest margin, and commercial lending, and almost any model lands it on Banks - Regional. A pharmaceutical company is nearly as clean. The trouble starts with the conglomerates. Take a diversified industrial holding company that builds elevators, sells insurance, and runs a logistics arm. Its one company-level description mentions all three businesses, and depending on which segment you are scoring, the correct code is different. The text does not change; the right answer does. No model, however large, can read a single paragraph and reliably produce three different labels from it. That is not a modeling gap we failed to close. It is a property of the data, and naming it honestly is part of the job.
+
 # Methodology: honest evaluation by design
 
 ## The split is the experiment
@@ -151,7 +161,9 @@ Throughout, the system reports a confidence percentage. It is computed as a soft
 
 The first cascade classifier reported 88.90% Macro F1 and looked finished. It was not. The demo worked only for four hand-tuned example inputs; arbitrary text returned erratic predictions wrapped in confident-looking percentages. That gap between the score and the behavior is what triggered the audit. The audit traced the training script and found that the model had been trained on the full 53,585-row table and evaluated on a 10,717-row subset of the very same table.
 
-![Exhibit 2 reads left to right: almost all of the test set was already in training, so the reported score collapses to an honest 59.65% once the overlap is removed.](figures/exhibit_2_leakage.png){width=100%}
+![](figures/exhibit_leakage.png){width=100%}
+
+![](figures/exhibit_waterfall.png){width=100%}
 
 Of the 10,717 test rows, 10,412 (97.2%) had been seen in training. On the 305 rows that were genuinely unseen, the same model scored 81.73%, so the model was not fake, but the headline was memorization. Rebuilt on a company-disjoint split with no overlap, the identical architecture scored 59.65%.
 
@@ -165,7 +177,7 @@ The audit surfaced three structural facts that defined the rest of the work: a r
 
 With an honest baseline of 59.65%, every subsequent gain was real. The development arc spans classical ensembles and transformer fine-tuning; the figure below traces it from the discarded leak to the locked result.
 
-![Each bar after the honest reset is measured on the same company-disjoint test set, so the gains are directly comparable.](figures/exhibit_1_journey.png){width=100%}
+![](figures/exhibit_journey.png){width=100%}
 
 ## The classical plateau, experiment by experiment
 
@@ -206,7 +218,7 @@ The first honest gains came from engineering, not from larger models. Each versi
 
 The ceiling was not an accident of one feature set. We tested every TF-IDF variant we could construct, and they all converged on the same wall.
 
-![The representation ceiling held across every bag-of-words configuration we tried; none crossed roughly 57%, well short of the 75% bar.](figures/exhibit_8_tfidf.png){width=100%}
+![](figures/exhibit_tfidf.png){width=100%}
 
 ## BreezeML: a classifier library we built and shipped
 
@@ -281,13 +293,13 @@ prediction = score.argmax(dim=-1)
 
 The full four-level system, including the Task 2 stage described later, is shown below.
 
-![Levels 1 to 3 are joint heads on one shared ModernBERT-large encoder. Level 4 is a separate constrained SVM gated by the Level-3 prediction.](figures/exhibit_3_architecture.png){width=100%}
+![](figures/exhibit_architecture.png){width=100%}
 
 # Calibration and the locked headline
 
 The greedy two-checkpoint ensemble scored 73.95%. Calibration closed the last gap, and how we calibrated is itself a statement of method. Three options were on the table, and the highest number was the wrong one to report.
 
-![Tuning 145 per-class thresholds directly on the test set produced 77.51%, but five-fold cross-validation showed the lift was an artifact. The defensible choice is 75.0%.](figures/exhibit_6_calibration.png){width=100%}
+![](figures/exhibit_calibration.png){width=100%}
 
 Optimizing a separate decision threshold per class against the test set reached 77.51%, but that procedure fits 145 free parameters to the test data, and five-fold cross-validation of the same procedure returned 73.96%, essentially no lift. A single light temperature-scaling parameter (tau = 0.2), fit without touching per-class test labels, generalized cleanly and produced 75.0%. We locked the headline at 75.0% and disclose all three numbers in the open.
 
@@ -316,6 +328,8 @@ def predict_task2(text, task1_code):
 
 This constrained cascade reaches **55.44% Macro F1** across all 428 classes, up from roughly 20% for a flat classifier, and within striking distance of the oracle ceiling of about 62% that would apply if Task 1 were always correct. The result is lower than Task 1 for structural reasons that no amount of modeling removes: the long tail is far more severe, and any Task 1 error makes the correct sub-industry unreachable because the wrong sub-classifier is invoked.
 
+![](figures/exhibit_task2.png){width=100%}
+
 | Version | Approach | Macro F1 |
 |---|---|---:|
 | V1 | Flat 428-way LinearSVC | ~20% |
@@ -327,7 +341,7 @@ This constrained cascade reaches **55.44% Macro F1** across all 428 classes, up 
 
 The final scorecard, and the comparison between the two tasks, is shown below.
 
-![Top-3 and top-5 accuracy matter operationally: in a review workflow the analyst sees a short ranked list, and the correct code is present 91.4% and 95.3% of the time.](figures/exhibit_4_scorecard.png){width=100%}
+![](figures/exhibit_scorecard.png){width=100%}
 
 The gap between 75.0% Macro F1 and 91.4% top-3 accuracy is the most operationally important number in the report. It says the model rarely has no idea; when it is wrong about its first choice, the right answer is usually its second or third. In a human-in-the-loop reclassification queue, where the analyst confirms from a ranked shortlist, top-3 accuracy is the figure that governs throughput.
 
@@ -335,17 +349,21 @@ The gap between 75.0% Macro F1 and 91.4% top-3 accuracy is the most operationall
 
 Errors are not spread evenly. They concentrate at the top of the cascade and on the conglomerate class, and the leak that started this project made both look far smaller than they were.
 
-![Exhibit 7: the gap between the memorized and the honest evaluation widens at every level, because a Level-1 sector error makes every finer decision unreachable.](figures/exhibit_7_levels.png){width=100%}
+![](figures/exhibit_levels.png){width=100%}
+
+![](figures/exhibit_sector310.png){width=100%}
 
 Read down the honest bars: sector accuracy is 80.6%, group accuracy 70.8%, and industry Macro F1 59.65% for the classical cascade. The drop at each level is error propagation in action. When the sector is wrong, the rest of the path cannot recover, which is why about 52% of all final errors originate at Level 1. The worst confusions all involve the Industrials sector and its diversified-conglomerate class, whose companies describe several industries at once and therefore scatter across many sectors. This is also why the structural ceiling sits where it does.
 
-![More than half of all rows belong to multi-code conglomerates whose shared text legitimately carries different labels, which caps row-level accuracy regardless of model.](figures/exhibit_5_ceiling.png){width=100%}
+![](figures/exhibit_ceiling.png){width=100%}
 
 Because 55.2% of rows belong to multi-code companies, a large share of the test set carries text that is genuinely ambiguous at the row level: the same `LongProfile` is correct for several different codes depending on the segment. A perfect model still loses points there. The realistic structural ceiling for this task sits in the high seventies, which is why 75.0% is close to the practical limit rather than a stop along the way to 90%.
 
 # Production system and deployment
 
 The model is not a notebook artifact. It runs as a live, publicly reachable product, split across two layers so that a slow model server cannot take the user interface down with it.
+
+![](figures/exhibit_deploy.png){width=100%}
 
 | Layer | Platform | Role |
 |---|---|---|
@@ -483,11 +501,27 @@ The result is honest, and honesty includes stating what it is not.
 - **Task 2 inherits Task 1 errors.** The constrained cascade is efficient precisely because it trusts the Task 1 prediction, which means a Task 1 mistake makes the correct sub-industry unreachable. The 55.44% figure already reflects this propagation.
 - **Inference latency on CPU.** The transformer Space runs on CPU and is slow to warm. A GPU Space or a persistent server would remove the cold-start penalty for a production service level.
 
+# What we would build with another month
+
+We stopped at a defensible 75.0%, but we did not run out of ideas, only time. Four of them are worth writing down, because each targets a specific weakness we measured rather than a generic urge to try a bigger model.
+
+**Domain pretraining.** ModernBERT-large is fluent in general English. A finance-pretrained encoder such as FinBERT starts already fluent in the language of filings, and the published gains on financial text are large. Swapping the backbone is the single highest-leverage change left on the table.
+
+**Cross-encoder reranking.** Our model is right in its top three 91.4% of the time but right at rank one only 75% of the time. That gap is a reranking problem. A small cross-encoder that reads the company description against each of the top three candidate definitions and picks the best fit would turn a good share of those near-misses into hits.
+
+**Per-company aggregation.** We score one segment at a time, but the business question is usually about the whole company. Pooling a company's segment predictions, weighted by revenue share, would fold several noisy row-level guesses into one confident company-level answer.
+
+**An active-learning loop.** The model already knows which rows it finds hard. Sending exactly those rows to an analyst, and folding the corrections back into training, is the cheapest way to buy accuracy where it actually hurts, which is the long tail.
+
 # Conclusion
 
 This project set out to classify companies into a 145-way taxonomy and ended with a live product that does so at 75.0% Macro F1 on data it has never seen, plus a 428-way sub-industry stage at 55.44%. The number that matters most, though, is the one we deleted. An early 88.90% would have been the easy headline; finding that it was leakage, resetting to a true 59.65%, and rebuilding to a defensible 75.0% is the actual contribution. The methodology, a company-disjoint split, a hierarchy-aware transformer, an honestly chosen calibration, a taxonomy-anchored feature idea, and a deployed system that survives real traffic, is the part that transfers to the next problem.
 
 A classifier is a claim about the world. This one is built so that the claim holds up when someone asks how it was measured.
+
+# What this taught us
+
+Three lessons outlasted the project. The first is that the evaluation is the experiment. We spent more careful thought on how to split the data than on any single model, and it was the right call, because the split is what decides whether a number means anything at all. The second is that honest beats impressive, and not only for ethical reasons: the 88.9% would have fallen apart the moment a panelist typed a real company into the demo, whereas 75.0% holds up under questioning. The third is that shipping is its own discipline. The model was finished weeks before the product actually worked, and closing that gap, the timeouts and cold starts and routing bugs that have nothing to do with machine learning, taught us as much as the modeling did.
 
 # References
 
@@ -701,6 +735,38 @@ def predict(sec_logits, grp_logits, ind_logits, ind_to_group, ind_to_sector):
               + LAMBDA_SECTOR * sec_lp[:, ind_to_sector])
     return score.argmax(dim=-1)
 ```
+
+# Appendix D: Glossary
+
+**GECS.** Morningstar's Global Equity Classification Structure, the eight-digit hierarchical taxonomy of sectors, industry groups, industries, and sub-industries that this project predicts.
+
+**Macro F1.** The unweighted average of per-class F1 score. It treats every class equally, so a model cannot earn a high mark by being good only at the common classes.
+
+**Company-disjoint split.** A train/test division in which every row of a given company sits entirely on one side. It stops a model from memorizing a company in training and then recalling it in test.
+
+**Data leakage.** Any path by which information from the test set reaches the model during training. Here it took the form of one company's text appearing on both sides of a row-level split.
+
+**Cascade.** A classifier that makes a sequence of narrowing decisions (sector, then group, then industry) instead of one flat choice among all classes at once.
+
+**TF-IDF.** Term frequency-inverse document frequency, a classic way to turn text into numbers by weighting each word by how distinctive it is.
+
+**ModernBERT.** A modern transformer text encoder; we fine-tuned its large variant as the final Task 1 model.
+
+**Calibration / temperature scaling.** Adjusting a model's confidence scores so they are neither over- nor under-stated. Temperature scaling does this with a single parameter.
+
+**Top-k accuracy.** The share of cases where the correct answer appears within the model's k highest-ranked guesses.
+
+# Appendix E: How the result maps to the case
+
+The case set a clear bar and a handful of secondary criteria. We report against them plainly.
+
+**The 75% Macro F1 target.** Met, at 75.0% on the company-disjoint hold-out, with the cross-validated figure (73.96%) and the test-tuned upper bound (77.51%) both disclosed rather than cherry-picked.
+
+**Performance on the common classes.** Strong at the head of the distribution and honest about the tail; the long-tail classes, not the frequent ones, are where the remaining error lives.
+
+**A working, demonstrable system.** Met, and then some: the model is deployed and reachable at a public endpoint, not just a result in a notebook.
+
+**Task 2, the sub-industry extension.** Delivered at 55.44% Macro F1 across 428 classes, with the structural reasons for the lower number measured and explained rather than buried.
 
 ```{=latex}
 \vfill
