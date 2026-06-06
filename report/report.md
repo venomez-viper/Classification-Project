@@ -1,6 +1,5 @@
 ```{=latex}
 \begin{titlepage}
-\global\pgborderfalse
 \thispagestyle{empty}
 \newgeometry{top=0pt, bottom=0.8in, left=0pt, right=0pt}
 
@@ -34,7 +33,6 @@ Repository: \texttt{github.com/venomez-viper/Classification-Project}
 
 \restoregeometry
 \end{titlepage}
-\global\pgbordertrue
 ```
 
 ```{=latex}

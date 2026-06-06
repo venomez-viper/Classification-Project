@@ -90,19 +90,5 @@
   {\sffamily\footnotesize\color{inkgray}#2}\par}
 \makeatother
 
-% ---- Page border (thin navy frame, drawn on every page except the cover) ----
-\usepackage{atbegshi}
-\newif\ifpgborder \pgbordertrue
-\AtBeginShipout{%
-  \ifpgborder
-    \AtBeginShipoutUpperLeft{%
-      \setlength{\unitlength}{1in}%
-      \setlength{\fboxrule}{0.7pt}%
-      {\color{navy}\put(0.36,-11.3329){\framebox(7.5477,10.9729){}}}%
-      {\color{accent}\put(0.36,-0.36){\line(1,0){7.5477}}}%
-    }%
-  \fi
-}
-
 % ---- Tables ----
 \renewcommand{\arraystretch}{1.18}
