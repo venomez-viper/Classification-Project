@@ -42,13 +42,10 @@
 
 % ---- Section titles (sans, navy) via kernel \@startsection ----
 \makeatletter
-% Each top-level section starts on a fresh page (premium-report convention),
-% with a thin accent rule under the title.
-\newcommand\sectiontitlestyle[1]{%
-  \headingfont\LARGE\bfseries\color{navy}#1\par
-  \vspace{3pt}{\color{rulegray}\hrule height 1pt}\vspace{-2pt}}
-\renewcommand\section{\clearpage\@startsection{section}{1}{\z@}%
-  {6\p@}{9\p@}{\headingfont\LARGE\bfseries\color{navy}}}
+% Continuous flow: sections do NOT force a page break. Generous but not huge
+% spacing above each heading keeps the document readable and professional.
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {17\p@}{7\p@}{\headingfont\LARGE\bfseries\color{navy}}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
   {14\p@}{5\p@}{\headingfont\large\bfseries\color{navy}}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
